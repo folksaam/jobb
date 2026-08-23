@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Träna — Villaförsäkring Bas &amp; Stor</title>
+<script>
+/* Sätts före rendering så sidan inte blinkar vitt i mörkt läge. */
+(function(){
+  try{
+    var saved = localStorage.getItem('theme');
+    var dark = saved ? saved === 'dark'
+                     : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if(dark) document.documentElement.setAttribute('data-theme','dark');
+  }catch(e){}
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="stil.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap navrow">
+    <a href="./villaforsakring.html">&#8592; Villkoret</a>
+    <a href="./villaforsakring.html#anteckningar">Anteckningar</a>
+    <a href="./villaforsakring.html#sjalvrisk">Självrisker</a>
+    <a href="./villaforsakring.html#skador">Skadehändelser</a>
+    <a href="./aa-kalkylator.html">Åldersavdrag →</a>
+  </div>
+</nav>
+
+<header class="wrap">
+  <div class="eyebrow">06 — Testa dig</div>
+  <h1>Träna<em>52 frågor</em></h1>
+  <p class="lede">Frågor och scenarion grupperade per område. Klicka på ett svar så visas facit och förklaring direkt.</p>
+</header>
+
+<main>
+
+<section class="wrap" style="border-top:none;padding-top:0">
+
+  <h3 class="qcat">Självrisk <span>8 frågor</span></h3>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">1</span>Vad är grundsjälvrisken i villaförsäkringen vid varje skadetillfälle?</p>
+    <input type="radio" name="q1" id="q1_0" class="ri"><label for="q1_0" class="opt wrong">900 kr</label>
+    <input type="radio" name="q1" id="q1_1" class="ri"><label for="q1_1" class="opt right">1 800 kr</label>
+    <input type="radio" name="q1" id="q1_2" class="ri"><label for="q1_2" class="opt wrong">4 000 kr</label>
+    <input type="radio" name="q1" id="q1_3" class="ri"><label for="q1_3" class="opt wrong">Beror på skadetypen</label>
+    <div class="expl"><div class="verdict">Svar · B1</div>Grundsjälvrisken är 1 800 kr. Men vid läckage, översvämning och installationsskador gäller särskilda, högre självrisker.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> 1 800 kr</p><p>Grundsjälvrisken är 1 800 kr. Men vid läckage, översvämning och installationsskador gäller särskilda, högre självrisker. <em>(B1)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">2</span>En frysskada på ledning har orsakat läckage. Skadebeloppet är 60 000 kr. Vad blir självrisken?</p>
+    <input type="radio" name="q2" id="q2_0" class="ri"><label for="q2_0" class="opt wrong">1 800 kr</label>
+    <input type="radio" name="q2" id="q2_1" class="ri"><label for="q2_1" class="opt wrong">4 000 kr</label>
+    <input type="radio" name="q2" id="q2_2" class="ri"><label for="q2_2" class="opt right">6 000 kr</label>
+    <input type="radio" name="q2" id="q2_3" class="ri"><label for="q2_3" class="opt wrong">10 000 kr</label>
+    <div class="expl"><div class="verdict">Svar · B7</div>10 % av 60 000 = 6 000 kr. Det ligger mellan golvet 4 000 och taket 10 000, så tio procent gäller rakt av.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> 6 000 kr</p><p>10 % av 60 000 = 6 000 kr. Det ligger mellan golvet 4 000 och taket 10 000, så tio procent gäller rakt av. <em>(B7)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">3</span>Samma frysskada men skadebeloppet är 25 000 kr. Självrisk?</p>
+    <input type="radio" name="q3" id="q3_0" class="ri"><label for="q3_0" class="opt wrong">2 000 kr</label>
+    <input type="radio" name="q3" id="q3_1" class="ri"><label for="q3_1" class="opt wrong">2 500 kr</label>
+    <input type="radio" name="q3" id="q3_2" class="ri"><label for="q3_2" class="opt right">4 000 kr</label>
+    <input type="radio" name="q3" id="q3_3" class="ri"><label for="q3_3" class="opt wrong">10 000 kr</label>
+    <div class="expl"><div class="verdict">Svar · B7</div>10 % av 25 000 = 2 500 kr, vilket är under golvet. Lägstanivån 4 000 kr slår in.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> 4 000 kr</p><p>10 % av 25 000 = 2 500 kr, vilket är under golvet. Lägstanivån 4 000 kr slår in. <em>(B7)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">4</span>Läckageskada på 200 000 kr som beror på att branschreglerna inte följdes när badrummet byggdes. Självrisk?</p>
+    <input type="radio" name="q4" id="q4_0" class="ri"><label for="q4_0" class="opt wrong">1 800 kr</label>
+    <input type="radio" name="q4" id="q4_1" class="ri"><label for="q4_1" class="opt wrong">10 000 kr</label>
+    <input type="radio" name="q4" id="q4_2" class="ri"><label for="q4_2" class="opt right">20 000 kr</label>
+    <input type="radio" name="q4" id="q4_3" class="ri"><label for="q4_3" class="opt wrong">4 000 kr</label>
+    <div class="expl"><div class="verdict">Svar · B7</div>10 % av 200 000 = 20 000 kr. Byggnormsvarianten har golv på 10 000 men INGET tak — därför slår procenten igenom fullt ut.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> 20 000 kr</p><p>10 % av 200 000 = 20 000 kr. Byggnormsvarianten har golv på 10 000 men INGET tak — därför slår procenten igenom fullt ut. <em>(B7)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">5</span>Vad skiljer frysning från byggnorm-brist i självriskhänseende?</p>
+    <input type="radio" name="q5" id="q5_0" class="ri"><label for="q5_0" class="opt wrong">Frysning har högre procentsats</label>
+    <input type="radio" name="q5" id="q5_1" class="ri"><label for="q5_1" class="opt right">Frysning har ett tak på 10 000 kr, byggnorm-brist saknar tak</label>
+    <input type="radio" name="q5" id="q5_2" class="ri"><label for="q5_2" class="opt wrong">Byggnorm-brist har lägre golv</label>
+    <input type="radio" name="q5" id="q5_3" class="ri"><label for="q5_3" class="opt wrong">Ingen skillnad</label>
+    <div class="expl"><div class="verdict">Svar · B7</div>Båda är 10 %. Frysning: lägst 4 000, högst 10 000. Byggnorm: lägst 10 000, inget tak. Vid stora skador blir skillnaden dramatisk för kunden.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Frysning har ett tak på 10 000 kr, byggnorm-brist saknar tak</p><p>Båda är 10 %. Frysning: lägst 4 000, högst 10 000. Byggnorm: lägst 10 000, inget tak. Vid stora skador blir skillnaden dramatisk för kunden. <em>(B7)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">6</span>En frysskada har skadat själva installationen och regleras enligt B14–B15. Skadebeloppet är 15 000 kr. Självrisk?</p>
+    <input type="radio" name="q6" id="q6_0" class="ri"><label for="q6_0" class="opt wrong">1 500 kr</label>
+    <input type="radio" name="q6" id="q6_1" class="ri"><label for="q6_1" class="opt right">2 000 kr</label>
+    <input type="radio" name="q6" id="q6_2" class="ri"><label for="q6_2" class="opt wrong">4 000 kr</label>
+    <input type="radio" name="q6" id="q6_3" class="ri"><label for="q6_3" class="opt wrong">1 800 kr</label>
+    <div class="expl"><div class="verdict">Svar · B15</div>10 % av 15 000 = 1 500 kr, under golvet. Men här är golvet 2 000 kr — inte 4 000 som vid läckage enligt B7. Två olika frysningsnivåer i villkoret.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> 2 000 kr</p><p>10 % av 15 000 = 1 500 kr, under golvet. Men här är golvet 2 000 kr — inte 4 000 som vid läckage enligt B7. Två olika frysningsnivåer i villkoret. <em>(B15)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">7</span>Kunden har ett aktiverat inbrottslarm kopplat till godkänd larmcentral. Ingen var hemma vid inbrottet. Vilken självrisk?</p>
+    <input type="radio" name="q7" id="q7_0" class="ri"><label for="q7_0" class="opt wrong">1 800 kr</label>
+    <input type="radio" name="q7" id="q7_1" class="ri"><label for="q7_1" class="opt wrong">900 kr</label>
+    <input type="radio" name="q7" id="q7_2" class="ri"><label for="q7_2" class="opt right">Ingen självrisk</label>
+    <input type="radio" name="q7" id="q7_3" class="ri"><label for="q7_3" class="opt wrong">Halva grundsjälvrisken</label>
+    <div class="expl"><div class="verdict">Svar · B1</div>Ingen självrisk — men alla tre kraven måste vara uppfyllda: larmet aktiverat, kopplat till godkänd larmcentral, och ingen hemma som ser till bostaden.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Ingen självrisk</p><p>Ingen självrisk — men alla tre kraven måste vara uppfyllda: larmet aktiverat, kopplat till godkänd larmcentral, och ingen hemma som ser till bostaden. <em>(B1)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">8</span>Vatten har trängt upp ur golvbrunnen inomhus. Kunden har installerad backventil. Vilken självrisk vid denna rena baktrycksskada?</p>
+    <input type="radio" name="q8" id="q8_0" class="ri"><label for="q8_0" class="opt wrong">1 800 kr</label>
+    <input type="radio" name="q8" id="q8_1" class="ri"><label for="q8_1" class="opt right">5 000 kr</label>
+    <input type="radio" name="q8" id="q8_2" class="ri"><label for="q8_2" class="opt wrong">10 000 kr</label>
+    <input type="radio" name="q8" id="q8_3" class="ri"><label for="q8_3" class="opt wrong">10 % av skadebeloppet</label>
+    <div class="expl"><div class="verdict">Svar · B8</div>Ren baktrycksskada har fast självrisk: 10 000 kr utan backventil, 5 000 kr med installerad backventil.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> 5 000 kr</p><p>Ren baktrycksskada har fast självrisk: 10 000 kr utan backventil, 5 000 kr med installerad backventil. <em>(B8)</em></p></details>
+  </div>
+
+  <h3 class="qcat">Läckage <span>4 frågor</span></h3>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">9</span>Ett rör har läckt och skadat golvet. Ersätter vi själva det trasiga röret enligt B5?</p>
+    <input type="radio" name="q9" id="q9_0" class="ri"><label for="q9_0" class="opt wrong">Ja, det ingår i läckageskadan</label>
+    <input type="radio" name="q9" id="q9_1" class="ri"><label for="q9_1" class="opt right">Nej — men det kan prövas enligt B14–B15</label>
+    <input type="radio" name="q9" id="q9_2" class="ri"><label for="q9_2" class="opt wrong">Ja, men med extra självrisk</label>
+    <input type="radio" name="q9" id="q9_3" class="ri"><label for="q9_3" class="opt wrong">Nej, aldrig</label>
+    <div class="expl"><div class="verdict">Svar · B6</div>B6 undantar skada på den anordning som läckt. Rörledningar med mera kan dock ersättas enligt B14–B15. Vattenskadan ersätts via B5, röret prövas separat.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Nej — men det kan prövas enligt B14–B15</p><p>B6 undantar skada på den anordning som läckt. Rörledningar med mera kan dock ersättas enligt B14–B15. Vattenskadan ersätts via B5, röret prövas separat. <em>(B6)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">10</span>Läckage har uppstått genom tätskiktet i badrummet. Kunden vill ha ersättning för ytskiktet. Villaförsäkring Bas.</p>
+    <input type="radio" name="q10" id="q10_0" class="ri"><label for="q10_0" class="opt wrong">Ja, ytskikt ingår alltid</label>
+    <input type="radio" name="q10" id="q10_1" class="ri"><label for="q10_1" class="opt right">Nej — ytskikt inklusive tätskikt genom vilket läckaget uppstått undantas</label>
+    <input type="radio" name="q10" id="q10_2" class="ri"><label for="q10_2" class="opt wrong">Ja, men bara halva kostnaden</label>
+    <input type="radio" name="q10" id="q10_3" class="ri"><label for="q10_3" class="opt wrong">Bara om badrummet är under 10 år</label>
+    <div class="expl"><div class="verdict">Svar · B6</div>B6 undantar ytskikt inklusive tätskikt genom vilket läckaget uppstått. Hela våtutrymmet — väggar och golv — ses som en enhet. Med Villaförsäkring Stor omfattas det dock, om dokumentation från uppförandet kan uppvisas.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Nej — ytskikt inklusive tätskikt genom vilket läckaget uppstått undantas</p><p>B6 undantar ytskikt inklusive tätskikt genom vilket läckaget uppstått. Hela våtutrymmet — väggar och golv — ses som en enhet. Med Villaförsäkring Stor omfattas det dock, om dokumentation från uppförandet kan uppvisas. <em>(B6)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">11</span>Vatten har läckt in från en takränna och skadat fasaden. Villaförsäkring Bas. Ersätts det som läckage?</p>
+    <input type="radio" name="q11" id="q11_0" class="ri"><label for="q11_0" class="opt wrong">Ja</label>
+    <input type="radio" name="q11" id="q11_1" class="ri"><label for="q11_1" class="opt right">Nej — utströmning från takränna undantas</label>
+    <div class="expl"><div class="verdict">Svar · B6</div>B6 undantar utströmning från rökkanal, ventilationskanal, dräneringssystem, dagvattensystem, stuprör, tak eller takränna. Med Villaförsäkring Stor kan Utökat läckageskydd gälla — men bara upp till 20 000 kr och inte för skada på yttertaket självt.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Nej — utströmning från takränna undantas</p><p>B6 undantar utströmning från rökkanal, ventilationskanal, dräneringssystem, dagvattensystem, stuprör, tak eller takränna. Med Villaförsäkring Stor kan Utökat läckageskydd gälla — men bara upp till 20 000 kr och inte för skada på yttertaket självt. <em>(B6)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">12</span>Ersätter vi kostnaden för att bila upp golvet för att hitta och komma åt läckan?</p>
+    <input type="radio" name="q12" id="q12_0" class="ri"><label for="q12_0" class="opt wrong">Nej, det är kundens egen kostnad</label>
+    <input type="radio" name="q12" id="q12_1" class="ri"><label for="q12_1" class="opt right">Ja — lokalisering, friläggning och återställande av läckagestället ingår</label>
+    <input type="radio" name="q12" id="q12_2" class="ri"><label for="q12_2" class="opt wrong">Bara om läckan hittas</label>
+    <input type="radio" name="q12" id="q12_3" class="ri"><label for="q12_3" class="opt wrong">Bara med Villaförsäkring Stor</label>
+    <div class="expl"><div class="verdict">Svar · B5</div>Vid ersättningsbar läckageskada omfattas även kostnaderna för att lokalisera och frilägga läckagestället inom byggnaden, samt att återställa det frilagda läckagestället.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Ja — lokalisering, friläggning och återställande av läckagestället ingår</p><p>Vid ersättningsbar läckageskada omfattas även kostnaderna för att lokalisera och frilägga läckagestället inom byggnaden, samt att återställa det frilagda läckagestället. <em>(B5)</em></p></details>
+  </div>
+
+  <h3 class="qcat">Storm <span>3 frågor</span></h3>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">13</span>Vindstyrkan uppmättes till 19 m/s. Ett träd blåste omkull och landade på villan. Ersätter vi skadan?</p>
+    <input type="radio" name="q13" id="q13_0" class="ri"><label for="q13_0" class="opt wrong">Nej, stormgränsen är 21 m/s</label>
+    <input type="radio" name="q13" id="q13_1" class="ri"><label for="q13_1" class="opt right">Ja — undantaget för träd som blåser omkull gäller vid lägre vindstyrka</label>
+    <div class="expl"><div class="verdict">Svar · B9</div>Stormgränsen är 21 m/s, men även vid lägre vindstyrka lämnas ersättning om byggnaden skadas av träd eller flaggstång som blåser omkull.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Ja — undantaget för träd som blåser omkull gäller vid lägre vindstyrka</p><p>Stormgränsen är 21 m/s, men även vid lägre vindstyrka lämnas ersättning om byggnaden skadas av träd eller flaggstång som blåser omkull. <em>(B9)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">14</span>Samma storm på 19 m/s. Trädet landar i stället på kundens fristående carport på 30 m². Villaförsäkring Bas.</p>
+    <input type="radio" name="q14" id="q14_0" class="ri"><label for="q14_0" class="opt wrong">Ja, carporten är försäkrad egendom under 50 m²</label>
+    <input type="radio" name="q14" id="q14_1" class="ri"><label for="q14_1" class="opt right">Nej — fristående carport undantas specifikt vid storm</label>
+    <div class="expl"><div class="verdict">Svar · B9</div>Carporten ÄR försäkrad egendom enligt B2 (upp till 50 m²), men B9 undantar uttryckligen fristående carport vid storm. Att något är försäkrad egendom betyder inte att alla skadehändelser täcker det. Med Villaförsäkring Stor gäller dock Utökat stormskydd.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Nej — fristående carport undantas specifikt vid storm</p><p>Carporten ÄR försäkrad egendom enligt B2 (upp till 50 m²), men B9 undantar uttryckligen fristående carport vid storm. Att något är försäkrad egendom betyder inte att alla skadehändelser täcker det. Med Villaförsäkring Stor gäller dock Utökat stormskydd. <em>(B9)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">15</span>Stormen på 25 m/s slet loss puts från fasaden. Inget föremål träffade huset. Ersätts putsen?</p>
+    <input type="radio" name="q15" id="q15_0" class="ri"><label for="q15_0" class="opt wrong">Ja, vindstyrkan överstiger 21 m/s</label>
+    <input type="radio" name="q15" id="q15_1" class="ri"><label for="q15_1" class="opt right">Nej — revetering, puts och skorstensbeklädnad ersätts bara om ett föremål blåst omkull eller brutits loss och orsakat skadan</label>
+    <div class="expl"><div class="verdict">Svar · B9</div>B9 undantar revetering, puts och skorstensbeklädnad som skadas på annat sätt än genom att träd eller annat föremål blåst omkull eller brutits loss.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Nej — revetering, puts och skorstensbeklädnad ersätts bara om ett föremål blåst omkull eller brutits loss och orsakat skadan</p><p>B9 undantar revetering, puts och skorstensbeklädnad som skadas på annat sätt än genom att träd eller annat föremål blåst omkull eller brutits loss. <em>(B9)</em></p></details>
+  </div>
+
+  <h3 class="qcat">Snötryck <span>2 frågor</span></h3>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">16</span>Snötyngden har knäckt kundens altantak. Ersätts det enligt B11?</p>
+    <input type="radio" name="q16" id="q16_0" class="ri"><label for="q16_0" class="opt wrong">Ja</label>
+    <input type="radio" name="q16" id="q16_1" class="ri"><label for="q16_1" class="opt right">Nej — altantak, balkongtak och verandatak undantas</label>
+    <div class="expl"><div class="verdict">Svar · B11</div>B11 gäller yttertakets bärande konstruktion på bostadsbyggnad. Altantak, balkongtak, verandatak och liknande tak undantas uttryckligen.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Nej — altantak, balkongtak och verandatak undantas</p><p>B11 gäller yttertakets bärande konstruktion på bostadsbyggnad. Altantak, balkongtak, verandatak och liknande tak undantas uttryckligen. <em>(B11)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">17</span>Vilket aktsamhetskrav gäller vid snötryck, och vad blir avdraget normalt vid brott?</p>
+    <input type="radio" name="q17" id="q17_0" class="ri"><label for="q17_0" class="opt right">Skotta taket vid hotande snömängd — normalt 25 % avdrag</label>
+    <input type="radio" name="q17" id="q17_1" class="ri"><label for="q17_1" class="opt wrong">Skotta taket varje vecka — normalt 50 % avdrag</label>
+    <input type="radio" name="q17" id="q17_2" class="ri"><label for="q17_2" class="opt wrong">Inget särskilt krav</label>
+    <input type="radio" name="q17" id="q17_3" class="ri"><label for="q17_3" class="opt wrong">Anlita takskottare — normalt 25 % avdrag</label>
+    <div class="expl"><div class="verdict">Svar · B11</div>Kunden ska förebygga skada genom att se till att taket blir skottat om snömängden blir hotande stor. Vid brott normalt 25 % avdrag, större i allvarliga fall, inget i lindriga.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Skotta taket vid hotande snömängd — normalt 25 % avdrag</p><p>Kunden ska förebygga skada genom att se till att taket blir skottat om snömängden blir hotande stor. Vid brott normalt 25 % avdrag, större i allvarliga fall, inget i lindriga. <em>(B11)</em></p></details>
+  </div>
+
+  <h3 class="qcat">Installationer <span>4 frågor</span></h3>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">18</span>Ett rör inomhus är skadat av rost och frätning. Installationen är 20 år gammal. Ersätts det?</p>
+    <input type="radio" name="q18" id="q18_0" class="ri"><label for="q18_0" class="opt wrong">Ja</label>
+    <input type="radio" name="q18" id="q18_1" class="ri"><label for="q18_1" class="opt right">Nej — rost och frätning på installation inom byggnad undantas om installationen är äldre än 15 år</label>
+    <div class="expl"><div class="verdict">Svar · B15</div>B15 undantar skada orsakad av rost eller frätning på installation inom byggnad om installationen är äldre än 15 år. Utanför eller utanpå byggnad undantas rost och frätning helt, oavsett ålder.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Nej — rost och frätning på installation inom byggnad undantas om installationen är äldre än 15 år</p><p>B15 undantar skada orsakad av rost eller frätning på installation inom byggnad om installationen är äldre än 15 år. Utanför eller utanpå byggnad undantas rost och frätning helt, oavsett ålder. <em>(B15)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">19</span>Ett rör i marken utanför huset har rostat sönder. Röret är 8 år gammalt. Ersätts det?</p>
+    <input type="radio" name="q19" id="q19_0" class="ri"><label for="q19_0" class="opt wrong">Ja, det är under 15 år</label>
+    <input type="radio" name="q19" id="q19_1" class="ri"><label for="q19_1" class="opt right">Nej — rost och frätning på egendom utanför eller utanpå byggnad undantas oavsett ålder</label>
+    <div class="expl"><div class="verdict">Svar · B15</div>15-årsgränsen gäller bara installation INOM byggnad. Utanför eller utanpå byggnaden undantas rost- och frätskador helt.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Nej — rost och frätning på egendom utanför eller utanpå byggnad undantas oavsett ålder</p><p>15-årsgränsen gäller bara installation INOM byggnad. Utanför eller utanpå byggnaden undantas rost- och frätskador helt. <em>(B15)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">20</span>Kunden vill ha ersättning för att spola rent en igensatt avloppsledning. Ersätts det?</p>
+    <input type="radio" name="q20" id="q20_0" class="ri"><label for="q20_0" class="opt wrong">Ja, om ledningen är under 15 år</label>
+    <input type="radio" name="q20" id="q20_1" class="ri"><label for="q20_1" class="opt right">Nej — kostnad för rensning eller upptining av ledning undantas</label>
+    <div class="expl"><div class="verdict">Svar · B15</div>B15 undantar uttryckligen kostnad för rensning eller upptining av ledning.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Nej — kostnad för rensning eller upptining av ledning undantas</p><p>B15 undantar uttryckligen kostnad för rensning eller upptining av ledning. <em>(B15)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">21</span>En diskmaskin som är byggnadstillbehör har gått sönder. Kunden har garanti kvar hos leverantören, men leverantören vägrar åtgärda. Ersätter vi?</p>
+    <input type="radio" name="q21" id="q21_0" class="ri"><label for="q21_0" class="opt wrong">Nej, garantin gäller</label>
+    <input type="radio" name="q21" id="q21_1" class="ri"><label for="q21_1" class="opt right">Ja — om den försäkrade visar att den ansvarige inte avhjälper eller betalar</label>
+    <div class="expl"><div class="verdict">Svar · B15</div>B15 undantar skada som leverantör ansvarar för enligt konsumentköp- eller konsumenttjänstlagen — men vi ersätter dock om den försäkrade visar att den som ansvarar inte avhjälper eller betalar.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Ja — om den försäkrade visar att den ansvarige inte avhjälper eller betalar</p><p>B15 undantar skada som leverantör ansvarar för enligt konsumentköp- eller konsumenttjänstlagen — men vi ersätter dock om den försäkrade visar att den som ansvarar inte avhjälper eller betalar. <em>(B15)</em></p></details>
+  </div>
+
+  <h3 class="qcat">Egendom <span>2 frågor</span></h3>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">22</span>Vad av detta ingår INTE i den försäkrade egendomen enligt B2?</p>
+    <input type="radio" name="q22" id="q22_0" class="ri"><label for="q22_0" class="opt wrong">Fristående carport på 45 m²</label>
+    <input type="radio" name="q22" id="q22_1" class="ri"><label for="q22_1" class="opt wrong">Laddstolpe</label>
+    <input type="radio" name="q22" id="q22_2" class="ri"><label for="q22_2" class="opt right">Brunn och brunnsvatten</label>
+    <input type="radio" name="q22" id="q22_3" class="ri"><label for="q22_3" class="opt wrong">Flaggstång</label>
+    <div class="expl"><div class="verdict">Svar · B2</div>Brunn inklusive brunnsvatten undantas i B2 — men undantaget avser inte ledningar och maskinell utrustning. Carport upp till 50 m², laddstolpe och flaggstång räknas som tomtmark och ingår.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Brunn och brunnsvatten</p><p>Brunn inklusive brunnsvatten undantas i B2 — men undantaget avser inte ledningar och maskinell utrustning. Carport upp till 50 m², laddstolpe och flaggstång räknas som tomtmark och ingår. <em>(B2)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">23</span>Kunden har köpt ett nytt badkar som står oinstallerat i garaget när en brand bryter ut. Omfattas det?</p>
+    <input type="radio" name="q23" id="q23_0" class="ri"><label for="q23_0" class="opt wrong">Nej, det är inte monterat</label>
+    <input type="radio" name="q23" id="q23_1" class="ri"><label for="q23_1" class="opt right">Ja — sådant som räknas som byggnadstillbehör ingår även om det ännu inte installerats</label>
+    <div class="expl"><div class="verdict">Svar · B2</div>B2 omfattar sådant som räknas som tillbehör till byggnad enligt jordabalken även om det ännu inte installerats vid skadetillfället. Sådan egendom värderas enligt C34.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Ja — sådant som räknas som byggnadstillbehör ingår även om det ännu inte installerats</p><p>B2 omfattar sådant som räknas som tillbehör till byggnad enligt jordabalken även om det ännu inte installerats vid skadetillfället. Sådan egendom värderas enligt C34. <em>(B2)</em></p></details>
+  </div>
+
+  <h3 class="qcat">Stöld <span>3 frågor</span></h3>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">24</span>En tjuv har brutit sig in i ett garage som är sammanbyggt med villan och har invändig dörrförbindelse. Räknas garaget som bostad?</p>
+    <input type="radio" name="q24" id="q24_0" class="ri"><label for="q24_0" class="opt wrong">Nej, garage är alltid biutrymme</label>
+    <input type="radio" name="q24" id="q24_1" class="ri"><label for="q24_1" class="opt right">Ja — i villabyggnad räknas källare, vind och garage till bostaden</label>
+    <div class="expl"><div class="verdict">Svar · B17 / A12</div>Enligt A12, som B17 hänvisar till, räknas källare, vind och garage i villabyggnad till bostaden. Detsamma gäller när garage och liknande är sammanbyggt med villan och invändig dörrförbindelse finns. Det gör stor skillnad, eftersom biutrymmen har hårdare begränsningar.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Ja — i villabyggnad räknas källare, vind och garage till bostaden</p><p>Enligt A12, som B17 hänvisar till, räknas källare, vind och garage i villabyggnad till bostaden. Detsamma gäller när garage och liknande är sammanbyggt med villan och invändig dörrförbindelse finns. Det gör stor skillnad, eftersom biutrymmen har hårdare begränsningar. <em>(B17 / A12)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">25</span>Efter ett inbrott vill kunden byta lås eftersom nyckeln kan ha kommit på avvägar. Ersätts låsbytet, och med vilket maxbelopp?</p>
+    <input type="radio" name="q25" id="q25_0" class="ri"><label for="q25_0" class="opt wrong">Nej, låsbyte ersätts inte</label>
+    <input type="radio" name="q25" id="q25_1" class="ri"><label for="q25_1" class="opt right">Ja — högst 3 000 kr, om det är sannolikt att gärningspersonen kan spåra vart nyckeln går</label>
+    <input type="radio" name="q25" id="q25_2" class="ri"><label for="q25_2" class="opt wrong">Ja — högst 10 000 kr</label>
+    <input type="radio" name="q25" id="q25_3" class="ri"><label for="q25_3" class="opt wrong">Bara med Villaförsäkring Stor</label>
+    <div class="expl"><div class="verdict">Svar · B17 / A13</div>Kostnad för byte eller omkodning av eget bekostat lås ersätts om nyckeln förlorats vid ersättningsbar skadehändelse och det är sannolikt att gärningspersonen kan spåra vart nyckeln går. Högsta ersättning 3 000 kr.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Ja — högst 3 000 kr, om det är sannolikt att gärningspersonen kan spåra vart nyckeln går</p><p>Kostnad för byte eller omkodning av eget bekostat lås ersätts om nyckeln förlorats vid ersättningsbar skadehändelse och det är sannolikt att gärningspersonen kan spåra vart nyckeln går. Högsta ersättning 3 000 kr. <em>(B17 / A13)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">26</span>Räknas balkong och altan som bostad vid bedömning av inbrott?</p>
+    <input type="radio" name="q26" id="q26_0" class="ri"><label for="q26_0" class="opt wrong">Ja</label>
+    <input type="radio" name="q26" id="q26_1" class="ri"><label for="q26_1" class="opt right">Nej — balkong och altan räknas inte som bostad</label>
+    <div class="expl"><div class="verdict">Svar · A12</div>A12 slår fast att balkong och altan inte räknas som bostad. De räknas inte heller som biutrymme till bostad enligt A15.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Nej — balkong och altan räknas inte som bostad</p><p>A12 slår fast att balkong och altan inte räknas som bostad. De räknas inte heller som biutrymme till bostad enligt A15. <em>(A12)</em></p></details>
+  </div>
+
+  <h3 class="qcat">Naturskada <span>2 frågor</span></h3>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">27</span>Ett jordskalv med styrka 3,5 på Richterskalan har spruckit grunden. Ersätts det enligt B12?</p>
+    <input type="radio" name="q27" id="q27_0" class="ri"><label for="q27_0" class="opt wrong">Ja</label>
+    <input type="radio" name="q27" id="q27_1" class="ri"><label for="q27_1" class="opt right">Nej — kravet är minst 4 enligt Richterskalan</label>
+    <div class="expl"><div class="verdict">Svar · B12</div>B12 kräver jordskalv med en styrka på minst 4 enligt Richterskalan. Dessutom ersätts sprickor bara om de är så allvarliga att funktionsdugligheten avsevärt minskat.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Nej — kravet är minst 4 enligt Richterskalan</p><p>B12 kräver jordskalv med en styrka på minst 4 enligt Richterskalan. Dessutom ersätts sprickor bara om de är så allvarliga att funktionsdugligheten avsevärt minskat. <em>(B12)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">28</span>Huset har satt sig och det har uppstått sprickor i grunden. Ersätts det?</p>
+    <input type="radio" name="q28" id="q28_0" class="ri"><label for="q28_0" class="opt wrong">Ja, om sprickorna är allvarliga</label>
+    <input type="radio" name="q28" id="q28_1" class="ri"><label for="q28_1" class="opt right">Nej — sättning i mark eller grund undantas</label>
+    <div class="expl"><div class="verdict">Svar · B12</div>B12 undantar uttryckligen skada på tomtmark eller byggnad som orsakats av sättning i mark eller grund.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Nej — sättning i mark eller grund undantas</p><p>B12 undantar uttryckligen skada på tomtmark eller byggnad som orsakats av sättning i mark eller grund. <em>(B12)</em></p></details>
+  </div>
+
+  <h3 class="qcat">Djur <span>1 frågor</span></h3>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">29</span>Möss har tagit sig in på vinden och gnagt sönder isoleringen. Ersätts det enligt B13?</p>
+    <input type="radio" name="q29" id="q29_0" class="ri"><label for="q29_0" class="opt wrong">Ja, det är vilda djur</label>
+    <input type="radio" name="q29" id="q29_1" class="ri"><label for="q29_1" class="opt right">Nej — insekter, råttor, möss och andra smågnagare undantas</label>
+    <div class="expl"><div class="verdict">Svar · B13 / B25</div>B13 undantar insekter, råttor, möss och andra smågnagare. Detta hanteras i stället via skadedjursförsäkringen hos Anticimex — och skada på byggnad orsakad av möss kräver Villaförsäkring Stor, med max 50 000 kr och 4 000 kr i självrisk.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Nej — insekter, råttor, möss och andra smågnagare undantas</p><p>B13 undantar insekter, råttor, möss och andra smågnagare. Detta hanteras i stället via skadedjursförsäkringen hos Anticimex — och skada på byggnad orsakad av möss kräver Villaförsäkring Stor, med max 50 000 kr och 4 000 kr i självrisk. <em>(B13 / B25)</em></p></details>
+  </div>
+
+  <h3 class="qcat">Glas <span>1 frågor</span></h3>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">30</span>Isolerglaset i ett fönster har blivit otätt och immar igen. Ersätts det?</p>
+    <input type="radio" name="q30" id="q30_0" class="ri"><label for="q30_0" class="opt wrong">Ja, glasrutor omfattas</label>
+    <input type="radio" name="q30" id="q30_1" class="ri"><label for="q30_1" class="opt right">Nej — skada på isolerglas som endast består i att konstruktionen blivit otät undantas</label>
+    <div class="expl"><div class="verdict">Svar · B16</div>B16 undantar uttryckligen skada på isolerglas som endast består i att konstruktionen blivit otät.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Nej — skada på isolerglas som endast består i att konstruktionen blivit otät undantas</p><p>B16 undantar uttryckligen skada på isolerglas som endast består i att konstruktionen blivit otät. <em>(B16)</em></p></details>
+  </div>
+
+  <h3 class="qcat">Bygge <span>2 frågor</span></h3>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">31</span>Ett läckage uppstår i en nybyggd villa innan rörsystemen provats. Ersätts det?</p>
+    <input type="radio" name="q31" id="q31_0" class="ri"><label for="q31_0" class="opt wrong">Ja</label>
+    <input type="radio" name="q31" id="q31_1" class="ri"><label for="q31_1" class="opt right">Nej — skada genom läckage ersätts inte om den inträffar innan rörsystemen provats och befunnits felfria</label>
+    <div class="expl"><div class="verdict">Svar · B20</div>B20 begränsar skyddet under byggtiden: läckage och skada på installationer för värme, vatten eller avlopp ersätts inte om det inträffar innan rörsystemen provats och befunnits felfria.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Nej — skada genom läckage ersätts inte om den inträffar innan rörsystemen provats och befunnits felfria</p><p>B20 begränsar skyddet under byggtiden: läckage och skada på installationer för värme, vatten eller avlopp ersätts inte om det inträffar innan rörsystemen provats och befunnits felfria. <em>(B20)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">32</span>Verktyg har stulits från byggarbetsplatsen. De låg i en olåst arbetsbod. Ersätts det?</p>
+    <input type="radio" name="q32" id="q32_0" class="ri"><label for="q32_0" class="opt wrong">Ja</label>
+    <input type="radio" name="q32" id="q32_1" class="ri"><label for="q32_1" class="opt right">Nej — stöld av verktyg och material ersätts endast vid inbrott i låst utrymme</label>
+    <div class="expl"><div class="verdict">Svar · B21</div>B21 kräver att stölden sker genom inbrott i låst utrymme. Dessutom ersätts varken skadegörelse på arbetsbodar, verktyg och material eller stormskador på verktyg och material.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Nej — stöld av verktyg och material ersätts endast vid inbrott i låst utrymme</p><p>B21 kräver att stölden sker genom inbrott i låst utrymme. Dessutom ersätts varken skadegörelse på arbetsbodar, verktyg och material eller stormskador på verktyg och material. <em>(B21)</em></p></details>
+  </div>
+
+  <h3 class="qcat">Stor <span>7 frågor</span></h3>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">33</span>Vilken är den viktigaste skillnaden mellan Bas och Stor i värderingsreglerna?</p>
+    <input type="radio" name="q33" id="q33_0" class="ri"><label for="q33_0" class="opt wrong">Stor har ingen självrisk</label>
+    <input type="radio" name="q33" id="q33_1" class="ri"><label for="q33_1" class="opt right">Åldersavdraget begränsas till 15 000 kr i Stor mot 105 000 kr i Bas</label>
+    <input type="radio" name="q33" id="q33_2" class="ri"><label for="q33_2" class="opt wrong">Stor har inga åldersavdrag alls</label>
+    <input type="radio" name="q33" id="q33_3" class="ri"><label for="q33_3" class="opt wrong">Stor har högre friår</label>
+    <div class="expl"><div class="verdict">Svar · Stor / C42</div>Det sammanlagda åldersavdraget per skadetillfälle begränsas till 15 000 kr i Stor mot 105 000 kr i Bas. Det kan betyda 90 000 kr i skillnad för kunden vid en stor skada.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Åldersavdraget begränsas till 15 000 kr i Stor mot 105 000 kr i Bas</p><p>Det sammanlagda åldersavdraget per skadetillfälle begränsas till 15 000 kr i Stor mot 105 000 kr i Bas. Det kan betyda 90 000 kr i skillnad för kunden vid en stor skada. <em>(Stor / C42)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">34</span>Kunden har Villaförsäkring Stor och vill ha ersättning för tätskiktet efter en läckageskada. Vad krävs?</p>
+    <input type="radio" name="q34" id="q34_0" class="ri"><label for="q34_0" class="opt wrong">Ingenting extra, det ingår</label>
+    <input type="radio" name="q34" id="q34_1" class="ri"><label for="q34_1" class="opt right">Att arbetet utförts enligt gällande byggnormer och branschregler OCH att kvalitetsdokument kan uppvisas</label>
+    <input type="radio" name="q34" id="q34_2" class="ri"><label for="q34_2" class="opt wrong">Att badrummet är under 10 år</label>
+    <input type="radio" name="q34" id="q34_3" class="ri"><label for="q34_3" class="opt wrong">Att kunden anlitat behörig hantverkare</label>
+    <div class="expl"><div class="verdict">Svar · Stor</div>Villaförsäkring Stor täcker det ytskikt och tätskikt som undantas i B6 — men förutsättningen är att arbetet utförts enligt gällande byggnormer och branschregler och att kvalitetsdokument eller annan motsvarande dokumentation från uppförandet kan uppvisas.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Att arbetet utförts enligt gällande byggnormer och branschregler OCH att kvalitetsdokument kan uppvisas</p><p>Villaförsäkring Stor täcker det ytskikt och tätskikt som undantas i B6 — men förutsättningen är att arbetet utförts enligt gällande byggnormer och branschregler och att kvalitetsdokument eller annan motsvarande dokumentation från uppförandet kan uppvisas. <em>(Stor)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">35</span>Vatten har trängt in genom yttertaket och skadat innertaket. Kunden har Villaförsäkring Stor och taket är 12 år gammalt. Vad gäller?</p>
+    <input type="radio" name="q35" id="q35_0" class="ri"><label for="q35_0" class="opt wrong">Full ersättning för både innertak och yttertak</label>
+    <input type="radio" name="q35" id="q35_1" class="ri"><label for="q35_1" class="opt right">Utökat läckageskydd gäller — max 20 000 kr, men inte för skada på yttertaket självt</label>
+    <input type="radio" name="q35" id="q35_2" class="ri"><label for="q35_2" class="opt wrong">Ingen ersättning alls</label>
+    <input type="radio" name="q35" id="q35_3" class="ri"><label for="q35_3" class="opt wrong">Max 10 000 kr</label>
+    <div class="expl"><div class="verdict">Svar · Stor</div>Utökat läckageskydd ersätter skada på huvudbyggnaden när vatten oberäknat tränger in genom yttertaket eller fasad ovan marken. Max 20 000 kr, självrisk 1 800 kr. Skada på yttertaket självt — hela takkonstruktionen ovanför takstolar — undantas. Hade taket varit över 30 år hade inget ersatts.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Utökat läckageskydd gäller — max 20 000 kr, men inte för skada på yttertaket självt</p><p>Utökat läckageskydd ersätter skada på huvudbyggnaden när vatten oberäknat tränger in genom yttertaket eller fasad ovan marken. Max 20 000 kr, självrisk 1 800 kr. Skada på yttertaket självt — hela takkonstruktionen ovanför takstolar — undantas. Hade taket varit över 30 år hade inget ersatts. <em>(Stor)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">36</span>En diskmaskin som är byggnadstillbehör och 3 år gammal har skadats. Kunden har Villaförsäkring Stor och köper en likvärdig ny inom två månader. Vad gäller?</p>
+    <input type="radio" name="q36" id="q36_0" class="ri"><label for="q36_0" class="opt wrong">Åldersavdrag 10 % görs för år 3</label>
+    <input type="radio" name="q36" id="q36_1" class="ri"><label for="q36_1" class="opt right">Maskinen betraktas som helt ny — inget åldersavdrag</label>
+    <input type="radio" name="q36" id="q36_2" class="ri"><label for="q36_2" class="opt wrong">Halvt åldersavdrag</label>
+    <input type="radio" name="q36" id="q36_3" class="ri"><label for="q36_3" class="opt wrong">Ersättning med marknadsvärdet</label>
+    <div class="expl"><div class="verdict">Svar · Stor</div>Nyvärdesskydd hushållsmaskiner: maskiner under fyra års ålder betraktas som helt nya vid tillämpningen av C42, förutsatt att kunden återanskaffar likvärdig egendom eller reparerar inom sex månader från skadetillfället.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Maskinen betraktas som helt ny — inget åldersavdrag</p><p>Nyvärdesskydd hushållsmaskiner: maskiner under fyra års ålder betraktas som helt nya vid tillämpningen av C42, förutsatt att kunden återanskaffar likvärdig egendom eller reparerar inom sex månader från skadetillfället. <em>(Stor)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">37</span>Kunden har Villaförsäkring Stor och drabbas av översvämning. Skadebeloppet är 300 000 kr. Vad betalar kunden i självrisk?</p>
+    <input type="radio" name="q37" id="q37_0" class="ri"><label for="q37_0" class="opt wrong">30 000 kr</label>
+    <input type="radio" name="q37" id="q37_1" class="ri"><label for="q37_1" class="opt wrong">10 000 kr</label>
+    <input type="radio" name="q37" id="q37_2" class="ri"><label for="q37_2" class="opt right">1 800 kr</label>
+    <input type="radio" name="q37" id="q37_3" class="ri"><label for="q37_3" class="opt wrong">Ingen självrisk</label>
+    <div class="expl"><div class="verdict">Svar · Stor</div>Villaförsäkring Stor ersätter den förhöjda självrisken vid översvämning enligt B8. Kunden betalar endast 1 800 kr. Hade det varit en ren baktrycksskada med installerad backventil hade självrisken varit noll.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> 1 800 kr</p><p>Villaförsäkring Stor ersätter den förhöjda självrisken vid översvämning enligt B8. Kunden betalar endast 1 800 kr. Hade det varit en ren baktrycksskada med installerad backventil hade självrisken varit noll. <em>(Stor)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">38</span>Husextra ersätter plötslig och oförutsedd händelse. Vilket av dessa ersätts INTE?</p>
+    <input type="radio" name="q38" id="q38_0" class="ri"><label for="q38_0" class="opt wrong">Kunden tappar ett verktyg som spräcker handfatet</label>
+    <input type="radio" name="q38" id="q38_1" class="ri"><label for="q38_1" class="opt right">Sprickbildning som är naturlig på grund av byggnadens konstruktion</label>
+    <input type="radio" name="q38" id="q38_2" class="ri"><label for="q38_2" class="opt wrong">En sten slungas in i en dörr av gräsklipparen</label>
+    <input type="radio" name="q38" id="q38_3" class="ri"><label for="q38_3" class="opt wrong">Ett fallande föremål skadar köksinredningen</label>
+    <div class="expl"><div class="verdict">Svar · Stor / Husextra</div>Husextra undantar bland annat sprickbildning på byggnad som är naturlig på grund av byggnadens utförande och konstruktion, samt förslitning, självsprickor, vittring och åldersförändring — vare sig skadan visar sig successivt eller plötsligt.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Sprickbildning som är naturlig på grund av byggnadens konstruktion</p><p>Husextra undantar bland annat sprickbildning på byggnad som är naturlig på grund av byggnadens utförande och konstruktion, samt förslitning, självsprickor, vittring och åldersförändring — vare sig skadan visar sig successivt eller plötsligt. <em>(Stor / Husextra)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">39</span>Vad är högsta ersättningsbelopp för Husextra vid varje skadetillfälle?</p>
+    <input type="radio" name="q39" id="q39_0" class="ri"><label for="q39_0" class="opt wrong">80 000 kr</label>
+    <input type="radio" name="q39" id="q39_1" class="ri"><label for="q39_1" class="opt wrong">100 000 kr</label>
+    <input type="radio" name="q39" id="q39_2" class="ri"><label for="q39_2" class="opt right">150 000 kr</label>
+    <input type="radio" name="q39" id="q39_3" class="ri"><label for="q39_3" class="opt wrong">200 000 kr</label>
+    <div class="expl"><div class="verdict">Svar · Stor / Husextra</div>Husextra ersätter högst 150 000 kr vid varje skadetillfälle. Självrisken är 1 800 kr.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> 150 000 kr</p><p>Husextra ersätter högst 150 000 kr vid varje skadetillfälle. Självrisken är 1 800 kr. <em>(Stor / Husextra)</em></p></details>
+  </div>
+
+  <h3 class="qcat">Värdering <span>5 frågor</span></h3>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">40</span>Ett rörsystem i marken ska bytas efter en ersättningsbar skada. Vad räknas in i underlaget för åldersavdraget?</p>
+    <input type="radio" name="q40" id="q40_0" class="ri"><label for="q40_0" class="opt wrong">Bara materialkostnaden</label>
+    <input type="radio" name="q40" id="q40_1" class="ri"><label for="q40_1" class="opt wrong">Material och arbete, men inte grävning</label>
+    <input type="radio" name="q40" id="q40_2" class="ri"><label for="q40_2" class="opt right">Hela kostnaden inklusive friläggning, rivning och återläggning</label>
+    <input type="radio" name="q40" id="q40_3" class="ri"><label for="q40_3" class="opt wrong">Bara arbetskostnaden</label>
+    <div class="expl"><div class="verdict">Svar · C42</div>Vid återställande av installation utomhus tillämpas installationens åldersavdrag på hela kostnaden för återställandet — inklusive friläggning, rivning och återläggning. Grävkostnaden räknas alltså in.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Hela kostnaden inklusive friläggning, rivning och återläggning</p><p>Vid återställande av installation utomhus tillämpas installationens åldersavdrag på hela kostnaden för återställandet — inklusive friläggning, rivning och återläggning. Grävkostnaden räknas alltså in. <em>(C42)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">41</span>Hur många friår har rörsystem och sanitetsgods enligt C42, och vad blir avdraget därefter?</p>
+    <input type="radio" name="q41" id="q41_0" class="ri"><label for="q41_0" class="opt wrong">5 år, sedan 8 % per år</label>
+    <input type="radio" name="q41" id="q41_1" class="ri"><label for="q41_1" class="opt right">10 år, sedan 5 % per år</label>
+    <input type="radio" name="q41" id="q41_2" class="ri"><label for="q41_2" class="opt wrong">15 år, sedan 5 % per år</label>
+    <input type="radio" name="q41" id="q41_3" class="ri"><label for="q41_3" class="opt wrong">2 år, sedan 10 % per år</label>
+    <div class="expl"><div class="verdict">Svar · C42</div>Rörsystem, vattenradiatorer, sanitetsgods, duschvägg och duschdörr har 10 friår, därefter 5 % avdrag per påbörjat år.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> 10 år, sedan 5 % per år</p><p>Rörsystem, vattenradiatorer, sanitetsgods, duschvägg och duschdörr har 10 friår, därefter 5 % avdrag per påbörjat år. <em>(C42)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">42</span>En luft/luft-värmepump är 6 år gammal och totalskadad. Hur stort blir åldersavdraget?</p>
+    <input type="radio" name="q42" id="q42_0" class="ri"><label for="q42_0" class="opt wrong">30 %</label>
+    <input type="radio" name="q42" id="q42_1" class="ri"><label for="q42_1" class="opt wrong">45 %</label>
+    <input type="radio" name="q42" id="q42_2" class="ri"><label for="q42_2" class="opt right">60 %</label>
+    <input type="radio" name="q42" id="q42_3" class="ri"><label for="q42_3" class="opt wrong">80 %</label>
+    <div class="expl"><div class="verdict">Svar · C42</div>Luft/luft värmepumpsanläggning har 2 friår, därefter 15 % per påbörjat år. År 3, 4, 5 och 6 ger 4 × 15 % = 60 %.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> 60 %</p><p>Luft/luft värmepumpsanläggning har 2 friår, därefter 15 % per påbörjat år. År 3, 4, 5 och 6 ger 4 × 15 % = 60 %. <em>(C42)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">43</span>Vad är det generella taket för åldersavdrag på en byggnadsdel som var funktionsduglig före skadan?</p>
+    <input type="radio" name="q43" id="q43_0" class="ri"><label for="q43_0" class="opt wrong">50 %</label>
+    <input type="radio" name="q43" id="q43_1" class="ri"><label for="q43_1" class="opt right">80 %</label>
+    <input type="radio" name="q43" id="q43_2" class="ri"><label for="q43_2" class="opt wrong">90 %</label>
+    <input type="radio" name="q43" id="q43_3" class="ri"><label for="q43_3" class="opt wrong">100 %</label>
+    <div class="expl"><div class="verdict">Svar · C42</div>Avdraget är begränsat till 80 % för byggnadsdel som före skadan var funktionsduglig. Undantag finns dock: vid skada enligt B4, B14 samt ytskikt och tätskikt äldre än 30 år vid B5-skador kan avdraget uppgå till 100 %.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> 80 %</p><p>Avdraget är begränsat till 80 % för byggnadsdel som före skadan var funktionsduglig. Undantag finns dock: vid skada enligt B4, B14 samt ytskikt och tätskikt äldre än 30 år vid B5-skador kan avdraget uppgå till 100 %. <em>(C42)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">44</span>Inom vilken tid måste återställandet av byggnaden normalt ske för att skadan ska värderas till återställandekostnaden?</p>
+    <input type="radio" name="q44" id="q44_0" class="ri"><label for="q44_0" class="opt wrong">Ett år</label>
+    <input type="radio" name="q44" id="q44_1" class="ri"><label for="q44_1" class="opt right">Två år</label>
+    <input type="radio" name="q44" id="q44_2" class="ri"><label for="q44_2" class="opt wrong">Tre år</label>
+    <input type="radio" name="q44" id="q44_3" class="ri"><label for="q44_3" class="opt wrong">Fem år</label>
+    <div class="expl"><div class="verdict">Svar · C39 / C40</div>Vid återställande inom två år från skadedagen värderas skadan till vad det kostar att utan dröjsmål återställa byggnaden. Vid hinder kunden inte kunnat påverka räknas tiden från när hindret upphörde, men återställandet måste i varje fall påbörjas inom fem år.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Två år</p><p>Vid återställande inom två år från skadedagen värderas skadan till vad det kostar att utan dröjsmål återställa byggnaden. Vid hinder kunden inte kunnat påverka räknas tiden från när hindret upphörde, men återställandet måste i varje fall påbörjas inom fem år. <em>(C39 / C40)</em></p></details>
+  </div>
+
+  <h3 class="qcat">Hyresbortfall <span>1 frågor</span></h3>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">45</span>Kundens uthyrda villa blir obrukbar efter brand. Under hur lång tid ersätts hyresbortfall?</p>
+    <input type="radio" name="q45" id="q45_0" class="ri"><label for="q45_0" class="opt wrong">Sex månader</label>
+    <input type="radio" name="q45" id="q45_1" class="ri"><label for="q45_1" class="opt wrong">Ett år</label>
+    <input type="radio" name="q45" id="q45_2" class="ri"><label for="q45_2" class="opt right">Högst två år</label>
+    <input type="radio" name="q45" id="q45_3" class="ri"><label for="q45_3" class="opt wrong">Obegränsat tills villan är återställd</label>
+    <div class="expl"><div class="verdict">Svar · B23</div>Hyresbortfall ersätts under högst två år. Vi ersätter det belopp kunden enligt lag är skyldig att sätta ned hyran med, med avdrag för värme och andra driftskostnader kunden sparar. Förmedlingskostnad ersätts inte.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Högst två år</p><p>Hyresbortfall ersätts under högst två år. Vi ersätter det belopp kunden enligt lag är skyldig att sätta ned hyran med, med avdrag för värme och andra driftskostnader kunden sparar. Förmedlingskostnad ersätts inte. <em>(B23)</em></p></details>
+  </div>
+
+  <h3 class="qcat">Skadedjur <span>2 frågor</span></h3>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">46</span>Vem är försäkringsgivare för skadedjursförsäkringen?</p>
+    <input type="radio" name="q46" id="q46_0" class="ri"><label for="q46_0" class="opt wrong">Folksam</label>
+    <input type="radio" name="q46" id="q46_1" class="ri"><label for="q46_1" class="opt right">Anticimex Försäkringar AB</label>
+    <input type="radio" name="q46" id="q46_2" class="ri"><label for="q46_2" class="opt wrong">SOS International</label>
+    <input type="radio" name="q46" id="q46_3" class="ri"><label for="q46_3" class="opt wrong">Beror på skadetypen</label>
+    <div class="expl"><div class="verdict">Svar · B25</div>Försäkringsgivare för skadedjursförsäkring är Anticimex Försäkringar AB, org.nr 502000-8958. Det är inte Folksam som reglerar dessa ärenden.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Anticimex Försäkringar AB</p><p>Försäkringsgivare för skadedjursförsäkring är Anticimex Försäkringar AB, org.nr 502000-8958. Det är inte Folksam som reglerar dessa ärenden. <em>(B25)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">47</span>Kunden tecknade villaförsäkring för tre månader sedan och har nu hittat husbock. Besiktning har inte gjorts. Gäller försäkringen?</p>
+    <input type="radio" name="q47" id="q47_0" class="ri"><label for="q47_0" class="opt wrong">Ja, från begynnelsedagen</label>
+    <input type="radio" name="q47" id="q47_1" class="ri"><label for="q47_1" class="opt right">Nej — momentet börjar gälla vid godkänd besiktning eller senast sex månader efter begynnelsedagen</label>
+    <div class="expl"><div class="verdict">Svar · B25</div>Särskilda nyteckningsregler: momenten för träskadeinsekter och äkta hussvamp börjar gälla vid godkänd besiktning eller senast sex månader efter begynnelsedagen. När försäkringen väl börjar gälla inträder dock ansvaret retroaktivt från begynnelsedagen.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Nej — momentet börjar gälla vid godkänd besiktning eller senast sex månader efter begynnelsedagen</p><p>Särskilda nyteckningsregler: momenten för träskadeinsekter och äkta hussvamp börjar gälla vid godkänd besiktning eller senast sex månader efter begynnelsedagen. När försäkringen väl börjar gälla inträder dock ansvaret retroaktivt från begynnelsedagen. <em>(B25)</em></p></details>
+  </div>
+
+  <h3 class="qcat">Trafik <span>1 frågor</span></h3>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">48</span>En bil har kört in i kundens husvägg. Bilen har trafikförsäkring. Hur hanteras skadan?</p>
+    <input type="radio" name="q48" id="q48_0" class="ri"><label for="q48_0" class="opt wrong">Villaförsäkringen betalar allt</label>
+    <input type="radio" name="q48" id="q48_1" class="ri"><label for="q48_1" class="opt right">Trafikförsäkringen går först — villaförsäkringen täcker bara den del som inte är ersättningsbar genom trafikförsäkringen</label>
+    <input type="radio" name="q48" id="q48_2" class="ri"><label for="q48_2" class="opt wrong">Kunden får välja</label>
+    <input type="radio" name="q48" id="q48_3" class="ri"><label for="q48_3" class="opt wrong">Ingen ersättning från villaförsäkringen</label>
+    <div class="expl"><div class="verdict">Svar · B18</div>B18 ersätter skada på byggnad vid trafikolycka med fordon som omfattas av trafikskadelagen — dock endast till den del skadan inte är ersättningsbar genom trafikförsäkringen.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Trafikförsäkringen går först — villaförsäkringen täcker bara den del som inte är ersättningsbar genom trafikförsäkringen</p><p>B18 ersätter skada på byggnad vid trafikolycka med fordon som omfattas av trafikskadelagen — dock endast till den del skadan inte är ersättningsbar genom trafikförsäkringen. <em>(B18)</em></p></details>
+  </div>
+
+  <h3 class="qcat">Tomtmark <span>2 frågor</span></h3>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">49</span>Ett jordskred har skadat kundens tomtmark. Taxeringsvärdet på tomten är 400 000 kr. Vad är högsta ersättning?</p>
+    <input type="radio" name="q49" id="q49_0" class="ri"><label for="q49_0" class="opt wrong">200 000 kr</label>
+    <input type="radio" name="q49" id="q49_1" class="ri"><label for="q49_1" class="opt wrong">400 000 kr</label>
+    <input type="radio" name="q49" id="q49_2" class="ri"><label for="q49_2" class="opt right">800 000 kr</label>
+    <input type="radio" name="q49" id="q49_3" class="ri"><label for="q49_3" class="opt wrong">Fullvärde</label>
+    <div class="expl"><div class="verdict">Svar · C48</div>Vid jordskalv, jordskred, jordras, bergras, lavin och vulkanutbrott betalas högst två gånger den skadade tomtens taxeringsvärde — eller 200 000 kr om det ger högre ersättning. Här ger 2 × 400 000 = 800 000 kr mest.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> 800 000 kr</p><p>Vid jordskalv, jordskred, jordras, bergras, lavin och vulkanutbrott betalas högst två gånger den skadade tomtens taxeringsvärde — eller 200 000 kr om det ger högre ersättning. Här ger 2 × 400 000 = 800 000 kr mest. <em>(C48)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">50</span>En oljetank har läckt och förorenat tomtmarken. Vad är högsta ersättning för saneringen?</p>
+    <input type="radio" name="q50" id="q50_0" class="ri"><label for="q50_0" class="opt wrong">200 000 kr</label>
+    <input type="radio" name="q50" id="q50_1" class="ri"><label for="q50_1" class="opt wrong">300 000 kr</label>
+    <input type="radio" name="q50" id="q50_2" class="ri"><label for="q50_2" class="opt right">500 000 kr</label>
+    <input type="radio" name="q50" id="q50_3" class="ri"><label for="q50_3" class="opt wrong">Ingen gräns</label>
+    <div class="expl"><div class="verdict">Svar · C48</div>Sanering av oljeskada på tomtmark ersätts med högst 500 000 kr. För övriga skadehändelser på tomtmark är taket 200 000 kr.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> 500 000 kr</p><p>Sanering av oljeskada på tomtmark ersätts med högst 500 000 kr. För övriga skadehändelser på tomtmark är taket 200 000 kr. <em>(C48)</em></p></details>
+  </div>
+
+  <h3 class="qcat">Brand <span>2 frågor</span></h3>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">51</span>Kunden lämnade ett stearinljus obevakat och det uppstod en brand. Vad händer med ersättningen?</p>
+    <input type="radio" name="q51" id="q51_0" class="ri"><label for="q51_0" class="opt wrong">Ingen ersättning alls</label>
+    <input type="radio" name="q51" id="q51_1" class="ri"><label for="q51_1" class="opt wrong">Fast avdrag på 25 %</label>
+    <input type="radio" name="q51" id="q51_2" class="ri"><label for="q51_2" class="opt right">Nedsättning efter vad som är skäligt med hänsyn till samband, uppsåt eller vårdslöshet och omständigheterna i övrigt</label>
+    <input type="radio" name="q51" id="q51_3" class="ri"><label for="q51_3" class="opt wrong">Full ersättning, aktsamhetskrav gäller inte vid brand</label>
+    <div class="expl"><div class="verdict">Svar · B4</div>Vid brott mot aktsamhetskraven i B4 finns ingen fast procentsats. Ersättningen sätts ned eller uteblir efter vad som är skäligt med hänsyn till sambandet mellan åsidosättandet och skadan, uppsåtet eller vårdslösheten, samt omständigheterna i övrigt.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Nedsättning efter vad som är skäligt med hänsyn till samband, uppsåt eller vårdslöshet och omständigheterna i övrigt</p><p>Vid brott mot aktsamhetskraven i B4 finns ingen fast procentsats. Ersättningen sätts ned eller uteblir efter vad som är skäligt med hänsyn till sambandet mellan åsidosättandet och skadan, uppsåtet eller vårdslösheten, samt omständigheterna i övrigt. <em>(B4)</em></p></details>
+  </div>
+  <div class="qbox">
+    <p class="qtext"><span class="qn">52</span>Vilket aktsamhetskrav gäller vid laddning av elbil och mindre elfordon?</p>
+    <input type="radio" name="q52" id="q52_0" class="ri"><label for="q52_0" class="opt wrong">Endast ladda utomhus</label>
+    <input type="radio" name="q52" id="q52_1" class="ri"><label for="q52_1" class="opt right">Följa MSB:s vägledning om laddinfrastruktur för laddbara fordon</label>
+    <input type="radio" name="q52" id="q52_2" class="ri"><label for="q52_2" class="opt wrong">Använda godkänd laddbox</label>
+    <input type="radio" name="q52" id="q52_3" class="ri"><label for="q52_3" class="opt wrong">Aldrig ladda nattetid</label>
+    <div class="expl"><div class="verdict">Svar · B4</div>Kunden ska följa Myndigheten för samhällsskydd och beredskaps (MSB:s) vägledning "Säker utbyggnad och användning av laddinfrastruktur för laddbara fordon" vid laddning av elbil och mindre elfordon.</div>
+    <details class="fallback"><summary>Visa svar och förklaring</summary><p><strong>Rätt svar:</strong> Följa MSB:s vägledning om laddinfrastruktur för laddbara fordon</p><p>Kunden ska följa Myndigheten för samhällsskydd och beredskaps (MSB:s) vägledning "Säker utbyggnad och användning av laddinfrastruktur för laddbara fordon" vid laddning av elbil och mindre elfordon. <em>(B4)</em></p></details>
+  </div>
+
+</section>
+
+</main>
+
+<footer class="wrap">
+  <p>Byggt utifrån <code>Folksam Försäkringsvillkor Hem och villa, 1 januari 2026 (S2940 26-01)</code>, avsnitt B och tillhörande delar av avsnitt C.</p>
+  <p style="margin-top:10px">Studiematerial — kontrollera alltid mot gällande villkor och interna riktlinjer innan beslut i ett ärende.</p>
+  <p class="copyright">&copy; <span class="cpYear">2026</span> Nicolas Da Silva Kuehn</p>
+</footer>
+
+<button id="themeToggle" type="button" aria-pressed="false">🌙 Mörkt</button>
+<script src="tema.js"></script>
+</body>
+</html>

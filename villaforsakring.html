@@ -1,0 +1,2019 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Villaförsäkring Bas &amp; Stor — träningsunderlag</title>
+<script>
+/* Sätts före rendering så sidan inte blinkar vitt i mörkt läge. */
+(function(){
+  try{
+    var saved = localStorage.getItem('theme');
+    var dark = saved ? saved === 'dark'
+                     : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if(dark) document.documentElement.setAttribute('data-theme','dark');
+  }catch(e){}
+})();
+</script>
+<script src="aa-data.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="stil.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap navrow">
+    <a href="#anteckningar">Anteckningar</a>
+    <a href="#oversikt">Översikt</a>
+    <a href="#sjalvrisk">Självrisker</a>
+    <a href="#skador">Skadehändelser</a>
+    <a href="#stor">Stor</a>
+    <a href="#vardering">Värdering</a>
+    <a href="./trana.html">Träna →</a>
+    <a href="./aa-kalkylator.html">Åldersavdrag →</a>
+  </div>
+</nav>
+
+<header class="wrap">
+  <div class="eyebrow">Folksam · Försäkringsvillkor 1 januari 2026 · S2940 26-01</div>
+  <h1>Villaförsäkring<em>Bas &amp; Stor</em></h1>
+  <p class="lede">Avsnitt B i villkoret — byggnaden och tomten. Uppslagsverk och träningsunderlag för dig som reglerar villaskador.</p>
+
+</header>
+
+<main>
+
+<!-- ANTECKNINGAR -->
+<section id="anteckningar" class="wrap">
+  <div class="sectag">Vid inkommande samtal</div>
+  <h2 class="sec">Anteckningar</h2>
+  <p class="intro" style="max-width:70ch">Välj avtal och skadeorsak — självrisken räknas fram och du får direktlänkar till rätt villkorspunkt. Mallen fylls på när du klickar.</p>
+
+  <div id="nWarn">
+    <div class="wtitle">Oklar skadeorsak</div>
+    <p>Vet vi inte skadeorsaken, så ska kunden ta kontakt med någon som kan utföra en besiktning. Så vi kan få en konstaterad skadeorsak — så vi kan reglera det mot ett moment i villkoret.</p>
+    <p>Notera i anteckningen vem som ska besiktiga och när återkoppling väntas.</p>
+  </div>
+
+  <div class="ngrid">
+    <div class="npanel">
+      <span class="nlabel">Avtal</span>
+      <div class="seg" id="nAvtal">
+        <button type="button" data-v="bas" class="on">Villa Bas</button>
+        <button type="button" data-v="stor">Villa Stor</button>
+      </div>
+
+      <span class="nlabel">Skadeorsak</span>
+      <select id="nSkadeorsak"></select>
+
+      <span class="nlabel">Skadebelopp (kr)</span>
+      <input id="nBelopp" type="number" inputmode="numeric" placeholder="Valfritt — för procentsjälvrisk" min="0" step="1000">
+
+      <label class="ncheck" id="wrapBackventil" style="display:none">
+        <input type="checkbox" id="nBackventil"> Installerad backventil
+      </label>
+      <label class="ncheck" id="wrapLarm" style="display:none">
+        <input type="checkbox" id="nLarm"> Aktiverat inbrottslarm till godkänd larmcentral, ingen hemma
+      </label>
+
+      <div class="nsr">
+        <div class="amt" id="nAmt">1 800 kr</div>
+        <div class="calcline" id="nCalc">Grundsjälvrisk vid varje skadetillfälle.</div>
+        <div class="chips">
+          <button type="button" id="nInsertSr">Lägg in i mallen</button>
+          <button type="button" class="srq" data-v="1800">1 800</button>
+          <button type="button" class="srq" data-v="2000">2 000</button>
+          <button type="button" class="srq" data-v="4000">4 000</button>
+          <button type="button" class="srq" data-v="5000">5 000</button>
+          <button type="button" class="srq" data-v="10000">10 000</button>
+          <button type="button" class="srq" data-v="0">Ingen</button>
+        </div>
+        <div class="reflinks" id="nRefs"></div>
+      </div>
+
+      <p class="nhint" id="nHint"></p>
+    </div>
+
+    <div class="npanel" id="nAaPanel">
+      <span class="nlabel">Åldersavdrag</span>
+      <input id="aaSok" type="text" autocomplete="off" placeholder="Sök, t.ex. tvättmaskin eller fönster">
+      <select id="aaObjekt" size="8"></select>
+
+      <div class="seg" id="aaLage">
+        <button type="button" data-v="alder" class="on">Ange ålder</button>
+        <button type="button" data-v="datum">Installationsdatum</button>
+      </div>
+
+      <div id="aaAlderBox">
+        <span class="nlabel">Ålder (år)</span>
+        <input id="aaAlder" type="number" inputmode="numeric" min="0" max="200" placeholder="T.ex. 8">
+      </div>
+
+      <div id="aaDatumBox" style="display:none">
+        <span class="nlabel">Installationsdatum</span>
+        <input id="aaInstall" type="date">
+        <span class="nlabel">Jämför mot datum</span>
+        <input id="aaJamfor" type="date">
+      </div>
+
+      <div class="nsr">
+        <div class="amt" id="aaAmt">Välj objekt</div>
+        <div class="calcline" id="aaCalc">Sök fram objektet och ange ålder.</div>
+        <div class="chips">
+          <button type="button" id="aaInsert">Lägg in i mallen</button>
+        </div>
+      </div>
+
+      <p class="nhint" id="aaHint">Skadebeloppet hämtas från Avtal-panelen — fyll i det där så räknas kronor ut här.</p>
+    </div>
+
+    <div class="npanel" id="nMallPanel">
+      <span class="nlabel">Mall — vilken slinga?</span>
+      <div class="seg" id="nLage">
+        <button type="button" data-v="ny" class="on">Nya skador</button>
+        <button type="button" data-v="pag">Pågående skador</button>
+      </div>
+      <div class="sizebtns" id="nHojd">
+        <span class="sizelbl">Höjd</span>
+        <button type="button" data-h="300">Liten</button>
+        <button type="button" data-h="620" class="on">Normal</button>
+        <button type="button" data-h="900">Stor</button>
+      </div>
+      <div class="sizebtns" id="nBredd">
+        <span class="sizelbl">Bredd</span>
+        <button type="button" data-v="normal" class="on">Normal</button>
+        <button type="button" data-v="bred">Bred</button>
+        <button type="button" data-v="full">Full</button>
+      </div>
+      <div id="nFlag">Skadeorsaken är angiven som oklar — skadan kan inte regleras mot ett moment i villkoret ännu.</div>
+      <textarea id="nNote" spellcheck="true"></textarea>
+      <div class="nbtns">
+        <button type="button" id="nCopy">Kopiera anteckning</button>
+        <button type="button" id="nClear">Rensa</button>
+        <button type="button" id="nUndo">Ångra rensning</button>
+      </div>
+      <div id="nSave">Autospar aktivt</div>
+      <p class="nhint" style="margin-top:12px">Åldersavdragstak: <strong id="nTak">105 000 kr</strong> per skadetillfälle. <a class="extlink" style="margin-top:10px" href="./aa-kalkylator.html">Öppna åldersavdragskalkylatorn →</a></p>
+    </div>
+
+    <div class="npanel" id="nPhonePanel">
+      <span class="nlabel">Telefonlista</span>
+      <input id="pFilter" type="text" placeholder="Sök funktion, t.ex. maskin eller ansvar" autocomplete="off">
+      <select id="pSelect" size="14"></select>
+      <div class="presult">
+        <div class="pnum" id="pNum">—</div>
+        <div class="pname" id="pName">Välj funktion i listan</div>
+      </div>
+      <button type="button" id="pCopy">Kopiera nummer</button>
+      <button type="button" id="pInsert">Lägg in i mallen</button>
+      <p class="nhint" id="pNote"></p>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ÖVERSIKT -->
+<section id="oversikt" class="wrap">
+  <div class="sectag">01 — Grunden</div>
+  <h2 class="sec">Två avsnitt, en skada</h2>
+  <p class="intro">Har kunden villahemförsäkring gäller <strong>både avsnitt A och avsnitt B</strong>. Det är den vanligaste källan till fel i början: att leta i fel avsnitt.</p>
+
+  <div class="tblwrap">
+  <table>
+    <thead><tr><th>Avsnitt</th><th>Täcker</th><th>Exempel</th></tr></thead>
+    <tbody>
+      <tr><td class="num">A</td><td>Hemförsäkring — lösöre</td><td>Möbler, elektronik, kläder, cykel</td></tr>
+      <tr><td class="num">B</td><td>Villaförsäkring — byggnad och tomt</td><td>Rör, tak, kök, staket, pool</td></tr>
+      <tr><td class="num">C</td><td>Gemensamt — ansvar, rättsskydd, värdering</td><td>Åldersavdrag, skadereglering</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Vad villaförsäkringen omfattar</h3>
+  <ul class="pts plain">
+    <li>Stöld och skadegörelse</li>
+    <li>Brand, blixt med mera</li>
+    <li>Läckage, översvämning</li>
+    <li>Storm, hagel, snötryck</li>
+    <li>Andra naturskador (lavin med mera)</li>
+    <li>Skador orsakade av vilda djur</li>
+    <li>Hushållsmaskiner, installationer</li>
+    <li>Glasrutor</li>
+    <li>Vissa trafikskador</li>
+    <li>Hyresbortfall</li>
+  </ul>
+  <p style="margin-top:12px">Plus <strong>ansvarsförsäkring</strong>, <strong>rättsskyddsförsäkring</strong> och <strong>skadedjursförsäkring</strong>.</p>
+
+  <details class="card" id="b2">
+    <summary><span class="chip">B2</span><span class="title">Vilken egendom som är försäkrad</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Försäkringen gäller för dig i egenskap av <strong>ägare, tomträttshavare eller arrendator</strong> till den försäkrade fastigheten.</p>
+      <div class="lbl yes">Ingår</div>
+      <ul class="pts yes">
+        <li>Byggnad som är angiven i försäkringsbeskedet</li>
+        <li>Tillbehör till byggnaden enligt jordabalken — fast inredning, ledningar, värmepanna, spis, badkar, kylskåp, tvättmaskin</li>
+        <li>Ledningar avsedda för försäkrad byggnad, även sträckning utanför byggnaden fram till kommunal eller samägd anläggning</li>
+        <li>Tomtmark: mark, växtlighet, staket, terrassmur, trädgårdstrappa, plattgång, konstverk fastsatt på fundament, flaggstång, <strong>fristående carport upp till 50 m²</strong>, pergola, brygga och laddstolpe</li>
+        <li>Installation som servar försäkrad byggnad — vid samägd installation gäller försäkringen för din del</li>
+        <li>Fast monterad radio- och tv-antenn, även parabol</li>
+        <li>Simbassäng inom tomten, även spabad utomhus anbringat för stadigvarande bruk</li>
+        <li>Bränsle på tomten avsett för byggnadens uppvärmning</li>
+        <li>Solceller som du hyr eller leasar som servar försäkrad byggnad</li>
+        <li>Byggnadstillbehör som ännu inte installerats vid skadetillfället — värderas enligt C34</li>
+      </ul>
+      <div class="lbl no">Ingår inte</div>
+      <ul class="pts no">
+        <li>Brunn, inklusive brunnsvatten. Undantaget avser dock <em>inte</em> ledningar och maskinell utrustning</li>
+      </ul>
+      <div class="note"><strong>Kom ihåg:</strong> Carporten är försäkrad egendom upp till 50 m² — men undantas ändå specifikt vid stormskada i B9. Att något är försäkrad egendom betyder inte att alla skadehändelser täcker den.</div>
+    </div>
+  </details>
+
+  <details class="card" id="b3">
+    <summary><span class="chip">B3</span><span class="title">Försäkringsbelopp och indexgaranti</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>I försäkringsbeskedet anges antingen <strong>fullvärde</strong> eller ett <strong>försäkringsbelopp</strong>.</p>
+      <ul class="pts plain">
+        <li><strong>Fullvärde</strong> — ingen beloppsgräns för högsta ersättning</li>
+        <li><strong>Försäkringsbelopp</strong> — ersättningen är begränsad till högst detta belopp</li>
+      </ul>
+      <p style="margin-top:12px">För tomtmark finns beloppsbegränsningar i C48–C49 oavsett vilket.</p>
+      <div class="note"><strong>Indexgaranti:</strong> Stiger byggnadskostnadsindex höjs försäkringsbeloppet automatiskt i samma mån. Beloppet följer faktorprisindex för gruppbyggda småhus. Premien höjs först vid nästa huvudförfallodag.</div>
+    </div>
+  </details>
+</section>
+
+<!-- SJÄLVRISKER -->
+<section id="sjalvrisk" class="wrap">
+  <div class="sectag">02 — B1, B7, B8, B15</div>
+  <h2 class="sec">Självrisker</h2>
+  <p class="intro">Grundsjälvrisken är 1 800 kr. Men vid vattenskador gäller den nästan aldrig — där finns egna, högre nivåer. Det här är den vanligaste fällan.</p>
+
+  <div class="calc">
+    <h2>Självriskräknare</h2>
+    <p class="sub">Villaförsäkringen har fem olika självrisknivåer. Välj skadetyp och belopp.</p>
+
+    <label for="ctype">Skadetyp</label>
+    <select id="ctype">
+      <option value="grund">Grundsjälvrisk — övriga byggnadsskador</option>
+      <option value="frys5">Läckage: frysning (B7)</option>
+      <option value="norm">Läckage: byggnorm/branschregler ej följda (B7)</option>
+      <option value="tat">Läckage genom vattentätt skikt (B7)</option>
+      <option value="annat">Annan läckageskada på byggnad (B7)</option>
+      <option value="oversv">Översvämning (B8)</option>
+      <option value="baktryck">Ren baktrycksskada, utan backventil (B8)</option>
+      <option value="baktryckv">Ren baktrycksskada, med backventil (B8)</option>
+      <option value="frys15">Hushållsmaskin/installation: frysning (B15)</option>
+      <option value="larm">Inbrott med aktiverat larm till larmcentral (B1)</option>
+    </select>
+
+    <label for="camt">Skadebelopp (kr)</label>
+    <input id="camt" type="number" inputmode="numeric" value="60000" min="0" step="1000">
+
+    <div class="result">
+      <div class="amount" id="cout">6 000 kr</div>
+      <div class="formula" id="cform"></div>
+      <span class="ref" id="cref">B7</span>
+    </div>
+  </div>
+
+  <div class="tblwrap">
+  <table>
+    <thead><tr><th>Skadetyp</th><th>Självrisk</th><th>Punkt</th></tr></thead>
+    <tbody>
+      <tr><td>Grundsjälvrisk (övrigt)</td><td class="num">1 800 kr</td><td class="num">B1</td></tr>
+      <tr><td>Läckage: frysning</td><td class="num">10 %, lägst 4 000, <b>högst 10 000</b></td><td class="num">B7</td></tr>
+      <tr><td>Läckage: byggnorm ej följd</td><td class="num">10 %, lägst 10 000, <b>inget tak</b></td><td class="num">B7</td></tr>
+      <tr><td>Läckage genom vattentätt skikt</td><td class="num">4 000 kr</td><td class="num">B7</td></tr>
+      <tr><td>Annan läckageskada på byggnad</td><td class="num">4 000 kr</td><td class="num">B7</td></tr>
+      <tr><td>Översvämning</td><td class="num">10 %, lägst 10 000</td><td class="num">B8</td></tr>
+      <tr><td>Ren baktrycksskada</td><td class="num">10 000 kr</td><td class="num">B8</td></tr>
+      <tr><td>Ren baktrycksskada med backventil</td><td class="num">5 000 kr</td><td class="num">B8</td></tr>
+      <tr><td>Hushållsmaskin/installation: frysning</td><td class="num">10 %, lägst <b>2 000</b>, högst 10 000</td><td class="num">B15</td></tr>
+      <tr><td>Rättsskydd</td><td class="num">20 % av kostnaden, lägst 1 800</td><td class="num">C22</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note warn"><strong>Två frysningsnivåer.</strong> Golvet skiljer sig: läckage enligt B7 har lägst <strong>4 000 kr</strong>, medan hushållsmaskin- och installationsskada enligt B15 har lägst <strong>2 000 kr</strong>. Taket är 10 000 i båda fallen.</div>
+
+  <h3>Ingen självrisk alls</h3>
+  <ul class="pts yes">
+    <li>Inbrott i hemmabostaden när kunden har ett <strong>aktiverat</strong> inbrottslarm som är <strong>kopplat till godkänd larmcentral</strong> och <strong>ingen är hemma</strong> och ser till bostaden — alla tre kraven måste vara uppfyllda</li>
+    <li>Saneringsavtal mot skadedjur</li>
+    <li>Försäkring mot husbock, hästmyra och andra träskadeinsekter</li>
+  </ul>
+
+  <h3>Förhöjd självrisk</h3>
+  <p>Har ni avtalat om högre självrisk än grundsjälvrisken framgår det av försäkringsbeskedet. Den förhöjda självrisken är då <strong>alltid den lägsta kunden får stå för</strong>.</p>
+</section>
+
+<!-- SKADEHÄNDELSER -->
+<section id="skador" class="wrap">
+  <div class="sectag">03 — B4 till B25</div>
+  <h2 class="sec">Skadehändelser</h2>
+  <p class="intro">För att ersättning ska lämnas krävs två saker: att skadehändelsen är ersättningsbar <em>och</em> att den försäkrade egendomen omfattas av just den skadehändelsen.</p>
+
+  <details class="card" id="b4">
+    <summary><span class="chip">B4</span><span class="title">Brand, blixt, explosion med mera</span><span class="caret">›</span></summary>
+    <div class="body">
+      <div class="lbl yes">Vi ersätter</div>
+      <ul class="pts yes">
+        <li>Skada genom brand</li>
+        <li>Skada genom blixt</li>
+        <li>Skada på hushållsmaskin och annan elektrisk maskin, apparat eller ledning genom kortslutning, överslag eller överspänning</li>
+        <li>Skada genom explosion</li>
+        <li>Skada som plötsligt orsakas av sot från öppen låga</li>
+        <li>Skada av frätande gas som bildats vid oavsiktlig upphettning av plast</li>
+      </ul>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada genom sprängningsarbete</li>
+        <li>Sot från levande ljus</li>
+      </ul>
+      <div class="lbl care">Aktsamhetskrav</div>
+      <ul class="pts care">
+        <li>Sota enligt kommunens regler och följa eldningsinstruktionerna för eldstaden</li>
+        <li>Tömma aska och sotrester i metallkärl med tättslutande lock på icke brännbart underlag</li>
+        <li>Följa MSB:s vägledning om laddinfrastruktur vid laddning av elbil och mindre elfordon</li>
+        <li>Inte lämna levande ljus eller andra ljuskällor med öppen låga utan tillsyn</li>
+        <li>Inte lämna kokkärl utan tillsyn på spisen</li>
+        <li>Inte röka i sängen</li>
+      </ul>
+      <div class="note"><strong>Vid brott:</strong> Ersättningen sätts ned eller uteblir efter vad som är skäligt — med hänsyn till sambandet mellan åsidosättandet och skadan, uppsåtet eller vårdslösheten, samt omständigheterna i övrigt. Ingen fast procentsats.</div>
+    </div>
+  </details>
+
+  <details class="card" id="b5">
+    <summary><span class="chip">B5</span><span class="title">Läckage</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter om egendomen skadas av vatten, olja, annan vätska eller ånga som <strong>oberäknat strömmar ut</strong> från:</p>
+      <div class="lbl yes">Källor som omfattas</div>
+      <ul class="pts yes">
+        <li>Ledningssystem för vatten, värme eller avlopp</li>
+        <li>Anordning ansluten till dessa system — tvättställ, diskmaskin, tvättmaskin, värmepanna, oljetank</li>
+        <li>Invändigt stuprör som uppfyller kraven på avloppsledning för spillvatten</li>
+        <li>Badrum, duschrum eller tvättstuga som har golvavlopp</li>
+        <li>Kyl eller frys vid strömavbrott eller fel på anläggningen</li>
+        <li>Akvarium eller vattensäng</li>
+      </ul>
+      <div class="note"><strong>Ingår också:</strong> Kostnaden för att lokalisera och frilägga läckagestället inom byggnaden för att möjliggöra reparation — och kostnaden för att återställa det frilagda läckagestället.</div>
+      <div class="sr"><b>Självrisk:</b> Se B7 — fyra olika nivåer beroende på orsak.</div>
+    </div>
+  </details>
+
+  <details class="card" id="b6">
+    <summary><span class="chip">B6</span><span class="title">Begränsningar till läckage</span><span class="caret">›</span></summary>
+    <div class="body">
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada på <strong>den anordning som läckt</strong> — rörledningar med mera kan dock ersättas enligt B14–B15</li>
+        <li>I våtutrymme: skada på ytskikt inklusive tätskikt genom vilket läckaget uppstått. <strong>Hela våtutrymmet (väggar och golv) ses som en enhet</strong></li>
+        <li>Den vätska som runnit ut</li>
+        <li>Skada på byggnad genom röta, svamp, rost, frätning eller annan långtidspåverkan — om det inte framgår av omständigheterna att skadan uppkommit genom utströmning under försäkringstiden</li>
+        <li>Utströmning från rökkanal, ventilationskanal, dräneringssystem, dagvattensystem, stuprör (annat än i B5), tak eller takränna</li>
+        <li>Vatten vid regn, snösmältning eller högvatten som kommer ut ur avloppsbrunn eller avloppsledning — men se B8 Översvämning</li>
+      </ul>
+      <div class="note"><strong>Den vanligaste feltolkningen:</strong> Läckaget ersätts, men det trasiga röret gör det inte via B5. Röret prövas i stället mot B14–B15.</div>
+    </div>
+  </details>
+
+  <details class="card" id="b7">
+    <summary><span class="chip">B7</span><span class="title">Särskilda självrisker för läckage</span><span class="caret">›</span></summary>
+    <div class="body">
+      <div class="sr">
+        <b>Frysning:</b> 10 % av skadebeloppet, lägst 4 000 kr, högst 10 000 kr<br>
+        <b>Byggnorm/branschregler ej följda</b> vid uppförandet eller reparationen: 10 % av skadebeloppet, lägst 10 000 kr — <b>inget tak</b><br>
+        <b>Läckage genom vattentätt skikt</b> eller vid dess anslutning till installationer eller övriga byggnadsdelar: 4 000 kr<br>
+        <b>Annan skada på byggnad genom läckage:</b> 4 000 kr
+      </div>
+      <div class="lbl care">Aktsamhetskrav — förhindra frysning</div>
+      <ul class="pts care">
+        <li>Alla ledningar och behållare töms på vatten</li>
+        <li>Vatten som finns kvar i ledningar eller behållare är antifrysbehandlat</li>
+        <li>Huset är uppvärmt — värmen ska vara tillräcklig för att förhindra frysning</li>
+      </ul>
+      <div class="note"><strong>Vid brott:</strong> Normalt 25 % avdrag. I allvarliga fall större, ända till ingen ersättning alls. I lindriga fall inget avdrag.</div>
+    </div>
+  </details>
+
+  <details class="card" id="b8">
+    <summary><span class="chip">B8</span><span class="title">Översvämning</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter skada på byggnad orsakad av att vatten strömmar <strong>direkt in i byggnad från markytan</strong> genom ventil, fönster eller dörröppning — eller <strong>inomhus tränger upp ur avloppsledning</strong>.</p>
+      <div class="lbl yes">Godtagna orsaker</div>
+      <ul class="pts yes">
+        <li>Skyfall — minst 1 mm/minut eller 50 mm/dygn</li>
+        <li>Snösmältning</li>
+        <li>Stigande sjö eller vattendrag</li>
+      </ul>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada på båthus, sjöbod, badhytt, tält eller inglasad byggnad, t.ex. växthus</li>
+        <li>Skada på tomtmark</li>
+      </ul>
+      <div class="sr">
+        <b>Självrisk:</b> 10 % av skadebeloppet, lägst 10 000 kr<br>
+        <b>Ren baktrycksskada:</b> 10 000 kr — med installerad backventil 5 000 kr<br>
+        <em>Ren baktrycksskada = vatten som inomhus tränger upp ur avloppsledningens golvbrunn.</em>
+      </div>
+    </div>
+  </details>
+
+  <details class="card" id="b9">
+    <summary><span class="chip">B9</span><span class="title">Storm</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter skada på byggnad som blåser sönder vid storm — <strong>minst 21 m/sekund</strong>.</p>
+      <div class="note"><strong>Undantaget som räddar många ärenden:</strong> Även vid lägre vindstyrka lämnas ersättning om byggnaden skadas av <strong>träd eller flaggstång som blåser omkull</strong>. Vindstyrkan spelar då mindre roll.</div>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Revetering, puts eller skorstensbeklädnad som skadas på annat sätt än genom träd eller annat föremål som blåst omkull eller brutits loss</li>
+        <li>Skada på tält eller inglasad byggnad, t.ex. växthus</li>
+        <li>Skada på båthus, sjöbod eller badhytt</li>
+        <li>Skada på tomtmark, till exempel flaggstång eller träd</li>
+        <li>Skada på <strong>fristående carport</strong></li>
+      </ul>
+    </div>
+  </details>
+
+  <details class="card" id="b10">
+    <summary><span class="chip">B10</span><span class="title">Hagel</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter skada på byggnad som slås sönder av hagel.</p>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no"><li>Skada på tält eller inglasad byggnad, t.ex. växthus</li></ul>
+    </div>
+  </details>
+
+  <details class="card" id="b11">
+    <summary><span class="chip">B11</span><span class="title">Snötryck</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter skada på <strong>bostadsbyggnad</strong> bestående i eller orsakad av att <strong>yttertakets bärande konstruktion</strong> skadats på grund av snötryck.</p>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada om taket inte utförts enligt gällande byggnorm eller branschregler vid tidpunkten för uppförandet eller reparationen</li>
+        <li>Skada som beror på ingrepp i den bärande stommen eller angrepp av röta eller skadeinsekter</li>
+        <li>Skada på altantak, balkongtak, verandatak eller liknande tak</li>
+      </ul>
+      <div class="lbl care">Aktsamhetskrav</div>
+      <ul class="pts care"><li>Förebygga och förhindra skada genom att se till att taket blir skottat om snömängden blir hotande stor</li></ul>
+      <div class="note"><strong>Vid brott:</strong> Normalt 25 % avdrag.</div>
+    </div>
+  </details>
+
+  <details class="card" id="b12">
+    <summary><span class="chip">B12</span><span class="title">Andra naturskador</span><span class="caret">›</span></summary>
+    <div class="body">
+      <div class="lbl yes">Vi ersätter</div>
+      <ul class="pts yes">
+        <li>Jordskalv med en styrka på <strong>minst 4 enligt Richterskalan</strong></li>
+        <li>Jordskred, jordras, bergras, lavin eller vulkanutbrott</li>
+      </ul>
+      <p style="margin-top:12px">Sprickor i byggnad ersätts endast om de är så allvarliga att de <strong>avsevärt minskat funktionsdugligheten</strong>. Ytliga sprickbildningar ersätts alltså inte.</p>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada på tomtmark eller byggnad orsakad av sättning i mark eller grund</li>
+        <li>Skada orsakad av sprängnings-, schaktnings-, pålnings- eller spontningsarbete</li>
+        <li>Skador orsakade av gruvdrift eller uppläggning av jord- och stenmassor</li>
+        <li>Skada orsakad av vatten- eller vågerosion</li>
+      </ul>
+    </div>
+  </details>
+
+  <details class="card" id="b13">
+    <summary><span class="chip">B13</span><span class="title">Skada orsakad av vilda djur</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter skada genom vilda djur eller fåglar som <strong>tagit sig in i bostadsbyggnaden</strong>.</p>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no"><li>Skada orsakad av insekter, råttor, möss eller andra smågnagare</li></ul>
+      <div class="note">Smågnagare och insekter hanteras i stället via <strong>skadedjursförsäkringen (B25)</strong> hos Anticimex.</div>
+    </div>
+  </details>
+
+  <details class="card" id="b14">
+    <summary><span class="chip">B14</span><span class="title">Hushållsmaskin- och installationsskador</span><span class="caret">›</span></summary>
+    <div class="body">
+      <div class="lbl yes">Vi ersätter skada på — som går sönder</div>
+      <ul class="pts yes">
+        <li>Installationer för vatten, värme, avlopp, ventilation, gas, el, fiberoptik eller bredband som är avsedda för den försäkrade byggnaden</li>
+        <li>Duschkabin, duschvägg eller duschdörr</li>
+        <li>Hushållsmaskin som är byggnadstillbehör</li>
+        <li>Den maskinella utrustningen till brunn, simbassäng eller poolduk</li>
+      </ul>
+      <div class="note">Det är hit du går när kunden frågar om <strong>själva det trasiga röret</strong> — inte till B5.</div>
+    </div>
+  </details>
+
+  <details class="card" id="b15">
+    <summary><span class="chip">B15</span><span class="title">Begränsningar till hushållsmaskin och installation</span><span class="caret">›</span></summary>
+    <div class="body">
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada på ytskikt inklusive tätskikt</li>
+        <li>Skada på elslingor i våtrumsgolv</li>
+        <li>Skada orsakad av rost eller frätning på egendom <strong>utanför eller utanpå</strong> byggnad — oavsett ålder</li>
+        <li>Skada orsakad av rost eller frätning på installation <strong>inom</strong> byggnad om installationen är <strong>äldre än 15 år</strong></li>
+        <li>Skada genom sprängningsarbete</li>
+        <li>Skada genom översvämning eller vatten som tränger in i byggnad — se B8</li>
+        <li>Kostnad för rensning eller upptining av ledning</li>
+        <li>Skada på belysningsarmatur, dränerings- och dagvattensystem, skorsten/rökgång, murverk, ventilationshuv, brunn, simbassäng eller poolduk</li>
+        <li>Skada som inte inverkar på funktionen utan enbart består i skönhetsfel</li>
+        <li>Skada som leverantör eller annan ansvarar för enligt konsumentköp- eller konsumenttjänstlagen — vi ersätter dock om den försäkrade visar att den ansvarige inte avhjälper eller betalar</li>
+      </ul>
+      <div class="sr"><b>Särskild självrisk vid frysning:</b> 10 % av skadebeloppet, lägst <b>2 000 kr</b>, högst 10 000 kr. Observera det lägre golvet jämfört med B7.</div>
+      <div class="lbl care">Aktsamhetskrav — förhindra frysning</div>
+      <ul class="pts care">
+        <li>Alla ledningar och behållare töms på vatten</li>
+        <li>Kvarvarande vatten är antifrysbehandlat</li>
+        <li>Huset är uppvärmt</li>
+      </ul>
+      <div class="note"><strong>Vid brott:</strong> Normalt 25 % avdrag.</div>
+    </div>
+  </details>
+
+  <details class="card" id="b16">
+    <summary><span class="chip">B16</span><span class="title">Glasruteskador</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter skada på glasrutor som går sönder i <strong>byggnadens fönster eller dörrar</strong> samt <strong>inglasad balkong och altan</strong>.</p>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada på isolerglas som endast består i att konstruktionen blivit otät</li>
+        <li>Skada på glas i drivbänkar och inglasad byggnad, t.ex. växthus</li>
+        <li>Skada genom byggnads- och sprängningsarbete</li>
+      </ul>
+    </div>
+  </details>
+
+  <details class="card" id="b17">
+    <summary><span class="chip">B17</span><span class="title">Stöld och skadegörelse</span><span class="caret">›</span></summary>
+    <div class="body">
+      <div class="lbl yes">Vi ersätter</div>
+      <ul class="pts yes">
+        <li>Stöld av fast monterat byggnadstillbehör utanför eller utanpå byggnaden</li>
+        <li>Skadegörelse på byggnad utifrån</li>
+        <li>Skadegörelse på byggnad inifrån samt stöld av fast monterat byggnadstillbehör inomhus — gäller även ännu inte installerat byggnadstillbehör</li>
+        <li>Skadegörelse på och stöld av sådant som i B2 betecknas som tomtmark</li>
+        <li>Skadegörelse på simbassäng</li>
+      </ul>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no"><li>Skada på drivbänkar och inglasad byggnad, t.ex. växthus</li></ul>
+      <div class="note"><strong>Viktigt:</strong> Samma förutsättningar och aktsamhetskrav som i hemförsäkringen gäller — punkterna <strong>A11 och A13–A17</strong>. Där hittar du kraven på låsta ytterdörrar, stängda fönster och nyckelhantering, samt avdragen vid brott (normalt 25 %).</div>
+      <div class="note">I villabyggnad räknas <strong>källare, vind och garage till bostaden</strong> (A12). Detsamma gäller när garage och liknande är sammanbyggt med villan och invändig dörrförbindelse finns. Balkong och altan räknas <em>inte</em> som bostad.</div>
+    </div>
+  </details>
+
+  <details class="card" id="b18">
+    <summary><span class="chip">B18</span><span class="title">Vissa trafikskador</span><span class="caret">›</span></summary>
+    <div class="body">
+      <div class="lbl yes">Vi ersätter</div>
+      <ul class="pts yes">
+        <li>Skada på byggnad vid trafikolycka med fordon som omfattas av trafikskadelagen — <strong>dock endast till den del skadan inte är ersättningsbar genom trafikförsäkringen</strong></li>
+        <li>Skada på byggnad och tomtmark genom att flygplan eller annat luftfartyg störtar, eller att delar från dessa faller ner</li>
+      </ul>
+      <div class="note">Trafikförsäkringen går alltid först. Villaförsäkringen fyller bara ut det som blir över.</div>
+    </div>
+  </details>
+
+  <details class="card" id="b19">
+    <summary><span class="chip">B19</span><span class="title">Nöd</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter nödskador — skador som uppstår genom <strong>nödvändiga räddningsåtgärder för att undanröja fara för en persons liv eller hälsa</strong>.</p>
+      <div class="note">Exempel: räddningstjänsten bryter upp en dörr för att nå en person inne i huset.</div>
+    </div>
+  </details>
+
+  <details class="card" id="b20">
+    <summary><span class="chip">B20–B22</span><span class="title">Byggnad under uppförande, om- eller tillbyggnad</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Försäkringen gäller för byggnad även under den tid den är under uppförande — men med begränsningar.</p>
+      <div class="lbl no">B20 — begränsning</div>
+      <ul class="pts no">
+        <li>Skada genom läckage eller skada på installationer för värme, vatten eller avlopp ersätts inte om den inträffar <strong>innan rörsystemen provats och befunnits felfria</strong></li>
+      </ul>
+      <div class="lbl no">B21 — arbetsbodar, verktyg och material</div>
+      <ul class="pts no">
+        <li>Stöld av verktyg och material ersätts endast om stölden sker genom <strong>inbrott i låst utrymme</strong></li>
+        <li>Skadegörelse på arbetsbodar, verktyg och material ersätts inte</li>
+        <li>Stormskador på verktyg och material ersätts inte</li>
+      </ul>
+      <div class="note"><strong>B22:</strong> Har kunden villahemförsäkring gäller hemförsäkringens egendomsskydd för personligt lösöre i villan så snart det flyttats dit — och dessförinnan på det tidigare försäkringsstället. Ansvarsförsäkringen enligt C1–C5 samt C10 gäller för kunden som byggherre och arbetsgivare. Anlitas entreprenör betraktas kunden normalt <em>inte</em> som arbetsgivare åt denna eller entreprenörens anställda.</div>
+    </div>
+  </details>
+
+  <details class="card" id="b23">
+    <summary><span class="chip">B23</span><span class="title">Hyresbortfall vid egendomsskada</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Är villan, del av villan eller annan byggnad angiven i försäkringsbeskedet <strong>uthyrd</strong> och blir helt eller delvis obrukbar efter brand eller annan ersättningsbar skadehändelse, ersätter vi hyresbortfall under <strong>högst två år</strong>.</p>
+      <ul class="pts plain">
+        <li>Vi ersätter det belopp kunden enligt lag är skyldig att sätta ned hyran med</li>
+        <li>Vi drar av kostnader för värme och andra driftskostnader som kunden sparar under tiden</li>
+        <li>Är villan uthyrd genom förmedling ersätts <strong>inte</strong> förmedlingskostnaden</li>
+      </ul>
+    </div>
+  </details>
+
+  <details class="card" id="b24">
+    <summary><span class="chip">B24</span><span class="title">Trygghetsbesiktning</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>När kunden tecknar en villaförsäkring utför <strong>Anticimex</strong> en försäkringsbesiktning av huvudbyggnaden för att upptäcka eventuella brister och risker för försäkringsmomenten <strong>vattenläckage, brand och inbrott</strong>.</p>
+    </div>
+  </details>
+
+  <details class="card" id="b25">
+    <summary><span class="chip">B25</span><span class="title">Skadedjursförsäkring — Anticimex</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Försäkringsgivare är <strong>Anticimex Försäkringar AB</strong>, inte Folksam. Försäkringen gäller under den tid villaförsäkringen är i kraft.</p>
+      <div class="tblwrap">
+      <table>
+        <thead><tr><th>Moment</th><th>Högsta ersättning</th><th>Självrisk</th></tr></thead>
+        <tbody>
+          <tr><td>Sanering av skadedjur</td><td class="num">Ingen beloppsgräns</td><td class="num">0 kr</td></tr>
+          <tr><td>Skada av träskadeinsekter</td><td class="num">4 mkr / skadetillfälle</td><td class="num">0 kr</td></tr>
+          <tr><td>Sent upptäckt dödsfall</td><td class="num">4 mkr / skadetillfälle</td><td class="num">0 kr</td></tr>
+          <tr><td>Äkta hussvamp</td><td class="num">Fullvärde</td><td class="num">10 000 kr<br><em>0 kr med Stor</em></td></tr>
+          <tr><td>Övriga insekter, råttor, möss + lukt<br><em>(kräver Villaförsäkring Stor)</em></td><td class="num">50 000 kr / skadetillfälle</td><td class="num">4 000 kr</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="note"><strong>Hussvamp — merkostnader:</strong> Ersättning för merkostnader i samband med skada orsakad av äkta hussvamp lämnas med högst <strong>1,5 prisbasbelopp</strong> inom gällande högsta försäkringsbelopp.</div>
+      <div class="note warn"><strong>Nyteckningsregel:</strong> Momenten för träskadeinsekter och äkta hussvamp börjar gälla vid <strong>godkänd besiktning</strong> eller <strong>senast sex månader efter begynnelsedagen</strong> — såvida Anticimex inte dessförinnan nekat eller meddelat undantag. När försäkringen börjar gälla inträder ansvaret från begynnelsedagen.</div>
+      <div class="lbl no">Undantag att känna till</div>
+      <ul class="pts no">
+        <li>Sanering i utrymme som helt eller delvis används i näringsverksamhet</li>
+        <li>Angrepp på rötskadat virke</li>
+        <li>Byggnad som är eller har varit ekonomibyggnad eller uthus vid lantgård</li>
+        <li>Hussvamp: angrepp av andra rötsvampar och mögelsvampar</li>
+        <li>Hussvamp: skador som kan härledas till vatten- eller fuktskador och som är ersättningsgilla enligt den vanliga villaförsäkringen</li>
+        <li>Estetiska skador som inte påverkar nyttjandet, obefogad rädsla, obehag av lukt eller störande ljud</li>
+        <li>Direkt eller indirekt skada orsakad av skadedjur inom saneringsmomentet — samt sanering av kläder och livsmedel, och rengöring efter utförd sanering</li>
+        <li>Ersättning för byggnadsskada av skadedjur lämnas inte i den mån ersättning kan betalas enligt B4–B15</li>
+        <li>Hussvamp: angrepp på byggnadsdelar utomhus, till exempel balkonger, utomhustrappor, terrasser och uterum. Invändig skada ersätts dock även om svampkroppen befinner sig utomhus</li>
+      </ul>
+    </div>
+  </details>
+</section>
+
+<!-- STOR -->
+<section id="stor" class="wrap">
+  <div class="sectag">04 — Utöver Bas</div>
+  <h2 class="sec">Villaförsäkring Stor</h2>
+  <p class="intro">Åtta tillägg. Det tyngsta är åldersavdragstaket — det går från 105 000 kr ner till 15 000 kr.</p>
+
+  <details class="card" id="stor1">
+    <summary><span class="chip">1</span><span class="title">Självriskersättning vid översvämning</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter den förhöjda självrisken vid översvämning enligt B8. Kunden betalar endast <strong>1 800 kr</strong> i självrisk.</p>
+      <p>Finns installerad backventil betalar kunden <strong>ingen självrisk alls</strong> vid ren baktrycksskada.</p>
+    </div>
+  </details>
+
+  <details class="card" id="stor2">
+    <summary><span class="chip">2</span><span class="title">Ersättning på grund av nya normer och branschregler</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>I skadat våtutrymme ersätter vi den extra kostnad som kan uppkomma vid återställande eller reparation på grund av att <strong>nya normer och branschregler</strong> gäller vid skadetillfället.</p>
+      <ul class="pts plain">
+        <li>Kostnaden ersätts <strong>utan åldersavdrag</strong></li>
+        <li>Högsta ersättning: <strong>10 000 kr</strong> vid varje skadetillfälle</li>
+      </ul>
+      <div class="note"><strong>Våtutrymme</strong> = badrum, duschrum, tvättstuga, WC samt rum för varmvattenberedare eller värmepump. Förutsättning: utrymmena är beklädda med vattentäta skikt.</div>
+    </div>
+  </details>
+
+  <details class="card" id="stor3">
+    <summary><span class="chip">3</span><span class="title">Ytskikt och tätskikt i våtutrymme</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Försäkringen gäller för det ytskikt och tätskikt som <strong>undantas i B6</strong>.</p>
+      <div class="note warn"><strong>Förutsättning:</strong> Arbetet med ytskikt och tätskikt har utförts enligt gällande byggnormer och branschregler <em>och</em> kvalitetsdokument eller annan motsvarande dokumentation från uppförandet kan uppvisas. Utan dokumentation — ingen ersättning.</div>
+    </div>
+  </details>
+
+  <details class="card" id="stor4">
+    <summary><span class="chip">4</span><span class="title">Nyvärdesskydd hushållsmaskiner</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Hushållsmaskiner som omfattas av B2 och som <strong>inte uppnått fyra års ålder</strong> betraktas som <strong>helt nya</strong> vid tillämpningen av värderingsregeln C42.</p>
+      <ul class="pts plain">
+        <li>Förutsättning: kunden återanskaffar likvärdig egendom eller reparerar föremålet <strong>inom sex månader</strong> från skadetillfället</li>
+        <li>Kan föremålet repareras ersätts högst reparationskostnaden</li>
+        <li>Sker ingen återanskaffning eller reparation lämnas ersättning med värdet enligt C42 — alltså med åldersavdrag</li>
+      </ul>
+      <div class="note"><strong>Hushållsmaskin</strong> = maskin för klädvård, disk, städning, förvaring eller tillagning av mat och dryck, luftrening eller avfuktning.</div>
+    </div>
+  </details>
+
+  <details class="card" id="stor5">
+    <summary><span class="chip">5</span><span class="title">Utökat läckageskydd</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter skada på försäkrad <strong>huvudbyggnad</strong> om vatten oberäknat tränger in genom <strong>yttertaket eller fasad ovan marken</strong>.</p>
+      <div class="sr"><b>Högsta ersättning:</b> 20 000 kr vid varje skadetillfälle · <b>Självrisk:</b> 1 800 kr</div>
+      <div class="lbl no">Vi ersätter inte skada</div>
+      <ul class="pts no">
+        <li>Om taket varit i sådant skick att uppenbar risk för läckage förelegat</li>
+        <li>Om taket är <strong>över 30 år</strong> eller är helt avskrivet enligt ersättningstabell C42</li>
+        <li>Som består i eller är en följd av konstruktions-, bygg- eller materialfel</li>
+        <li>Som har samband med att byggnaden är under reparation, uppförande, om- eller tillbyggnad</li>
+        <li><strong>På yttertak</strong> — med yttertak avses hela takkonstruktionen ovanför takstolar</li>
+      </ul>
+      <div class="note">Skyddet gäller alltså skadan <em>inne i huset</em> — inte taket självt.</div>
+    </div>
+  </details>
+
+  <details class="card" id="stor6">
+    <summary><span class="chip">6</span><span class="title">Utökat stormskydd</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter skada på <strong>tomtmark, pool och försäkrad byggnad enligt B2</strong> som blåser sönder vid storm (minst 21 m/sekund). Även vid lägre vindstyrka lämnas ersättning om byggnaden skadas av träd eller flaggstång som blåser omkull.</p>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no"><li>Skada på brygga</li></ul>
+      <div class="note">Här försvinner Bas-undantagen för tomtmark och fristående carport — men bryggan står kvar som undantag.</div>
+    </div>
+  </details>
+
+  <details class="card" id="stor7">
+    <summary><span class="chip">7</span><span class="title">Värderings- och ersättningsregler</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Värderingsreglerna i C37–C49 gäller, men med en avgörande ändring:</p>
+      <div class="sr"><b>Åldersavdrag på skadade byggnadsdelar begränsas till sammanlagt högst 15 000 kr.</b><br>I Villaförsäkring Bas är motsvarande gräns 105 000 kr.</div>
+      <div class="lbl no">Begränsningen till 15 000 kr gäller <em>inte</em> för</div>
+      <ul class="pts no">
+        <li>Skada på byggnadsdelar som ersätts enligt B4 (kortslutning, överslag eller överspänning) och som är <strong>helt avskrivna</strong> enligt C42</li>
+        <li>Skada på byggnadsdelar som ersätts enligt B14 (hushållsmaskin- och installationsskador) och som är <strong>helt avskrivna</strong> enligt C42</li>
+        <li>Ytskikt och tätskikt <strong>äldre än 30 år</strong> i våtutrymme vid skador som ersätts enligt B5 (läckage)</li>
+        <li>Skada på byggnadsdelar som <strong>inte var funktionsdugliga före skadan</strong></li>
+        <li>Åldersavdrag som kan ersättas från annan försäkring</li>
+      </ul>
+    </div>
+  </details>
+
+  <details class="card" id="stor8">
+    <summary><span class="chip">8</span><span class="title">Husextra — allrisk för byggnaden</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Gäller för <strong>samma egendom som omfattas i B2</strong>. Vi ersätter skada på eller förlust av försäkrad egendom genom <strong>plötslig och oförutsedd händelse</strong> — dock inte i den mån ersättning kan betalas ur villaförsäkringen i övrigt.</p>
+      <div class="sr"><b>Högsta ersättning:</b> 150 000 kr vid varje skadetillfälle · <b>Självrisk:</b> 1 800 kr</div>
+      <div class="note"><strong>Plötslig</strong> betyder att händelsen haft ett förhållandevis snabbt förlopp — slitage och förbrukning faller utanför. <strong>Oförutsedd</strong> betyder att den inträffat oväntat och normalt inte gått att förutse och därigenom förhindra.</div>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada genom förslitning, självsprickor, vittring eller åldersförändring — vare sig den visar sig successivt eller plötsligt</li>
+        <li>Sprickbildning på byggnad som är naturlig på grund av byggnadens utförande och konstruktion</li>
+        <li>Skada på byggnad genom fukt, röta, svamp, mögel, rost, frätning eller annan långtidspåverkan</li>
+        <li>Frostskador på växtlighet i trädgård</li>
+        <li>Skada orsakad av felaktig konstruktion, felaktigt utförande eller materialfel</li>
+        <li>Skada på tak och/eller byggnaden i övrigt orsakad av läckage från tak</li>
+        <li>Låsbyte</li>
+        <li>Den förhöjda självrisken vid läckageskador enligt B7 som beror på att byggnormer inte följts — och inte heller vid hushålls- och installationsskador enligt B15</li>
+        <li>Skada orsakad av husdjur, insekter, råttor, möss eller andra smågnagare</li>
+        <li>Skada på hushållsmaskin som enbart består i skönhetsfel</li>
+        <li>Skada som leverantör eller annan ansvarar för enligt begränsningarna i B15</li>
+        <li>Aktsamhetsnedsättning som gjorts i andra delar av försäkringen</li>
+      </ul>
+      <div class="note">Är byggnaden under uppförande, om- eller tillbyggnad gäller Villaförsäkring Stor med samma begränsningar som i B20 och B21.</div>
+    </div>
+  </details>
+</section>
+
+<!-- VÄRDERING -->
+<section id="vardering" class="wrap">
+  <div class="sectag">05 — C37 till C49</div>
+  <h2 class="sec">Värdering och åldersavdrag</h2>
+  <p class="intro">Huvudregeln: kunden ska varken vinna eller förlora på en skada. Åldersavdraget tar bort den standardförbättring som uppstår när gammalt byts mot nytt.</p>
+
+  <h3>Så räknas åldersavdraget</h3>
+  <ul class="pts plain">
+    <li>Avdrag görs på <strong>hela återställandekostnaden</strong> — material, transport <em>och</em> arbete</li>
+    <li>Byggnadsdelens ålder räknas från tidpunkten då den <strong>första gången togs i bruk</strong></li>
+    <li>Efter friåren görs ett procentuellt avdrag <strong>per påbörjat år</strong></li>
+    <li>Tabellen tillämpas inte om den skulle leda till ett oskäligt resultat</li>
+  </ul>
+
+  <div class="note warn"><strong>Installation utomhus:</strong> Vid återställande av t.ex. rörsystem i mark tillämpas installationens åldersavdrag på <strong>hela kostnaden</strong> — inklusive friläggning, rivning och återläggning. Grävkostnaden räknas alltså in i underlaget.</div>
+
+  <h3>Tak för avdraget</h3>
+  <div class="sr">
+    <b>Per byggnadsdel:</b> Avdraget är begränsat till <b>80 %</b> för byggnadsdel som före skadan var funktionsduglig.<br>
+    <b>Undantag:</b> Vid skada enligt B4 (kortslutning, överslag, överspänning), B14 (hushållsmaskin- och installationsskador) samt ytskikt/tätskikt äldre än 30 år vid B5-skador kan avdraget uppgå till <b>100 %</b>.<br>
+    <b>Sammanlagt per skadetillfälle:</b> Bas <b>105 000 kr</b> · Stor <b>15 000 kr</b>
+  </div>
+
+  <div class="note warn"><strong>Undantag från 105 000-taket i Villa Bas.</strong> Begränsningen gäller <em>inte</em> för skada på <strong>värmepumpsanläggning eller spabad</strong> som ersätts enligt B4 (kortslutning, överslag eller överspänning) eller B14 (hushållsmaskin- och installationsskador) och som är <strong>helt avskriven</strong> enligt ersättningstabell C42. I de fallen kan åldersavdraget alltså överstiga 105 000 kr.</div>
+
+  <div class="note warn"><strong>Undantag från 105 000-taket i Bas.</strong> Begränsningen gäller inte för skada på <strong>värmepumpsanläggning eller spabad</strong> som ersätts enligt B4 (kortslutning, överslag eller överspänning) eller enligt B14 (hushållsmaskin- och installationsskador) och som är <strong>helt avskriven</strong> enligt ersättningstabell C42.</div>
+
+  <h3>Ersättningstabell C42 — friår och avdrag</h3>
+  <div class="tblwrap">
+  <table>
+    <thead><tr><th>Byggnadsdel</th><th>Friår</th><th>Avdrag/år</th></tr></thead>
+    <tbody>
+      <tr><td>Rörsystem, vattenradiatorer, sanitetsgods, duschvägg, duschdörr</td><td class="num">10 år</td><td class="num">5 %</td></tr>
+      <tr><td>Värmepumpsanläggning, djupvattenpump, keramisk eldstad i värmepanna, vindkraftverk, takvärme, elslingor i golv, hushållsmaskin inkl spis, spabad utomhus</td><td class="num">2 år</td><td class="num">10 %</td></tr>
+      <tr><td>Luft/luft värmepumpsanläggning</td><td class="num">2 år</td><td class="num">15 %</td></tr>
+      <tr><td>Elinstallation (ej elradiator), ledningar för fiberoptik och bredband</td><td class="num">20 år</td><td class="num">5 %</td></tr>
+      <tr><td>Övriga installationer, duschkabin, pool och poolduk, laddbox, annan maskinell utrustning, solfångare/solceller</td><td class="num">5 år</td><td class="num">8 %</td></tr>
+      <tr><td>Radio- och tv-antenn, radiomast, markiser</td><td class="num">2 år</td><td class="num">10 %</td></tr>
+      <tr><td>Målning in- och utvändig, tapetsering, annan väggbeklädnad (ej våtrum)</td><td class="num">5 år</td><td class="num">8 %</td></tr>
+      <tr><td>Fönster, dörrar och garageportar</td><td class="num">10 år</td><td class="num">5 %</td></tr>
+      <tr><td>Köksinredning</td><td class="num">10 år</td><td class="num">5 %</td></tr>
+      <tr><td>Lås</td><td class="num">15 år</td><td class="num">5 %</td></tr>
+      <tr><td>Golv: textila</td><td class="num">5 år</td><td class="num">8 %</td></tr>
+      <tr><td>Golv: plast, linoleum, laminat</td><td class="num">10 år</td><td class="num">5 %</td></tr>
+      <tr><td>Golv: lamellträ (parkett), keramiska plattor</td><td class="num">15 år</td><td class="num">5 %</td></tr>
+      <tr><td>Golv: homogent trä</td><td class="num">20 år</td><td class="num">5 %</td></tr>
+      <tr><td>Våtrum: golv- och väggmatta (trådsvetsad)</td><td class="num">5 år</td><td class="num">8 %</td></tr>
+      <tr><td>Våtrum: keramiska plattor, natursten</td><td class="num">10 år</td><td class="num">5 %</td></tr>
+      <tr><td>Våtrum: övrigt golv- och väggbeklädnadsmaterial samt målning</td><td class="num">2 år</td><td class="num">10 %</td></tr>
+      <tr><td>Takbeläggning av papp, plast eller gummiduk, altantak</td><td class="num">5 år</td><td class="num">8 %</td></tr>
+      <tr><td>Takbeläggning övrigt</td><td class="num">25 år</td><td class="num">2 %</td></tr>
+      <tr><td>Skorsten: stål eller plåt</td><td class="num">5 år</td><td class="num">8 %</td></tr>
+      <tr><td>Skorsten: annat material</td><td class="num">25 år</td><td class="num">2 %</td></tr>
+      <tr><td>Murad öppen spis, kakelugn</td><td class="num">25 år</td><td class="num">2 %</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Tidsfrister vid återställande</h3>
+  <ul class="pts plain">
+    <li><strong>C39:</strong> Vid återställande inom <strong>två år</strong> från skadedagen värderas skadan till vad det kostar att utan dröjsmål återställa byggnaden med rationella metoder och material</li>
+    <li><strong>C40:</strong> Kan återställandet inte slutföras inom två år på grund av hinder kunden inte kunnat påverka, räknas tiden från den dag hindret upphörde. Återställandet måste i varje fall <strong>påbörjas inom fem år</strong></li>
+    <li><strong>C44:</strong> Återställs inte byggnaden inom två år värderas skadan högst till skillnaden mellan fastighetens marknadsvärde omedelbart före och efter skadan</li>
+    <li><strong>C45:</strong> Understeg marknadsvärdet på hela byggnaden före skadan <strong>50 % av marknadsvärdet för en ny motsvarande byggnad</strong>, värderas skadan högst till marknadsvärdesskillnaden</li>
+  </ul>
+
+  <h3>Beloppstak att komma ihåg</h3>
+  <div class="tblwrap">
+  <table>
+    <thead><tr><th>Situation</th><th>Högsta ersättning</th><th>Punkt</th></tr></thead>
+    <tbody>
+      <tr><td>Fördyring på grund av statlig föreskrift — annan än sådan som avser extra isolering eller ändamålsenlighet för handikappade</td><td class="num">100 000 kr</td><td class="num">C41</td></tr>
+      <tr><td>Tomtmark — jordskalv, skred, ras, lavin, vulkanutbrott</td><td class="num">2 × taxeringsvärdet, eller 200 000 kr om det ger mer</td><td class="num">C48</td></tr>
+      <tr><td>Tomtmark — övriga skadehändelser</td><td class="num">200 000 kr</td><td class="num">C48</td></tr>
+      <tr><td>Sanering av oljeskada på tomtmark</td><td class="num">500 000 kr</td><td class="num">C48</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- QUIZ -->
+
+</main>
+
+<footer class="wrap">
+  <p>Byggt utifrån <code>Folksam Försäkringsvillkor Hem och villa, 1 januari 2026 (S2940 26-01)</code>, avsnitt B och tillhörande delar av avsnitt C.</p>
+  <p style="margin-top:10px">Studiematerial — kontrollera alltid mot gällande villkor och interna riktlinjer innan beslut i ett ärende.</p>
+  <p class="copyright">&copy; <span class="cpYear">2026</span> Nicolas Da Silva Kuehn</p>
+</footer>
+
+<script>
+/* ---------------- SJÄLVRISKRÄKNARE ---------------- */
+const RULES = {
+  grund:     {type:'fix', v:1800, ref:'B1',  txt:'Grundsjälvrisk vid varje skadetillfälle.'},
+  frys5:     {type:'pct', p:.10, min:4000, max:10000, ref:'B7'},
+  norm:      {type:'pct', p:.10, min:10000, max:null, ref:'B7'},
+  tat:       {type:'fix', v:4000, ref:'B7', txt:'Fast självrisk vid läckage genom vattentätt skikt eller dess anslutning.'},
+  annat:     {type:'fix', v:4000, ref:'B7', txt:'Fast självrisk vid annan läckageskada på byggnad.'},
+  oversv:    {type:'pct', p:.10, min:10000, max:null, ref:'B8'},
+  baktryck:  {type:'fix', v:10000, ref:'B8', txt:'Ren baktrycksskada utan installerad backventil.'},
+  baktryckv: {type:'fix', v:5000, ref:'B8', txt:'Ren baktrycksskada med installerad backventil.'},
+  frys15:    {type:'pct', p:.10, min:2000, max:10000, ref:'B15'},
+  larm:      {type:'fix', v:0, ref:'B1', txt:'Aktiverat inbrottslarm kopplat till godkänd larmcentral, ingen hemma. Alla tre kraven måste vara uppfyllda.'}
+};
+const kr = n => n.toLocaleString('sv-SE').replace(/,/g,' ') + ' kr';
+const ctype=document.getElementById('ctype'), camt=document.getElementById('camt');
+const cout=document.getElementById('cout'), cform=document.getElementById('cform'), cref=document.getElementById('cref');
+
+function calc(){
+  const r = RULES[ctype.value];
+  const amt = Math.max(0, Number(camt.value)||0);
+  cref.textContent = r.ref;
+  if(r.type==='fix'){
+    cout.textContent = r.v===0 ? 'Ingen självrisk' : kr(r.v);
+    cform.textContent = r.txt;
+    return;
+  }
+  const raw = amt * r.p;
+  let val = raw, why;
+  if(raw < r.min){ val = r.min; why = 'Under golvet → lägstanivån gäller.'; }
+  else if(r.max && raw > r.max){ val = r.max; why = 'Över taket → högstanivån gäller.'; }
+  else { why = r.max ? 'Ligger mellan golv och tak → tio procent gäller.' : 'Över golvet → tio procent gäller. Inget tak finns.'; }
+  cout.textContent = kr(Math.round(val));
+  cform.innerHTML =
+    '10 % av ' + kr(amt) + ' = ' + kr(Math.round(raw)) + '<br>' +
+    'Golv ' + kr(r.min) + (r.max ? ' · Tak ' + kr(r.max) : ' · Inget tak') + '<br>' + why;
+}
+ctype.addEventListener('change',calc);
+camt.addEventListener('input',calc);
+calc();
+
+/* ---------------- ANTECKNINGAR ---------------- */
+/* Mallen har två lägen — ett per slinga. */
+const MALL_NY =
+'Kundens beskrivning i anmälan:\n' +
+'\n' +
+'Skadeorsak:\n' +
+'Skadeomfattning:\n' +
+'\n' +
+'Ytskikt:\n' +
+'Ålder:\n' +
+'Åldersavdrag:\n' +
+'Självrisk/avtal:\n' +
+'\n' +
+'Nästa steg:\n';
+
+const MALL_PAG =
+'Kund ringer in om - \n';
+
+const MALLAR={ny:MALL_NY, pag:MALL_PAG};
+/* Varje läge behåller sin egen text när man växlar fram och tillbaka. */
+const utkast={ny:MALL_NY, pag:MALL_PAG};
+let lage='ny';
+
+const ORSAKER = [
+{v:'okand', t:'— Okänd / ej konstaterad skadeorsak —', sr:{type:'none'}, refs:[], hint:'Skadeorsaken måste konstateras innan ärendet kan regleras mot ett moment i villkoret.', warn:true},
+
+{v:'lack_frys', t:'Läckage — frysning', sr:{type:'pct',p:.10,min:4000,max:10000,ref:'B7'},
+ refs:[['b5','B5 Läckage'],['b6','B6 Begränsningar'],['b7','B7 Självrisk']],
+ hint:'Kontrollera aktsamhetskravet: tömda ledningar, antifrysbehandling, tillräcklig uppvärmning. Vid brott normalt 25 % avdrag.'},
+
+{v:'lack_norm', t:'Läckage — byggnorm/branschregler ej följda', sr:{type:'pct',p:.10,min:10000,max:null,ref:'B7'},
+ refs:[['b5','B5 Läckage'],['b7','B7 Självrisk']],
+ hint:'Inget tak på självrisken här. Begär dokumentation från uppförandet eller reparationen.'},
+
+{v:'lack_tat', t:'Läckage genom vattentätt skikt', sr:{type:'fix',v:4000,ref:'B7'},
+ refs:[['b5','B5 Läckage'],['b6','B6 Begränsningar'],['stor3','Stor: ytskikt/tätskikt']],
+ hint:'I Bas undantas ytskikt och tätskikt som läckaget uppstått genom — hela våtutrymmet ses som en enhet. I Stor omfattas det om kvalitetsdokument kan uppvisas.'},
+
+{v:'lack_annat', t:'Läckage — annan orsak på byggnad', sr:{type:'fix',v:4000,ref:'B7'},
+ refs:[['b5','B5 Läckage'],['b6','B6 Begränsningar'],['b7','B7 Självrisk']],
+ hint:'Kom ihåg: skada på den anordning som läckt prövas mot B14–B15, inte B5.'},
+
+{v:'oversv', t:'Översvämning', sr:{type:'pct',p:.10,min:10000,max:null,ref:'B8'},
+ storSr:{type:'fix',v:1800,ref:'Stor pkt 1'},
+ refs:[['b8','B8 Översvämning'],['stor1','Stor: självriskersättning']],
+ hint:'Krav på skyfall minst 1 mm/minut eller 50 mm/dygn, snösmältning eller stigande vattendrag. Tomtmark undantas.'},
+
+{v:'baktryck', t:'Ren baktrycksskada (vatten upp ur golvbrunn)', sr:{type:'baktryck',ref:'B8'},
+ refs:[['b8','B8 Översvämning'],['stor1','Stor: självriskersättning']],
+ hint:'Fråga alltid om installerad backventil — det halverar självrisken i Bas och ger noll i Stor.', bv:true},
+
+{v:'maskin_frys', t:'Hushållsmaskin/installation — frysning', sr:{type:'pct',p:.10,min:2000,max:10000,ref:'B15'},
+ refs:[['b14','B14 Hushållsmaskin'],['b15','B15 Begränsningar']],
+ hint:'Observera det lägre golvet: 2 000 kr här, mot 4 000 kr vid läckage enligt B7.'},
+
+{v:'maskin', t:'Hushållsmaskin/installation går sönder', sr:{type:'fix',v:1800,ref:'B1'},
+ refs:[['b14','B14 Hushållsmaskin'],['b15','B15 Begränsningar'],['stor4','Stor: nyvärdesskydd']],
+ hint:'Kontrollera ålder mot 15-årsgränsen vid rost och frätning inomhus. Utomhus undantas rost och frätning helt. Åldersavdrag kan uppgå till 100 %.'},
+
+{v:'brand', t:'Brand, blixt, kortslutning, explosion', sr:{type:'fix',v:1800,ref:'B1'},
+ refs:[['b4','B4 Brand och blixt']],
+ hint:'Aktsamhetskrav: sotning, aska i metallkärl, MSB:s vägledning vid elbilsladdning, inga obevakade levande ljus eller kokkärl. Nedsättning sker efter skälighet, ingen fast procentsats. Vid kortslutning, överslag eller överspänning kan åldersavdraget uppgå till 100 %.'},
+
+{v:'storm', t:'Storm', sr:{type:'fix',v:1800,ref:'B1'},
+ refs:[['b9','B9 Storm'],['stor6','Stor: utökat stormskydd']],
+ hint:'Minst 21 m/s — men även lägre vindstyrka om träd eller flaggstång blåst omkull. Fristående carport och tomtmark undantas i Bas.'},
+
+{v:'hagel', t:'Hagel', sr:{type:'fix',v:1800,ref:'B1'},
+ refs:[['b10','B10 Hagel']], hint:'Tält och inglasad byggnad, till exempel växthus, undantas.'},
+
+{v:'snotryck', t:'Snötryck', sr:{type:'fix',v:1800,ref:'B1'},
+ refs:[['b11','B11 Snötryck']],
+ hint:'Endast yttertakets bärande konstruktion på bostadsbyggnad. Altantak, balkongtak och verandatak undantas. Aktsamhetskrav att skotta — normalt 25 % avdrag vid brott.'},
+
+{v:'natur', t:'Andra naturskador (jordskalv, skred, ras, lavin)', sr:{type:'fix',v:1800,ref:'B1'},
+ refs:[['b12','B12 Andra naturskador']],
+ hint:'Jordskalv kräver minst 4 på Richterskalan. Sättning i mark eller grund undantas.'},
+
+{v:'djur', t:'Vilda djur eller fåglar i byggnaden', sr:{type:'fix',v:1800,ref:'B1'},
+ refs:[['b13','B13 Vilda djur'],['b25','B25 Skadedjursförsäkring']],
+ hint:'Insekter, råttor, möss och smågnagare undantas i B13 — hänvisa till Anticimex. Byggnadsskada av möss kräver Villa Stor: max 50 000 kr, självrisk 4 000 kr.'},
+
+{v:'glas', t:'Glasruteskada', sr:{type:'fix',v:1800,ref:'B1'},
+ refs:[['b16','B16 Glasruteskador']],
+ hint:'Isolerglas som endast blivit otätt undantas.'},
+
+{v:'stold', t:'Stöld och skadegörelse', sr:{type:'larm',ref:'B1'},
+ refs:[['b17','B17 Stöld och skadegörelse'],['b2','B2 Försäkrad egendom']],
+ hint:'Samma förutsättningar och aktsamhetskrav som hemförsäkringen A11 och A13–A17. I villa räknas källare, vind och garage till bostaden. Låsbyte högst 3 000 kr.', larm:true},
+
+{v:'trafik', t:'Trafikskada eller nedfallande luftfartyg', sr:{type:'fix',v:1800,ref:'B1'},
+ refs:[['b18','B18 Vissa trafikskador']],
+ hint:'Trafikförsäkringen går alltid först — villaförsäkringen täcker bara det som blir över.'},
+
+{v:'nod', t:'Nödskada vid räddningsåtgärd', sr:{type:'fix',v:1800,ref:'B1'},
+ refs:[['b19','B19 Nöd']],
+ hint:'Gäller skador vid nödvändiga räddningsåtgärder för att undanröja fara för persons liv eller hälsa.'},
+
+{v:'tak_in', t:'Vatten in genom yttertak eller fasad (Stor)', sr:{type:'stor_only',v:1800,ref:'Stor pkt 5'},
+ refs:[['stor5','Stor: utökat läckageskydd'],['b6','B6 Begränsningar']],
+ hint:'Endast med Villa Stor. Max 20 000 kr. Gäller inte om taket är över 30 år, är helt avskrivet, eller vid skada på yttertaket självt.'},
+
+{v:'husextra', t:'Plötslig och oförutsedd händelse — Husextra (Stor)', sr:{type:'stor_only',v:1800,ref:'Stor pkt 8'},
+ refs:[['stor8','Stor: Husextra']],
+ hint:'Endast med Villa Stor. Max 150 000 kr per skadetillfälle. Undantar bland annat förslitning, konstruktionsfel, läckage från tak och låsbyte.'},
+
+{v:'skadedjur', t:'Skadedjur, hussvamp, sent upptäckt dödsfall', sr:{type:'skadedjur',ref:'B25'},
+ refs:[['b25','B25 Skadedjursförsäkring']],
+ hint:'Anticimex Försäkringar AB är försäkringsgivare, inte Folksam. Sanering och träskadeinsekter utan självrisk. Hussvamp 10 000 kr i Bas, utan självrisk i Stor.'}
+];
+
+const nAvtal=document.getElementById('nAvtal');
+const nSel=document.getElementById('nSkadeorsak');
+const nBel=document.getElementById('nBelopp');
+const nAmt=document.getElementById('nAmt');
+const nCalcEl=document.getElementById('nCalc');
+const nRefs=document.getElementById('nRefs');
+const nHint=document.getElementById('nHint');
+const nNote=document.getElementById('nNote');
+const nWarn=document.getElementById('nWarn');
+const nTak=document.getElementById('nTak');
+const nBv=document.getElementById('nBackventil');
+const nLarm=document.getElementById('nLarm');
+const wrapBv=document.getElementById('wrapBackventil');
+const wrapLarm=document.getElementById('wrapLarm');
+let avtal='bas', srText='1 800 kr', srRef='B1';
+
+ORSAKER.forEach(o=>{
+  const op=document.createElement('option');
+  op.value=o.v; op.textContent=o.t;
+  nSel.appendChild(op);
+});
+nNote.value=MALLAR[lage];
+
+/* Växla mellan slingornas mallar utan att tappa det man redan skrivit. */
+const nLage=document.getElementById('nLage');
+function placeraMarkor(){
+  if(lage!=='pag') return;
+  if(nNote.value.trim()!==MALL_PAG.trim()) return;   /* rör inte redan skriven text */
+  const i=nNote.value.indexOf('\n');
+  const p = i<0 ? nNote.value.length : i;
+  try{ nNote.setSelectionRange(p,p); }catch(e){}
+}
+nLage.querySelectorAll('button').forEach(b=>{
+  b.onclick=()=>{
+    const valt=b.dataset.v;
+    if(valt===lage) return;
+    utkast[lage]=nNote.value;
+    lage=valt;
+    [...nLage.children].forEach(x=>x.classList.toggle('on',x===b));
+    nNote.value=utkast[lage];
+    nNote.focus();
+    placeraMarkor();
+    if(typeof checkOklar==='function') checkOklar();
+    if(typeof saveNote==='function') saveNote();
+  };
+});
+
+nAvtal.querySelectorAll('button').forEach(b=>{
+  b.onclick=()=>{
+    avtal=b.dataset.v;
+    [...nAvtal.children].forEach(x=>x.classList.toggle('on',x===b));
+    nTak.textContent = avtal==='stor' ? '15 000 kr' : '105 000 kr';
+    updateSr();
+  };
+});
+
+function cur(){ return ORSAKER.find(o=>o.v===nSel.value) || ORSAKER[0]; }
+
+/* Ren självriskberäkning utan sidoeffekter. Både panelen och
+   villkorsassistenten går via den här, så de aldrig kan visa olika siffror. */
+function srBerakna(o, avtalV, belopp, bvOn, larmOn){
+  let rule=o.sr;
+  if(avtalV==='stor' && o.storSr) rule=o.storSr;
+  const amt=Math.max(0,Number(belopp)||0);
+
+  if(rule.type==='none')
+    return {text:'—', kort:'Kan ej bedömas', ref:'',
+            calc:'Skadeorsaken måste konstateras först.', obedombar:true};
+
+  if(rule.type==='text')
+    return {text:rule.t, kort:rule.t, ref:rule.ref, calc:'Se '+rule.ref+'.'};
+
+  if(rule.type==='skadedjur'){
+    if(avtalV==='stor') return {
+      text:'Hussvamp 0 kr · Möss, insekter och lukt 4 000 kr · Övrigt 0 kr',
+      kort:'0 / 4 000 kr', ref:'B25',
+      calc:'Sanering, träskadeinsekter och sent upptäckt dödsfall: ingen självrisk.<br>Äkta hussvamp: ingen självrisk med Villa Stor.<br>Övriga insekter, råttor, möss och lukt: 4 000 kr, högst 50 000 kr.'};
+    return {
+      text:'Hussvamp 10 000 kr · Övrigt 0 kr',
+      kort:'0 / 10 000 kr', ref:'B25',
+      calc:'Sanering, träskadeinsekter och sent upptäckt dödsfall: ingen självrisk.<br>Äkta hussvamp: 10 000 kr.<br>Möss, insekter och lukt kräver Villa Stor.'};
+  }
+
+  if(rule.type==='stor_only'){
+    if(avtalV!=='stor')
+      return {text:'Momentet saknas i Villa Bas', kort:'Ingår ej i Bas', ref:rule.ref,
+              calc:'Detta moment kräver Villa Stor.', kraverStor:true};
+    return {text:'1 800 kr', kort:'1 800 kr', ref:rule.ref, belopp:1800,
+            calc:'Självrisk enligt '+rule.ref+'.'};
+  }
+
+  if(rule.type==='larm'){
+    const t = larmOn ? 'Ingen självrisk' : '1 800 kr';
+    return {text:t, kort:t, ref:'B1', belopp: larmOn?0:1800,
+      calc: larmOn
+        ? 'Aktiverat larm till godkänd larmcentral och ingen hemma — alla tre kraven uppfyllda.'
+        : 'Grundsjälvrisk. Kryssa i larmrutan om kraven är uppfyllda.'};
+  }
+
+  if(rule.type==='baktryck'){
+    const v = avtalV==='stor' ? (bvOn?0:1800) : (bvOn?5000:10000);
+    const t = v===0 ? 'Ingen självrisk' : fmt(v)+' kr';
+    return {text:t, kort:t, ref:'B8', belopp:v,
+      calc: avtalV==='stor'
+        ? (bvOn ? 'Villa Stor med backventil — ingen självrisk.' : 'Villa Stor ersätter den förhöjda självrisken, kunden betalar 1 800 kr.')
+        : (bvOn ? 'Ren baktrycksskada med installerad backventil.' : 'Ren baktrycksskada utan backventil.')};
+  }
+
+  if(rule.type==='fix'){
+    const t = rule.v===0 ? 'Ingen självrisk' : fmt(rule.v)+' kr';
+    return {text:t, kort:t, ref:rule.ref, belopp:rule.v,
+            calc:'Fast självrisk enligt '+rule.ref+'.'};
+  }
+
+  if(rule.type==='pct'){
+    if(!amt) return {
+      text:'10 % av skadebeloppet, lägst '+fmt(rule.min)+(rule.max?' kr, högst '+fmt(rule.max):' kr, inget tak')+' kr',
+      kort:'Ange skadebelopp', ref:rule.ref, saknarBelopp:true,
+      calc:'10 % · golv '+fmt(rule.min)+' kr'+(rule.max?' · tak '+fmt(rule.max)+' kr':' · inget tak')};
+    const raw=amt*rule.p;
+    let v=raw, why;
+    if(raw<rule.min){ v=rule.min; why='Under golvet — lägstanivån gäller.'; }
+    else if(rule.max && raw>rule.max){ v=rule.max; why='Över taket — högstanivån gäller.'; }
+    else { why = rule.max ? 'Mellan golv och tak — tio procent gäller.' : 'Över golvet — tio procent gäller, inget tak finns.'; }
+    v=Math.round(v);
+    return {text:fmt(v)+' kr', kort:fmt(v)+' kr', ref:rule.ref, belopp:v,
+      calc:'10 % av '+fmt(amt)+' kr = '+fmt(Math.round(raw))+' kr<br>Golv '+fmt(rule.min)+' kr'+(rule.max?' · Tak '+fmt(rule.max)+' kr':' · Inget tak')+'<br>'+why};
+  }
+  return {text:'—', kort:'—', ref:'', calc:''};
+}
+
+function updateSr(){
+  const o=cur();
+  wrapBv.style.display = o.bv ? 'flex' : 'none';
+  wrapLarm.style.display = o.larm ? 'flex' : 'none';
+  nWarn.classList.toggle('show', !!o.warn);
+  nHint.textContent=o.hint||'';
+
+  nRefs.innerHTML = o.refs.length
+    ? '<span style="font-family:\'Archivo\',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:8px">Slå upp i villkoret</span>'
+      + o.refs.map(r=>'<a href="#'+r[0]+'" data-open="'+r[0]+'">'+r[1]+'</a>').join('')
+    : '';
+  nRefs.querySelectorAll('a').forEach(a=>{
+    a.onclick=()=>{ const el=document.getElementById(a.dataset.open); if(el) el.open=true; };
+  });
+
+  const r=srBerakna(o, avtal, nBel.value, nBv.checked, nLarm.checked);
+  srText=r.text; srRef=r.ref;
+  nAmt.textContent=r.kort;
+  nCalcEl.innerHTML=r.calc;
+}
+function fmt(n){ return n.toLocaleString('sv-SE').replace(/,/g,' '); }
+
+function setRow(label, value){
+  const lines=nNote.value.split('\n');
+  const i=lines.findIndex(l=>l.trim().startsWith(label));
+  if(i>=0){
+    lines[i]=label+' '+value;
+  } else {
+    /* Saknas raden — t.ex. i mallen för pågående skador — lägg till den sist. */
+    if(lines.length && lines[lines.length-1].trim()!=='') lines.push('');
+    lines.push(label+' '+value);
+  }
+  nNote.value=lines.join('\n');
+}
+
+document.getElementById('nInsertSr').onclick=()=>{
+  const o=cur();
+  const avtalNamn = avtal==='stor' ? 'Villa Stor' : 'Villa Bas';
+  const ref = srRef ? ' ('+srRef+')' : '';
+  setRow('Självrisk/avtal:', srText+ref+' — '+avtalNamn);
+  if(o.v!=='okand') setRow('Skadeorsak:', o.t);
+  nNote.focus();
+};
+document.querySelectorAll('.srq').forEach(b=>{
+  b.onclick=()=>{
+    const v=Number(b.dataset.v);
+    const avtalNamn = avtal==='stor' ? 'Villa Stor' : 'Villa Bas';
+    setRow('Självrisk/avtal:', (v===0?'Ingen självrisk':fmt(v)+' kr')+' — '+avtalNamn);
+    nNote.focus();
+  };
+});
+
+nSel.onchange=()=>{updateSr();checkOklar();};
+nBel.oninput=updateSr;
+nBv.onchange=updateSr;
+nLarm.onchange=updateSr;
+
+document.getElementById('nCopy').onclick=async function(){
+  const b=this;
+  try{
+    await navigator.clipboard.writeText(nNote.value);
+  }catch(e){
+    nNote.select(); document.execCommand('copy');
+  }
+  const old=b.textContent;
+  b.textContent='Kopierat';
+  setTimeout(()=>{b.textContent=old;},1400);
+};
+let backup=null;
+const nUndo=document.getElementById('nUndo');
+
+document.getElementById('nClear').onclick=()=>{
+  backup={
+    note:nNote.value, avtal:avtal, orsak:nSel.value, belopp:nBel.value,
+    bv:nBv.checked, larm:nLarm.checked, h:nNote.style.height||'',
+    lage:lage, utkast:Object.assign({},utkast)
+  };
+  nNote.value=MALLAR[lage];
+  utkast[lage]=MALLAR[lage];
+  placeraMarkor();
+  nBel.value='';
+  nSel.value='okand';
+  nBv.checked=false; nLarm.checked=false;
+  nUndo.classList.add('show');
+  updateSr();
+  nNote.focus();
+};
+
+nUndo.onclick=()=>{
+  if(!backup) return;
+  if(backup.utkast){ utkast.ny=backup.utkast.ny; utkast.pag=backup.utkast.pag; }
+  if(backup.lage){
+    lage=backup.lage;
+    [...nLage.children].forEach(x=>x.classList.toggle('on',x.dataset.v===lage));
+  }
+  nNote.value=backup.note;
+  nBel.value=backup.belopp;
+  nSel.value=backup.orsak;
+  nBv.checked=backup.bv; nLarm.checked=backup.larm;
+  if(backup.h) nNote.style.height=backup.h;
+  avtal=backup.avtal;
+  [...nAvtal.children].forEach(x=>x.classList.toggle('on',x.dataset.v===avtal));
+  nTak.textContent = avtal==='stor' ? '15 000 kr' : '105 000 kr';
+  backup=null;
+  nUndo.classList.remove('show');
+  updateSr();
+  if(typeof checkOklar==='function') checkOklar();
+  if(typeof saveNote==='function') saveNote();
+  nNote.focus();
+};
+
+updateSr();
+
+/* Höjdknappar för mallen — bara #nHojd, annars fångas breddknapparna med. */
+document.querySelectorAll('#nHojd button').forEach(b=>{
+  b.onclick=()=>{
+    nNote.style.height=b.dataset.h+'px';
+    [...b.parentNode.querySelectorAll('button')].forEach(x=>x.classList.toggle('on',x===b));
+  };
+});
+
+/* Mallens bredd — ändrar panelens andel av rutnätet. */
+const nBredd=document.getElementById('nBredd');
+const nGrid=document.querySelector('.ngrid');
+let breddV='normal';
+function sattBredd(v){
+  breddV = (v==='bred'||v==='full') ? v : 'normal';
+  nGrid.classList.toggle('mall-bred', breddV==='bred');
+  nGrid.classList.toggle('mall-full', breddV==='full');
+  nBredd.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.v===breddV));
+}
+nBredd.querySelectorAll('button').forEach(b=>{
+  b.onclick=()=>{ sattBredd(b.dataset.v); if(typeof saveNote==='function') saveNote(); };
+});
+
+/* Bevaka om skadeorsaken skrivs in som oklar i mallen */
+const nFlag=document.getElementById('nFlag');
+const OKLAR=/(oklar|okänd|okand|osäker|osaker|vet ej|vet inte|ej konstaterad|inte konstaterad|ej fastställd|ej faststalld|utreds|oklart|\?)/i;
+
+function checkOklar(){
+  const line=(nNote.value.split('\n').find(l=>l.trim().toLowerCase().startsWith('skadeorsak:'))||'');
+  const svar=line.split(':').slice(1).join(':').trim();
+  const flagga = svar.length>0 && OKLAR.test(svar);
+  nNote.classList.toggle('flagged',flagga);
+  nFlag.classList.toggle('show',flagga);
+  if(flagga) nWarn.classList.add('show');
+  else if(cur().v!=='okand') nWarn.classList.remove('show');
+}
+nNote.addEventListener('input',checkOklar);
+checkOklar();
+
+/* ---------------- AUTOSPAR ---------------- */
+const NKEY='folksam_villa_anteckning';
+const nSave=document.getElementById('nSave');
+let store=null;
+try{
+  localStorage.setItem('__t','1'); localStorage.removeItem('__t');
+  store=localStorage;
+}catch(e){ store=null; }
+
+function stamp(){
+  const t=new Date().toLocaleTimeString('sv-SE',{hour:'2-digit',minute:'2-digit'});
+  nSave.className=''; nSave.textContent='Sparat '+t;
+}
+
+function saveNote(){
+  utkast[lage]=nNote.value;
+  if(!store) return;
+  try{
+    store.setItem(NKEY, JSON.stringify({
+      note:nNote.value,
+      lage:lage,
+      utkast:utkast,
+      avtal:avtal,
+      orsak:nSel.value,
+      belopp:nBel.value,
+      bv:nBv.checked,
+      larm:nLarm.checked,
+      aaObjekt:aaValt,
+      aaAlder:aaAlderIn.value,
+      bredd:breddV,
+      h:nNote.style.height||'',
+      ts:Date.now()
+    }));
+    nSave.className='saving'; nSave.textContent='Sparar…';
+    clearTimeout(saveNote._t);
+    saveNote._t=setTimeout(stamp,350);
+  }catch(e){
+    nSave.className='off'; nSave.textContent='Kunde inte spara';
+  }
+}
+
+function restoreNote(){
+  if(!store){
+    nSave.className='off';
+    nSave.textContent='Autospar ej tillgängligt — kopiera innan du lämnar sidan';
+    return;
+  }
+  let d=null;
+  try{ d=JSON.parse(store.getItem(NKEY)||'null'); }catch(e){}
+  if(!d){ nSave.textContent='Autospar aktivt'; return; }
+
+  if(d.utkast && typeof d.utkast==='object'){
+    if(typeof d.utkast.ny==='string')  utkast.ny=d.utkast.ny;
+    if(typeof d.utkast.pag==='string') utkast.pag=d.utkast.pag;
+  }
+  if(d.lage==='ny' || d.lage==='pag'){
+    lage=d.lage;
+    [...nLage.children].forEach(x=>x.classList.toggle('on',x.dataset.v===lage));
+  }
+  if(typeof d.note==='string' && d.note.trim()) nNote.value=d.note;
+  if(d.h){
+    nNote.style.height=d.h;
+    const px=parseInt(d.h,10);
+    document.querySelectorAll('#nHojd button').forEach(x=>x.classList.toggle('on',Number(x.dataset.h)===px));
+  }
+  if(d.orsak) nSel.value=d.orsak;
+  if(d.belopp) nBel.value=d.belopp;
+  nBv.checked=!!d.bv;
+  nLarm.checked=!!d.larm;
+  if(typeof d.aaObjekt==='number' && AA_ITEMS[d.aaObjekt]){
+    aaValt=d.aaObjekt;
+    aaBygg(aaSok.value);
+  }
+  if(d.aaAlder) aaAlderIn.value=d.aaAlder;
+  if(d.bredd) sattBredd(d.bredd);
+  if(d.avtal==='stor'){
+    avtal='stor';
+    [...nAvtal.children].forEach(x=>x.classList.toggle('on',x.dataset.v==='stor'));
+    nTak.textContent='15 000 kr';
+  }
+  const t=new Date(d.ts||Date.now()).toLocaleTimeString('sv-SE',{hour:'2-digit',minute:'2-digit'});
+  nSave.textContent='Återställd från '+t;
+}
+
+/* Spara vid varje ändring */
+['input','change'].forEach(ev=>{
+  nNote.addEventListener(ev,saveNote);
+  nSel.addEventListener(ev,saveNote);
+  nBel.addEventListener(ev,saveNote);
+  nBv.addEventListener(ev,saveNote);
+  nLarm.addEventListener(ev,saveNote);
+});
+nAvtal.querySelectorAll('button').forEach(b=>b.addEventListener('click',saveNote));
+document.querySelectorAll('.sizebtns button').forEach(b=>b.addEventListener('click',saveNote));
+document.getElementById('nInsertSr').addEventListener('click',saveNote);
+document.querySelectorAll('.srq').forEach(b=>b.addEventListener('click',saveNote));
+nNote.addEventListener('mouseup',saveNote);
+window.addEventListener('beforeunload',()=>{ if(store) saveNote(); });
+
+/* Rensa tömmer även sparningen */
+document.getElementById('nClear').addEventListener('click',()=>{
+  if(store){ try{ store.removeItem(NKEY); }catch(e){} }
+  nSave.className=''; nSave.textContent='Autospar aktivt';
+});
+
+/* ---------------- TELEFONLISTA ---------------- */
+const TEL=[
+ ['Folksam',[
+  ['0771 950 950','Slinga'],['99','Växeln'],['27 290','Kundservice'],
+  ['26 510','BVN nyskador'],['26 395','BVN pågående skador'],
+  ['26 625','Skadeservice nyskador'],
+  ['26 415','Inbrott nyskador'],['26 290','Inbrott pågående'],
+  ['28 485','Maskin nyskador'],['26 670','Maskin pågående'],
+  ['27 070','Mobil'],['28 444','Motor (bil)'],['62 315','Djur'],
+  ['28 443','Olycksfall'],['27 580','Ansvar'],['28 280','Reseskador'],
+  ['28 150','Rättsskydd','ENDAST pågående. Nyskador till kundtjänst'],
+  ['28 810','Risk'],['28 890','Utredning'],
+  ['28 300','Service Desk (Tjosken)'],['78 916','Ekonomi'],
+  ['85 256','Vidareförmedling slinga'],['28 290','Utlandsskador'],
+  ['28 020','Företag Sak'],['26 870','Företag Bygg'],['28 180','Företag Ansvar']
+ ]],
+ ['3Kronor',[
+  ['0771 23 33 33','Slinga'],['43 740','Byggskador'],['79 945','Sakskador'],
+  ['79 985','Ansvar'],['79 930','Motor (bil)'],['79 935','Olycksfall / överfall'],
+  ['79 950','Reseskador'],
+  ['79 960','Rättsskydd','ENDAST pågående. Nyskador till kundtjänst'],
+  ['79 999','Support'],['19 966','Företag Sak'],['79 966','Företag Bygg']
+ ]],
+ ['Övrigt',[
+  ['0771 122 300','Rentokil (3KR skadedjur)'],
+  ['075 245 10 00','Anticimex Växel'],
+  ['075 245 17 00','Anticimex Byggrådgivning'],
+  ['020 23 52 35','Polygon'],
+  ['08 522 78 200','Trafikförsäkringsföreningen']
+ ]]
+];
+
+const pSel=document.getElementById('pSelect');
+const pFilter=document.getElementById('pFilter');
+const pNum=document.getElementById('pNum');
+const pName=document.getElementById('pName');
+const pNote=document.getElementById('pNote');
+
+function buildPhones(q){
+  q=(q||'').trim().toLowerCase();
+  pSel.innerHTML='';
+  let hits=0;
+  TEL.forEach(([grupp,rader])=>{
+    const träff=rader.filter(r=>!q || r[1].toLowerCase().includes(q) || r[0].replace(/\s/g,'').includes(q.replace(/\s/g,'')) || grupp.toLowerCase().includes(q));
+    if(!träff.length) return;
+    const og=document.createElement('optgroup');
+    og.label=grupp;
+    träff.forEach(r=>{
+      const o=document.createElement('option');
+      o.value=r[0];
+      o.textContent=r[1]+' — '+r[0];
+      o.dataset.namn=r[1];
+      o.dataset.grupp=grupp;
+      if(r[2]) o.dataset.info=r[2];
+      og.appendChild(o); hits++;
+    });
+    pSel.appendChild(og);
+  });
+  if(!hits){
+    const o=document.createElement('option');
+    o.textContent='Ingen träff'; o.disabled=true;
+    pSel.appendChild(o);
+  }
+}
+
+function pickPhone(){
+  const o=pSel.selectedOptions[0];
+  if(!o || o.disabled) return;
+  pNum.textContent=o.value;
+  pName.textContent=o.dataset.grupp+' · '+o.dataset.namn;
+  pNote.textContent=o.dataset.info||'';
+}
+
+pFilter.addEventListener('input',()=>buildPhones(pFilter.value));
+pSel.addEventListener('change',pickPhone);
+pSel.addEventListener('click',pickPhone);
+pSel.addEventListener('keyup',pickPhone);
+
+document.getElementById('pCopy').onclick=async function(){
+  if(pNum.textContent==='—') return;
+  const b=this, old=b.textContent;
+  try{ await navigator.clipboard.writeText(pNum.textContent); }
+  catch(e){
+    const tmp=document.createElement('textarea');
+    tmp.value=pNum.textContent; document.body.appendChild(tmp);
+    tmp.select(); document.execCommand('copy'); tmp.remove();
+  }
+  b.textContent='Kopierat'; setTimeout(()=>{b.textContent=old;},1400);
+};
+
+document.getElementById('pInsert').onclick=()=>{
+  const o=pSel.selectedOptions[0];
+  if(!o || o.disabled) return;
+  const rad='Vidarekopplad till '+o.dataset.namn+' ('+o.value+')';
+  const lines=nNote.value.split('\n');
+  const i=lines.findIndex(l=>l.trim().startsWith('Nästa steg:'));
+  if(i>=0){
+    lines[i]= lines[i].replace(/\s+$/,'');
+    lines[i]= lines[i].trim()==='Nästa steg:' ? 'Nästa steg: '+rad : lines[i]+' · '+rad;
+    nNote.value=lines.join('\n');
+  } else {
+    nNote.value=nNote.value.replace(/\s*$/,'')+'\nNästa steg: '+rad+'\n';
+  }
+  saveNote();
+  nNote.focus();
+};
+
+buildPhones('');
+
+
+buildPhones("");
+
+/* ---------------- ÅLDERSAVDRAGSPANELEN ---------------- */
+/* Samma tabell och samma beräkning som kalkylatorn — allt kommer från
+   aa-data.js, så panelen kan inte visa en annan siffra än den. */
+const aaSok=document.getElementById('aaSok');
+const aaObjekt=document.getElementById('aaObjekt');
+const aaLage=document.getElementById('aaLage');
+const aaAlderBox=document.getElementById('aaAlderBox');
+const aaDatumBox=document.getElementById('aaDatumBox');
+const aaAlderIn=document.getElementById('aaAlder');
+const aaInstall=document.getElementById('aaInstall');
+const aaJamfor=document.getElementById('aaJamfor');
+const aaAmt=document.getElementById('aaAmt');
+const aaCalcEl=document.getElementById('aaCalc');
+
+let aaValt=null;          /* index i AA_ITEMS */
+let aaLageV='alder';
+
+/* Sidan och aa-data.js laddas upp var för sig via FTP, så de kan hamna i
+   otakt. Utan den här kontrollen kastar beräkningen ReferenceError, händelse-
+   hanteraren dör tyst och panelen fryser på en gammal text — den ser hel ut
+   men slutar räkna. Hellre ett tydligt fel än en siffra man inte kan lita på. */
+function aaBeroendenSaknas(){
+  if(typeof AA_ITEMS==='undefined') return 'aa-data.js har inte laddats alls';
+  if(typeof AA_VERSION==='undefined' || AA_VERSION<2) return 'aa-data.js är en äldre version än sidan';
+  if(typeof aaAndel!=='function' || typeof aaProcent!=='function'
+     || typeof aaAlderFranDatum!=='function') return 'aa-data.js saknar beräkningsfunktionerna';
+  return null;
+}
+
+/* Listan byggs om vid sökning i stället för att dölja option-element,
+   eftersom display:none på <option> inte fungerar i alla webbläsare. */
+function aaBygg(filter){
+  if(typeof AA_ITEMS==='undefined'){ aaObjekt.innerHTML=''; return; }
+  const f=(filter||'').toLowerCase().trim();
+  aaObjekt.innerHTML='';
+  AA_ITEMS.forEach((it,i)=>{
+    if(f && !it.name.toLowerCase().includes(f)) return;
+    const op=document.createElement('option');
+    op.value=i; op.textContent=it.name;
+    if(i===aaValt) op.selected=true;
+    aaObjekt.appendChild(op);
+  });
+  if(!aaObjekt.options.length){
+    const op=document.createElement('option');
+    op.disabled=true; op.textContent='Ingen träff på "'+f+'"';
+    aaObjekt.appendChild(op);
+  }
+}
+
+function aaAlderNu(){
+  if(aaLageV==='alder') return parseInt(aaAlderIn.value,10);
+  return aaAlderFranDatum(aaInstall.value, aaJamfor.value);   /* aa-data.js */
+}
+
+function aaUppdatera(){
+  const brist=aaBeroendenSaknas();
+  if(brist){
+    aaAmt.textContent='Filerna i otakt';
+    aaCalcEl.innerHTML='<b>'+brist+'.</b><br>Ladda upp aa-data.js på nytt så '
+      + 'fungerar åldersavdraget igen. Kontrollera alltid mot kalkylatorn så länge.';
+    return;
+  }
+  const item = aaValt!=null ? AA_ITEMS[aaValt] : null;
+  const alder = aaAlderNu();
+
+  if(!item){
+    aaAmt.textContent='Välj objekt';
+    aaCalcEl.textContent='Sök fram objektet och ange ålder.';
+    return;
+  }
+  if(!isFinite(alder) || alder<0){
+    aaAmt.textContent='Ange ålder';
+    aaCalcEl.innerHTML=item.name+'<br>Fria år '+item.no_deduction_years
+      +' · '+(item.deduction_rate*100).toFixed(1).replace('.0','')+' %/år · max '+item.max_years+' år';
+    return;
+  }
+
+  const andel=aaAndel(item,alder);            /* aa-data.js */
+  aaAmt.textContent=aaProcent(andel);
+
+  let rader=item.name+', '+alder+' år<br>'
+    +'Fria år '+item.no_deduction_years+' · '
+    +(item.deduction_rate*100).toFixed(1).replace('.0','')+' %/år · max '+item.max_years+' år';
+
+  const belopp=Math.max(0,Number(nBel.value)||0);
+  if(belopp){
+    const avdrag=Math.round(belopp*andel);
+    rader+='<br>'+fmt(belopp)+' kr − '+fmt(avdrag)+' kr = <b>'+fmt(belopp-avdrag)+' kr</b> kvar';
+  }
+  aaCalcEl.innerHTML=rader;
+}
+
+aaObjekt.addEventListener('change',()=>{
+  const v=aaObjekt.value;
+  aaValt = v==='' ? null : Number(v);
+  aaUppdatera();
+  if(typeof saveNote==='function') saveNote();
+});
+aaSok.addEventListener('input',()=>aaBygg(aaSok.value));
+aaAlderIn.addEventListener('input',()=>{ aaUppdatera(); if(typeof saveNote==='function') saveNote(); });
+aaInstall.addEventListener('change',aaUppdatera);
+aaJamfor.addEventListener('change',aaUppdatera);
+/* Skadebeloppet delas med självriskpanelen. */
+nBel.addEventListener('input',aaUppdatera);
+
+aaLage.querySelectorAll('button').forEach(b=>{
+  b.onclick=()=>{
+    aaLageV=b.dataset.v;
+    [...aaLage.children].forEach(x=>x.classList.toggle('on',x===b));
+    aaAlderBox.style.display = aaLageV==='alder' ? '' : 'none';
+    aaDatumBox.style.display = aaLageV==='datum' ? '' : 'none';
+    aaUppdatera();
+  };
+});
+
+document.getElementById('aaInsert').onclick=()=>{
+  const item = aaValt!=null ? AA_ITEMS[aaValt] : null;
+  const alder = aaAlderNu();
+  if(!item || !isFinite(alder)){
+    aaAmt.textContent='Ange ålder';
+    return;
+  }
+  const andel=aaAndel(item,alder);
+  let rad=aaProcent(andel)+' — '+item.name+', '+alder+' år';
+  const belopp=Math.max(0,Number(nBel.value)||0);
+  if(belopp) rad+=' · '+fmt(Math.round(belopp*andel))+' kr av '+fmt(belopp)+' kr';
+  setRow('Åldersavdrag:', rad);
+  if(typeof saveNote==='function') saveNote();
+  nNote.focus();
+};
+
+aaBygg('');
+aaJamfor.value=new Date().toISOString().split('T')[0];
+
+/* Startsekvens — måste ligga sist, efter att alla paneler deklarerats. */
+restoreNote();
+updateSr();
+checkOklar();
+aaUppdatera();
+
+/* ---------------- VILLKORSASSISTENT ---------------- */
+/* Slår upp i sidans egna villkorskort och räknar med samma motorer som
+   panelen — srBerakna() för självrisk och åldersavdragstabellen i
+   aa-data.js. Den gissar aldrig ett belopp; saknas en uppgift frågar den.
+   Väntar på DOMContentLoaded — panelens markup ligger efter det här skriptet. */
+document.addEventListener('DOMContentLoaded',function(){
+  const vaOpen=document.getElementById('vaOpen');
+  const vaPanel=document.getElementById('vaPanel');
+  const vaLog=document.getElementById('vaLog');
+  const vaIn=document.getElementById('vaIn');
+  if(!vaOpen||!vaPanel) return;
+
+  /* Sökindex byggs vid start ur sidans kort — ingen dubbellagrad villkorstext. */
+  const KORT=[...document.querySelectorAll('details.card')].map(d=>({
+    id:d.id,
+    chip:((d.querySelector('.chip')||{}).textContent||'').trim(),
+    titel:((d.querySelector('.title')||{}).textContent||'').trim(),
+    text:((d.querySelector('.body')||{}).textContent||'').replace(/\s+/g,' ').trim()
+  })).filter(k=>k.id);
+
+  const NYCKEL={
+    lack_frys:['frysning','frysskada','frusen','frusit','fryst','frös','sprängt rör','sprängda rör','kylan'],
+    lack_norm:['branschregler','byggnorm','fackmässig','fackmassig','ej fackmannamässigt','bkr','säker vatten'],
+    lack_tat:['tätskikt','tatskikt','vattentätt skikt','våtrum','vatrum','kakel','klinker','duschen','badrumsgolv','golvmatta'],
+    lack_annat:['läckage','lackage','läcker','läckt','läckt vatten','vattenskada','rörbrott','rörskada','vattenledning','koppling','blandare','diskho','fuktskada'],
+    oversv:['översvämning','oversvamning','skyfall','störtregn','dagvatten','stigande vatten','snösmältning','vatten trängde in','vatten utifrån'],
+    baktryck:['baktryck','golvbrunn','upp ur avloppet','upp ur brunnen','kloak','stopp i avloppet'],
+    maskin:['går sönder','gått sönder','gick sönder','slutat fungera','fungerar inte','maskinskada','trasig'],
+    brand:['brand','brinner','brann','brunnit','eldsvåda','eld','blixt','åska','askan','kortslutning','explosion','sotskada','rökskada','överspänning','overspanning','överslag'],
+    storm:['storm','stormen','blåste','blast','vindstyrka','träd föll','trädet','oväder'],
+    hagel:['hagel','hagelskur'],
+    snotryck:['snötryck','snotryck','snölast','snön på taket','tyngden av snö'],
+    natur:['jordskalv','jordbävning','skred','jordskred','ras','lavin'],
+    djur:['mård','mard','fågel','fagel','hackspett','vilda djur','älg','rådjur','vildsvin','ekorre','grävling'],
+    glas:['glasruta','fönsterruta','krossad ruta','krossat fönster','glaset','isolerglas'],
+    stold:['stöld','stold','inbrott','stulen','stulit','stal','skadegörelse','skadegorelse','klotter','vandalisering','uppbruten'],
+    trafik:['trafikskada','påkörd','pakord','körde in i','luftfartyg','flygplan'],
+    nod:['nödskada','räddningsåtgärd','räddningstjänsten','nödvändig räddning'],
+    tak_in:['genom yttertaket','genom taket','vatten in genom tak','regn genom taket','via fasaden','in genom fasaden'],
+    husextra:['husextra','allrisk','plötslig och oförutsedd','oförutsedd','oforutsedd','råkade','tappade'],
+    skadedjur:['skadedjur','hussvamp','äkta hussvamp','mögel','mogel','insekter','råttor','rattor','möss','mus i','silverfisk','getingar','pälsänger','träskadeinsekter','lukt']
+  };
+
+  /* Föremål väger lätt — händelsen avgör vilket moment skadan hör till.
+     ”Läckage från diskmaskin” är en läckageskada (B5/B7), inte en maskinskada. */
+  const SVAGA={
+    maskin:['diskmaskin','tvättmaskin','tvattmaskin','torktumlare','kylskåp','frysen','frysskåp','spisen','ugnen','värmepump','varmepump','vitvara','vitvaror','hushållsmaskin','maskinen','varmvattenberedare','beredare','pannan','cirkulationspump'],
+    glas:['rutan','fönstret'],
+    stold:['tjuven']
+  };
+
+  const STOPP=new Set(['och','att','den','det','som','har','ett','för','med','var','vad','hur','vem','när','kan','ska','vill','man','jag','vi','de','är','på','av','till','från','om','en','i','så','men','eller','inte','ingen','detta','denna','kunden','kund','ringer','ringde','undrar','fråga','frågar','gäller','galler','villa','stor','bas','sin','sitt','hos','vid','efter','under','över','mot','samt','också','bara','även']);
+
+  const norm = s => (s||'').toLowerCase().replace(/[“”"'’]/g,'').replace(/\s+/g,' ').trim();
+  function esc(s){ const d=document.createElement('div'); d.textContent=s==null?'':String(s); return d.innerHTML; }
+
+  function hittaAvtal(q){
+    if(/villa stor|\bstor\b|\bplus\b/.test(q)) return 'stor';
+    if(/villa bas|\bbas\b/.test(q)) return 'bas';
+    return null;
+  }
+  function hittaBelopp(q){
+    let m=q.match(/(\d[\d\s.]{2,})\s*(?:kr|kronor|:-)/);
+    if(!m) m=q.match(/(?:kostar|kostnad|belopp|skadan är på|uppgår till)\s*(?:ca\s*|cirka\s*)?(\d[\d\s.]{2,})/);
+    if(!m) return null;
+    const n=Number(m[1].replace(/[\s.]/g,''));
+    return isFinite(n)&&n>0 ? n : null;
+  }
+  function hittaAlder(q){
+    const m=q.match(/(\d{1,3})\s*(?:år|års|åriga?)\b/);
+    return m ? Number(m[1]) : null;
+  }
+  function harBackventil(q){
+    if(/utan backventil|ingen backventil|saknar backventil/.test(q)) return false;
+    if(/backventil/.test(q)) return true;
+    return false;
+  }
+  function harLarm(q){
+    return /larm(et)? (var )?(på|aktiverat|aktiverad)|aktiverat larm|larmet gick|larmcentral/.test(q);
+  }
+
+  function hittaOrsak(q){
+    let bast=null, bastPoang=0;
+    for(const v in NYCKEL){
+      let poang=0;
+      for(const ord of NYCKEL[v]) if(q.includes(ord)) poang+=ord.length;
+      for(const ord of (SVAGA[v]||[])) if(q.includes(ord)) poang+=2;
+      if(poang>bastPoang){ bastPoang=poang; bast=v; }
+    }
+    if(!bast) return null;
+    /* Frysning tillsammans med en maskin hör till B15, inte B7. */
+    const frysord=/frysning|frysskada|frusen|frusit|fryst|frös/.test(q);
+    if(frysord && bast==='maskin') bast='maskin_frys';
+    if(frysord && /^lack_(annat|tat|norm)$/.test(bast)) bast='lack_frys';
+    return ORSAKER.find(o=>o.v===bast)||null;
+  }
+
+  const AA_STOPP=new Set(['gammal','gammalt','gamla','skada','skadan','skadad','kostar','kostnad','belopp','vilken','vilket','kunden','kundens','ringer','trasig','sönder','fungerar','installerad','villa','vatten','vattnet','läckage','brand','storm','genom','ovanför','under']);
+
+  /* Ordet måste träffa ett helt ord i postens namn — annars matchar ”vatten”
+     mot ”Golvvärme, vattenburen” och liknande. Tillåter sammansatt slut
+     (värmepump i bergvärmepump) och bestämd form (fönstret → fönster). */
+  function ordTraff(ord, namnOrd){
+    if(ord===namnOrd) return true;
+    if(ord.length>=7 && namnOrd.endsWith(ord)) return true;
+    if(namnOrd.length>=5 && ord.startsWith(namnOrd) && ord.length-namnOrd.length<=2) return true;
+    return false;
+  }
+  function hittaObjekt(q){
+    if(typeof AA_ITEMS==='undefined') return null;
+    const ord=q.split(/[^a-zåäöéèü]+/).filter(w=>w.length>=4 && !AA_STOPP.has(w) && !STOPP.has(w));
+    if(!ord.length) return null;
+    let bast=null, bastPoang=0, antal=0;
+    AA_ITEMS.forEach((it,i)=>{
+      const namnOrd=it.name.toLowerCase().split(/[^a-zåäöéèü]+/).filter(Boolean);
+      let poang=0;
+      ord.forEach(w=>{ if(namnOrd.some(n=>ordTraff(w,n)) && w.length>poang) poang=w.length; });
+      if(poang>0) antal++;
+      if(poang>bastPoang){ bastPoang=poang; bast={item:it,index:i}; }
+    });
+    if(!bast) return null;
+    bast.fler=antal-1;
+    return bast;
+  }
+
+  /* aaAndel() och aaProcent() kommer från aa-data.js. */
+
+  function sok(q){
+    const ord=[...new Set(q.split(/[^a-zåäöé0-9]+/).filter(w=>w.length>=3 && !STOPP.has(w)))];
+    if(!ord.length) return [];
+    return KORT.map(k=>{
+      const titel=k.titel.toLowerCase(), chip=k.chip.toLowerCase(), text=k.text.toLowerCase();
+      let p=0;
+      ord.forEach(w=>{
+        if(chip.includes(w)) p+=12;
+        if(titel.includes(w)) p+=8;
+        let n=0, i=text.indexOf(w);
+        while(i>=0 && n<6){ n++; i=text.indexOf(w,i+w.length); }
+        p+=n;
+      });
+      return {k,p,ord};
+    }).filter(x=>x.p>0).sort((a,b)=>b.p-a.p).slice(0,3);
+  }
+
+  function utdrag(kort, ord){
+    const text=kort.text, lag=text.toLowerCase();
+    let pos=-1, traff='';
+    for(const w of ord){ const i=lag.indexOf(w); if(i>=0 && (pos<0||i<pos)){ pos=i; traff=w; } }
+    if(pos<0) return esc(text.slice(0,150))+'…';
+    const start=Math.max(0,pos-70), slut=Math.min(text.length,pos+130);
+    const bit=text.slice(start,slut);
+    const re=new RegExp('('+traff.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','ig');
+    return (start>0?'…':'')+esc(bit).replace(re,'<mark>$1</mark>')+(slut<text.length?'…':'');
+  }
+
+  function refKnappar(refs){
+    if(!refs || !refs.length) return '';
+    return '<div class="vaEtikett" style="margin-top:9px">Slå upp i villkoret</div><div class="vaRefs">'
+      + refs.map(r=>'<button type="button" data-oppna="'+esc(r[0])+'">'+esc(r[1])+'</button>').join('')
+      + '</div>';
+  }
+
+  const FOT='<div class="vaFot">Slår upp i sidans villkorstext och räknar med villkorets regler. Kontrollera alltid mot gällande villkor innan beslut.</div>';
+
+  function byggSvar(fraga){
+    const q=norm(fraga);
+    if(!q) return null;
+
+    const orsak=hittaOrsak(q);
+    const avtalV=hittaAvtal(q) || avtal;   /* panelens val som utgångsläge */
+    const belopp=hittaBelopp(q);
+    const alder=hittaAlder(q);
+    const objekt=hittaObjekt(q);
+    const bv=harBackventil(q);
+    const larmOn=harLarm(q);
+
+    /* --- 1. Skadescenario --- */
+    if(orsak){
+      const r=srBerakna(orsak, avtalV, belopp, bv, larmOn);
+      let h='<div class="vaTitel">'+esc(avtalV==='stor'?'Villa Stor':'Villa Bas')+' · '+esc(orsak.t)+'</div>';
+
+      h+='<div class="vaBox"><div class="vaEtikett">Självrisk</div>'
+       + '<div class="vaBelopp">'+esc(r.kort)+'</div>'
+       + '<div class="vaCalc">'+r.calc+'</div></div>';
+
+      if(objekt && alder!=null){
+        const it=objekt.item, andel=aaAndel(it,alder);
+        let rader='Fria år '+it.no_deduction_years+' · '+(it.deduction_rate*100).toFixed(1).replace('.0','')+' %/år · max '+it.max_years+' år';
+        if(belopp){
+          const avdrag=Math.round(belopp*andel);
+          rader+='<br>'+fmt(belopp)+' kr − '+fmt(avdrag)+' kr = <b>'+fmt(belopp-avdrag)+' kr</b> kvar';
+        }
+        if(objekt.fler>0) rader+='<br>'+objekt.fler+' andra poster matchar också — kontrollera i kalkylatorn.';
+        h+='<div class="vaBox"><div class="vaEtikett">Åldersavdrag · '+esc(it.name)+', '+alder+' år</div>'
+         + '<div class="vaBelopp">'+aaProcent(andel)+'</div>'
+         + '<div class="vaCalc">'+rader+'</div></div>';
+      } else if(objekt && alder==null){
+        h+='<div class="vaFraga">Hittade <b>'+esc(objekt.item.name)+'</b> i åldersavdragstabellen. Hur gammal är den? Skriv t.ex. ”8 år” så räknar jag ut avdraget.</div>';
+      }
+
+      if(r.saknarBelopp) h+='<div class="vaFraga">Självrisken är rörlig här. Ange skadebeloppet så räknar jag ut den exakta summan.</div>';
+      if(r.obedombar)   h+='<div class="vaFraga">Skadeorsaken måste konstateras innan ärendet kan regleras mot ett moment i villkoret.</div>';
+      if(r.kraverStor)  h+='<div class="vaFraga">Det här momentet finns bara i Villa Stor. Kontrollera kundens avtal.</div>';
+
+      h+=refKnappar(orsak.refs);
+      if(orsak.hint) h+='<div class="vaHint">'+esc(orsak.hint)+'</div>';
+      h+='<button type="button" class="vaFyll" data-fyll="'+esc(orsak.v)
+        +'" data-avtal="'+esc(avtalV)+'" data-belopp="'+esc(belopp||'')
+        +'" data-bv="'+(bv?'1':'')+'" data-larm="'+(larmOn?'1':'')+'">Fyll i panelen med det här</button>';
+      return h+FOT;
+    }
+
+    /* --- 2. Enbart åldersavdrag --- */
+    if(objekt && alder!=null){
+      const it=objekt.item, andel=aaAndel(it,alder);
+      let rader='Fria år '+it.no_deduction_years+' · '+(it.deduction_rate*100).toFixed(1).replace('.0','')+' %/år · max '+it.max_years+' år';
+      if(belopp){
+        const avdrag=Math.round(belopp*andel);
+        rader+='<br>'+fmt(belopp)+' kr − '+fmt(avdrag)+' kr = <b>'+fmt(belopp-avdrag)+' kr</b> kvar';
+      }
+      if(objekt.fler>0) rader+='<br>'+objekt.fler+' andra poster matchar också — kontrollera i kalkylatorn.';
+      return '<div class="vaTitel">Åldersavdrag</div><div class="vaBox">'
+        + '<div class="vaEtikett">'+esc(it.name)+', '+alder+' år</div>'
+        + '<div class="vaBelopp">'+aaProcent(andel)+'</div>'
+        + '<div class="vaCalc">'+rader+'</div></div>'
+        + '<div class="vaHint">Skriv även skadeorsaken, t.ex. ”läckage”, så får du självrisken på köpet.</div>'+FOT;
+    }
+
+    /* --- 3. Uppslag av villkorspunkt, t.ex. ”B7” --- */
+    const punkt=q.match(/\bb\s?(\d{1,2})\b/);
+    if(punkt){
+      const id='b'+punkt[1];
+      const k=KORT.find(x=>x.id===id);
+      if(k) return '<div class="vaTitel">'+esc(k.chip)+' '+esc(k.titel)+'</div>'
+        + '<div class="vaUtdrag">'+esc(k.text.slice(0,320))+(k.text.length>320?'…':'')+'</div>'
+        + refKnappar([[k.id,'Öppna '+k.chip]])+FOT;
+    }
+
+    /* --- 4. Fritextsökning i villkoret --- */
+    const träffar=sok(q);
+    if(träffar.length){
+      let h='<div class="vaTitel">Det här hittade jag i villkoret</div>';
+      träffar.forEach(t=>{
+        h+='<div class="vaTraff"><b>'+esc(t.k.chip)+' '+esc(t.k.titel)+'</b>'
+         + '<div class="vaUtdrag">'+utdrag(t.k,t.ord)+'</div>'
+         + '<div class="vaRefs" style="margin-top:6px"><button type="button" data-oppna="'+esc(t.k.id)+'">Öppna '+esc(t.k.chip)+'</button></div></div>';
+      });
+      return h+FOT;
+    }
+
+    return '<div class="vaTitel">Jag hittade inget att gå på</div>'
+      + '<div>Prova att beskriva skadan i klartext — avtal, vad som hänt, belopp och ålder. Till exempel:</div>'
+      + '<div class="vaHint">villa stor, läckage från diskmaskin 8 år, 40 000 kr</div>'
+      + '<div style="margin-top:8px">Du kan också skriva en villkorspunkt direkt, som <b>B7</b>.</div>'+FOT;
+  }
+
+  function bubbla(klass, html){
+    const d=document.createElement('div');
+    d.className='vaMsg '+klass;
+    d.innerHTML=html;
+    vaLog.appendChild(d);
+    vaLog.scrollTop=vaLog.scrollHeight;
+    return d;
+  }
+
+  function oppnaKort(id){
+    const el=document.getElementById(id);
+    if(!el) return;
+    el.open=true;
+    el.scrollIntoView({behavior:'smooth',block:'center'});
+    if(window.innerWidth<=700) stang();
+  }
+
+  function fyllPanelen(d){
+    const o=ORSAKER.find(x=>x.v===d.fyll);
+    if(!o) return;
+    if(d.avtal && d.avtal!==avtal){
+      const knapp=[...nAvtal.children].find(x=>x.dataset.v===d.avtal);
+      if(knapp) knapp.click();
+    }
+    nSel.value=o.v;
+    if(d.belopp) nBel.value=d.belopp;
+    nBv.checked=!!d.bv;
+    nLarm.checked=!!d.larm;
+    updateSr();
+    if(typeof checkOklar==='function') checkOklar();
+    if(typeof saveNote==='function') saveNote();
+    document.getElementById('anteckningar').scrollIntoView({behavior:'smooth',block:'start'});
+    if(window.innerWidth<=700) stang();
+  }
+
+  vaLog.addEventListener('click',e=>{
+    const oppna=e.target.closest('[data-oppna]');
+    if(oppna){ oppnaKort(oppna.dataset.oppna); return; }
+    const fyll=e.target.closest('[data-fyll]');
+    if(fyll) fyllPanelen(fyll.dataset);
+  });
+
+  function fraga(text){
+    if(!text.trim()) return;
+    bubbla('jag',esc(text));
+    const svar=byggSvar(text);
+    if(svar) bubbla('bot',svar);
+    vaIn.value='';
+  }
+
+  document.getElementById('vaForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    fraga(vaIn.value);
+  });
+  document.querySelectorAll('#vaChips button').forEach(b=>{
+    b.addEventListener('click',()=>{ fraga(b.textContent); });
+  });
+
+  function oppna(){
+    vaPanel.hidden=false;
+    vaOpen.setAttribute('aria-expanded','true');
+    vaOpen.style.display='none';
+    vaIn.focus();
+    if(!vaLog.children.length){
+      bubbla('bot','<div class="vaTitel">Hej! Fråga om villkoret</div>'
+       +'<div>Beskriv skadan i klartext så plockar jag fram självrisk, åldersavdrag och rätt villkorspunkt. Nämn gärna avtal, belopp och ålder.</div>'
+       +'<div class="vaHint">Du kan också söka fritt i villkorstexten eller skriva en punkt direkt, som <b>B7</b>.</div>');
+    }
+  }
+  function stang(){
+    vaPanel.hidden=true;
+    vaOpen.setAttribute('aria-expanded','false');
+    vaOpen.style.display='';
+    vaOpen.focus();
+  }
+  vaOpen.addEventListener('click',oppna);
+  document.getElementById('vaClose').addEventListener('click',stang);
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape' && !vaPanel.hidden) stang(); });
+});
+
+</script>
+
+<button id="vaOpen" type="button" aria-expanded="false" aria-controls="vaPanel">💬 Fråga villkoret</button>
+<div id="vaPanel" role="dialog" aria-label="Villkorsassistent" hidden>
+  <div id="vaHead">
+    <div>
+      <strong>Villkorsassistent</strong>
+      <span>Söker i villkoret · räknar självrisk och åldersavdrag</span>
+    </div>
+    <button id="vaClose" type="button" aria-label="Stäng assistenten">&#10005;</button>
+  </div>
+  <div id="vaLog" aria-live="polite"></div>
+  <div id="vaChips">
+    <button type="button">villa bas, läckage från diskmaskin 8 år, 40 000 kr</button>
+    <button type="button">villa stor, baktryck utan backventil</button>
+    <button type="button">snötryck på altantak</button>
+    <button type="button">B7</button>
+  </div>
+  <form id="vaForm">
+    <input id="vaIn" type="text" autocomplete="off" placeholder="Beskriv skadan eller sök i villkoret…" aria-label="Din fråga">
+    <button type="submit">Fråga</button>
+  </form>
+</div>
+
+<button id="themeToggle" type="button" aria-pressed="false">🌙 Mörkt</button>
+<script src="tema.js"></script>
+</body>
+</html>

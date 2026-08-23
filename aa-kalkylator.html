@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<!-- saved from url=(0078)file:///C:/Users/fpzm84/OneDrive%20-%20Folksam/Skrivbordet/Mini%20projekt.html -->
+<html lang="sv"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>ALEX</title>
+<script>
+/* Sätts före rendering så sidan inte blinkar vitt i mörkt läge. */
+(function(){
+  try{
+    var saved = localStorage.getItem('theme');
+    var dark = saved ? saved === 'dark'
+                     : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if(dark) document.documentElement.setAttribute('data-theme','dark');
+  }catch(e){}
+})();
+</script>
+    <style>
+:root{
+    --bg1:#e6f4fb;
+    --bg2:#cce7f5;
+    --card:#ffffff;
+    --accent:rgb(0, 117, 188);
+    --accent-hover:#005a91;
+    --line:#cce7f5;
+    --soft:#e6f4fb;
+    --field-bg:#ffffff;
+    --field-ink:#1a2a35;
+    --btn-fg:#ffffff;
+    --shadow:rgba(0,0,0,0.15);
+    --focus-ring:rgba(0,117,188,0.3);
+}
+:root[data-theme="dark"]{
+    --bg1:#0E1620;
+    --bg2:#132330;
+    --card:#16212C;
+    --accent:#63B0E0;
+    --accent-hover:#8CC8EC;
+    --line:#33485A;
+    --soft:#1B2733;
+    --field-bg:#1B2733;
+    --field-ink:#E6EDF3;
+    --btn-fg:#0B131B;
+    --shadow:rgba(0,0,0,0.5);
+    --focus-ring:rgba(99,176,224,0.35);
+}
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    margin: 0;
+    background: linear-gradient(135deg, var(--bg1), var(--bg2));
+    color: var(--accent);
+
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    gap:20px;
+
+    padding:20px;
+}
+#searchInput{
+    width:100%;
+    margin-bottom:15px;
+}
+
+#DesignD {
+    background: var(--card);
+    padding: 30px;
+    border-radius: 16px;
+    width: 520px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px var(--shadow);
+    margin-bottom: 15px;
+}
+
+    h1 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: var(--accent);
+    }
+
+    label {
+        font-weight: 600;
+        margin-top: 20px;
+    }
+
+select,
+input[type="number"],
+input[type="text"],
+input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 3px solid var(--line);
+    background: var(--field-bg);
+    color: var(--field-ink);
+    outline: none;
+    transition: 0.2s;
+    font-size: 14px;
+    margin-top: 10px;
+}
+option{background:var(--field-bg);color:var(--field-ink)}
+optgroup{background:var(--field-bg);color:var(--accent)}
+input[type="date"]::-webkit-calendar-picker-indicator{
+    filter:var(--picker-filter,none);
+}
+:root[data-theme="dark"]{--picker-filter:invert(1) brightness(1.6)}
+.ageMode {
+    display: flex;
+    gap: 20px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.ageMode label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    font-weight: 600;
+}
+
+.ageMode input[type="radio"] {
+    width: auto;
+    margin: 0;
+}
+
+    select:focus, input:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 5px var(--focus-ring);
+    }
+
+    select {
+        height: 180px;
+	margin-bottom: 35px;
+	margin-top: 25px;
+	display: block;
+    	margin: 0 auto; /* centrerar horisontellt */
+
+    }
+
+    #result {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 12px;
+        background: var(--soft);
+        font-size: 18px;
+        text-align: center;
+        font-weight: bold;
+        border: 1px solid var(--line);
+	#result line-height: 1.6;
+}
+
+#SelfRiskBox{
+    background:var(--card);
+    padding:30px;
+    border-radius:16px;
+    width:420px;
+    max-height:90vh;
+    overflow-y:auto;
+    box-shadow:0 10px 30px var(--shadow);
+}
+
+#insuranceResult{
+    margin-top:20px;
+    padding:15px;
+    border-radius:12px;
+    background:var(--soft);
+    border:1px solid var(--line);
+    line-height:1.7;
+}
+#insuranceSelect {
+    width: 250px;
+    height: 50px;
+    display: block;
+    margin: 10px auto;
+}
+#calculatorBox{
+    background:var(--card);
+    padding:30px;
+    border-radius:16px;
+    width:300px;
+    max-height:90vh;
+    overflow-y:auto;
+    box-shadow:0 10px 30px var(--shadow);
+}
+
+#calculatorResult{
+    margin-top:20px;
+    padding:15px;
+    border-radius:12px;
+    background:var(--soft);
+    border:1px solid var(--line);
+    line-height:1.7;
+}
+    
+
+#backToVillkor{
+    position:fixed;
+    left:20px;
+    bottom:20px;
+    z-index:9999;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--accent);
+    color:var(--btn-fg);
+    text-decoration:none;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    font-size:14px;
+    font-weight:600;
+    padding:12px 18px;
+    border-radius:100px;
+    box-shadow:0 6px 20px var(--shadow);
+    transition:0.2s;
+}
+#backToVillkor:hover{
+    background:var(--accent-hover);
+    transform:translateY(-2px);
+    box-shadow:0 8px 24px var(--shadow);
+}
+@media (max-width:700px){
+    #backToVillkor{left:12px;bottom:12px;padding:10px 14px;font-size:13px}
+}
+
+/* ---------- mörkt läge ---------- */
+#themeToggle{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:9999;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--card);
+    color:var(--accent);
+    border:2px solid var(--line);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    font-size:14px;
+    font-weight:600;
+    padding:11px 17px;
+    border-radius:100px;
+    cursor:pointer;
+    box-shadow:0 6px 20px var(--shadow);
+    transition:0.2s;
+}
+#themeToggle:hover{
+    border-color:var(--accent);
+    transform:translateY(-2px);
+    box-shadow:0 8px 24px var(--shadow);
+}
+#themeToggle:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (max-width:700px){
+    #themeToggle{right:12px;bottom:12px;padding:10px 14px;font-size:13px}
+}
+@media print{#themeToggle{display:none}}
+
+</style>
+
+</head>
+<body>
+
+<a id="backToVillkor" href="./villaforsakring.html">&#8592; Villkor &amp; tr&#228;ning</a>
+
+
+
+
+<div id="calculatorBox">
+    <h2>Miniräknare</h2>
+
+    <label>Kostnad före avdrag (kr)</label>
+    <input type="number" id="costInput" placeholder="Ange belopp">
+
+    <div id="calculatorResult">
+        Ange belopp för att se åldersavdrag.
+    </div>
+
+    <div style="
+        font-size:12px;
+        line-height:1.5;
+        background:var(--soft);
+        padding:10px;
+        border-radius:10px;
+        margin-bottom:15px;
+	margin-top: 15px;
+        border:1px solid var(--line);
+    ">
+	<b>***OBS!!! Glöm ej MAX ÅA***</b><br><br>
+        Maskin/installation som regleras på moment brand (överslag, överspänning) eller maskin &amp; installation, samt yt-/tätskikt vid läckage regleras utan restvärde.<br>
+	Åldersavdrag max 105 000kr / skadetillfälle, gäller även vid utförsäkring.<br><br>
+	I Villa Bas gäller inte max 105 000 kr för värmepump/spabad enligt ovan.<br><br>
+	I villa stor gäller inte max 15 000kr för maskin/ installation eller yt-/tätskikt enligt ovan.
+    </div>
+<h4> Skapad av Alexander Abboud (chipsmannen)</h4>
+</div>
+
+<div id="DesignD">
+	<h1>ALEX</h1> 
+    <h1>Åldersavdrag</h1>
+
+<label for="searchInput">Sök åldersavdrag:</label>
+<input type="text" id="searchInput" placeholder="Skriv t.ex. tvättmaskin, värmepump eller fönster...">
+
+
+    <label for="objectSelect">Välj objekt:</label>
+    <select id="objectSelect" size="10" style="width: 300px;">
+        <option value="0">Ackumulatortank</option><option value="1">Altantak (plast)</option><option value="2">Annan väggbeklädnad (ej våtrum)</option><option value="3">Avfuktare som fast installation (krypgrundsavfuktare)</option><option value="4">Avloppspump</option><option value="5">Avloppstank (septitank)</option><option value="6">Badrumsskåp (inredning)</option><option value="7">Badtunna</option><option value="8">Bergvärmepump/jordvärmepump/sjövärmepump</option><option value="9">Braskamin</option><option value="10">Bredbandsledning (exempelvis fiber)</option><option value="11">Centraldammsugare maskin</option><option value="12">Centraldammsugare rörsystem</option><option value="13">Diskmaskin</option><option value="14">Duschdörr/duschvägg (räknas som sanitetsgods)</option><option value="15">Dörr - FOLKSAM</option><option value="16">Dörr - 3KRONOR</option><option value="17">Elinstallation (ej elradiator, ej lampa/armatur)</option><option value="18">Elpanna</option><option value="19">Elradiator</option><option value="20">Expansionskärl</option><option value="21">Fiberoptiksledning (exempelvis bredband)</option><option value="22">Fjärrvärme</option><option value="23">Frys/kyl</option><option value="24">Frånluftsvärmepump</option><option value="25">FTX/FX (värmeväxlare)</option><option value="26">Fönster - FOLKSAM</option><option value="27">Fönster - 3KRONOR</option><option value="28">Förbränningstoalett</option><option value="29">Garageport - FOLKSAM</option><option value="30">Garageport - 3KRONOR</option><option value="31">Golvbeläggning (ej våtrum) - Homogent trä</option><option value="32">Golvbeläggning (ej våtrum) - Keramiska plattor (kakel/klinker)</option><option value="33">Golvbeläggning (ej våtrum) - Lamellträ (parkett)</option><option value="34">Golvbeläggning (ej våtrum) - Laminat</option><option value="35">Golvbeläggning (ej våtrum) - Linoleum</option><option value="36">Golvbeläggning (ej våtrum) - Plast</option><option value="37">Golvbeläggning (ej våtrum) - Textilia</option><option value="38">Golvmatta, trådsvetsad (våtrumsbeklädnad, inklusive tätskikt)</option><option value="39">Golvvärme, elslinga - FOLKSAM (B14 gäller EJ i våtrumsgolv)</option><option value="40">Golvvärme, elslinga - 3KRONOR</option><option value="41">Golvvärme, vattenburen</option><option value="42">Golvvärmetermostat</option><option value="43">Gummidukstak</option><option value="44">Homogent trägolv (ej våtrum)</option><option value="45">Hushållsmaskin (exempelvis vitvaror)</option><option value="46">Hydroforpump</option><option value="47">Kakelugn</option><option value="48">Keramiska plattor, kakel/klinker (ej våtrum)</option><option value="49">Keramiska plattor, kakel/klinker (våtrumsbeklädnad, inklusive tätskikt)</option><option value="50">Keramisk eldstad i värmepanna</option><option value="51">Krypgrundsavfuktare</option><option value="52">Kollektorslang till bergvärme/jordvärme</option><option value="53">Kyl/frys (även vinkyl)</option><option value="54">Köksfläkt</option><option value="55">Köksinredning</option><option value="56">Larm - FOLKSAM</option><option value="57">Larm - 3KRONOR</option><option value="58">Lamellträ golvbeläggning - parkett (ej våtrum)</option><option value="59">Laminat golvbeläggning (ej våtrum)</option><option value="60">Ledningar för fiberoptik och bredband (dataöverföring)</option><option value="61">Liner (till pool)</option><option value="62">Linoleum golvbeläggning (ej våtrum)</option><option value="63">Luft/luft värmepumpsanläggning</option><option value="64">Luft/vatten värmepumpsanläggning</option><option value="65">Lås - FOLKSAM</option><option value="66">Lås - 3KRONOR</option><option value="67">Markis</option><option value="68">Maskinell utrustning (ej hushållsmaskin)</option><option value="69">Mulltoa</option><option value="70">Murad öppen spis</option><option value="71">Målning in- och utvändig (ej våtrum)</option><option value="72">Målning i våtrum (samt övrig beklädnad)</option><option value="73">Natursten (våtrumsbeklädnad, inklusive tätskikt)</option><option value="74">Oljecistern</option><option value="75">Panna</option><option value="76">Panna (kopplad till värmepump, exempelvis keramisk eldstad)</option><option value="77">Papptak</option><option value="78">Parkett golvbeläggning - lamellträ (ej våtrum)</option><option value="79">Pelletsbrännare</option><option value="80">Plastgolvbeläggning (ej våtrum)</option><option value="81">Plasttak</option><option value="82">Pool - maskinell utrustning</option><option value="83">Poolduk/konstruktion</option><option value="84">Pooldammsugare/poolrobot</option><option value="85">Poolvärmepump</option><option value="86">Radioantenn/mast</option><option value="87">Radonett/radonsug/radonavskiljare</option><option value="88">Reningsverk</option><option value="89">Rörsystem (kall/varmvatten, värmesystem, avlopp, blandare, diskho)</option><option value="90">Sanitetsgods (toalettstol, badkar, tvättställ (ej maskinell utrustning))</option><option value="91">Skorsten (annat material, ej plåt eller stål)</option><option value="92">Skorsten (plåt, stål)</option><option value="93">Skåp (fast inredning)</option><option value="94">Smarta hem</option><option value="95">Solfångare</option><option value="96">Solpanel (solceller)</option><option value="97">Spabad utomhus - FOLKSAM</option><option value="98">Spabad utomhus - 3KRONOR</option><option value="99">Spis</option><option value="100">Takbeläggning (papp, plast eller gummiduk)</option><option value="101">Takbeläggning (övrigt, ej papp, plast eller gummiduk)</option><option value="102">Takvärme</option><option value="103">Tapetsering</option><option value="104">Textilia golvbeläggning (ej våtrum)</option><option value="105">Trägolv, homogent (ej våtrum)</option><option value="106">TV-antenn/parabol</option><option value="107">Tvättmaskin</option><option value="108">Vakuumtoalett</option><option value="109">Varmvattenberedare (fristående)</option><option value="110">Varmvattenberedare (kopplad till värmepump)</option><option value="111">Vattenpump (djupvattenpump)</option><option value="112">Vattenradiator</option><option value="113">Vedpanna/gaspanna</option><option value="114">Vindkraftverk</option><option value="115">Våtrumsbeklädnad inklusive tätskikt - golv- &amp; väggmatta (trådsvetsad)</option><option value="116">Våtrumsbeklädnad inklusive tätskikt - keramiska plattor (kakel/klinker)</option><option value="117">Våtrumsbeklädnad inklusive tätskikt - målning i våtrum</option><option value="118">Våtrumsbeklädnad inklusive tätskikt - natursten</option><option value="119">Våtrumsbeklädnad inklusive tätskikt - övriga golv- &amp; väggbeklädnad</option><option value="120">Väggbeklädnad (annan, ej våtrum)</option><option value="121">Väggmatta, trådsvetsad (våtrumsbeklädnad, inklusive tätskikt)</option><option value="122">Värmepanna</option><option value="123">Värmepanna (kopplad till värmepump, exempelvis keramisk eldstad)</option><option value="124">Värmepumpsanläggning (ej luft/luft)</option><option value="125">Värmepumpsanläggning (luft/luft)</option><option value="126">Värmeväxlare (FTX/FX)</option><option value="127">Öppen spis (murad)</option><option value="128">Övrig maskininstallation</option> <option value="129">Duschkabin</option>
+    </select>
+<div class="ageMode">
+    <label>
+        <input type="radio" name="ageMode" value="manual" checked="">
+        Ange ålder
+    </label>
+
+    <label>
+        <input type="radio" name="ageMode" value="date">
+        Installationsdatum
+    </label>
+</div>
+
+<div id="manualAgeBox">
+    <label for="ageInput">Ange ålder (år):</label>
+    <input type="number" id="ageInput" min="0">
+</div>
+
+<div id="dateAgeBox" style="display:none;">
+    <label for="installDate">Installationsdatum:</label>
+    <input type="date" id="installDate">
+
+    <label for="compareDate">Jämför mot datum:</label>
+    <input type="date" id="compareDate">
+</div>
+    <div id="result">Resultat: </div>
+
+
+
+
+</div>
+
+<div id="SelfRiskBox">
+
+    <h2>Självriskguide</h2>
+
+    <label for="insuranceSelect">
+        Välj försäkring:
+    </label>
+
+    <select id="insuranceSelect">
+        <option value="">-- Välj försäkring --</option>
+
+        <optgroup label="Folksam">
+            <option value="FVB">Villa Bas</option>
+            <option value="FVS">Villa Stor</option>
+            <option value="FFB">Fritidshus Bas</option>
+            <option value="FFS">Fritidshus Stor</option>
+            <option value="FBS">Borätt Stor</option>
+        </optgroup>
+
+        <optgroup label="3Kronor">
+            <option value="3VB">Villa Bas</option>
+            <option value="3VP">Villa Plus</option>
+            <option value="3FB">Fritidshus Bas</option>
+            <option value="3FP">Fritidshus Plus</option>
+            <option value="3BP">Borätt Plus</option>
+        </optgroup>
+
+    </select>
+
+    <div id="insuranceResult">
+        Välj försäkring för att visa självrisker.
+    </div>
+
+
+
+
+<hr style="margin-top:25px; margin-bottom:25px;">
+
+<h3 style="text-align:center;">Telefonlista</h3>
+
+<label for="phoneSelect">Välj funktion:</label>
+
+<select id="phoneSelect" style="width:100%; height:auto;">
+    <option value="">-- Välj funktion --</option>
+
+    <optgroup label="Folksam">
+        <option value="0771 950 950">Slinga</option>
+        <option value="99">Växeln</option>
+        <option value="27 290">Kundservice</option>
+        <option value="26 510">BVN nyskador</option>
+        <option value="26 395">BVN pågående skador</option>
+        <option value="26 625">Skadeservice nyskador</option>
+        <option value="26 415">Inbrott nyskador</option>
+        <option value="26 290">Inbrott pågående</option>
+        <option value="28 485">Maskin nyskador</option>
+        <option value="26 670">Maskin pågående</option>
+        <option value="27 070">Mobil</option>
+        <option value="28 444">Motor (bil)</option>
+        <option value="62 315">Djur</option>
+        <option value="28 443">Olycksfall</option>
+        <option value="27 580">Ansvar</option>
+        <option value="28 280">Reseskador</option>
+        <option value="28 150">Rättsskydd (ENDAST pågående. Nyskador till kundtjänst)</option>
+        <option value="28 810">Risk</option>
+        <option value="28 890">Utredning</option>
+        <option value="28 300">Service Desk (Tjosken)</option>
+        <option value="78 916">Ekonomi</option>
+        <option value="85 256">Vidareförmedling slinga</option>
+        <option value="28 290">Utlandsskador</option>
+        <option value="28 020">Företag Sak</option>
+        <option value="26 870">Företag Bygg</option>
+        <option value="28 180">Företag Ansvar</option>
+    </optgroup>
+
+    <optgroup label="3Kronor">
+        <option value="0771 23 33 33">Slinga</option>
+        <option value="43 740">Byggskador</option>
+        <option value="79 945">Sakskador</option>
+        <option value="79 985">Ansvar</option>
+        <option value="79 930">Motor (bil)</option>
+        <option value="79 935">Olycksfall / överfall</option>
+        <option value="79 950">Reseskador</option>
+        <option value="79 960">Rättsskydd (ENDAST pågående. Nyskador till kundtjänst)</option>
+        <option value="79 999">Support</option>
+        <option value="19 966">Företag Sak</option>
+        <option value="79 966">Företag Bygg</option>
+    </optgroup>
+
+    <optgroup label="Övrigt">
+	<option value="0771 122 300">Rentokil (3KR skadedjur)</option>
+        <option value="075 245 10 00">Anticimex Växel</option>
+        <option value="075 245 17 00">Anticimex Byggrådgivning</option>
+        <option value="020 23 52 35">Polygon</option>
+        <option value="08 522 78 200">Trafikförsäkringsföreningen</option>
+    </optgroup>
+</select>
+
+<div id="phoneResult" style="
+        margin-top:15px;
+        padding:12px;
+        border-radius:10px;
+        background:var(--soft);
+        text-align:center;
+        font-weight:bold;">
+    Telefonnummer:
+</div>
+
+<button id="copyPhoneBtn" style="
+            width:100%;
+            margin-top:10px;
+            padding:10px;
+            border:none;
+            border-radius:10px;
+            background:var(--accent);
+            color:var(--btn-fg);
+            font-weight:bold;
+            cursor:pointer;">
+    Kopiera telefonnummer
+</button>
+
+
+
+
+
+
+</div>
+
+
+
+    <script src="aa-data.js"></script>
+    <script>
+window.addEventListener('load', () => {
+    document.getElementById('compareDate').value =
+        new Date().toISOString().split('T')[0];
+});
+``
+
+        const items = AA_ITEMS;   /* tabellen bor i aa-data.js */
+
+        document.getElementById('ageInput').addEventListener('input', calculateDeduction);
+        document.getElementById('objectSelect').addEventListener('change', calculateDeduction);
+	document.getElementById('costInput').addEventListener('input', calculateDeduction);
+
+document.getElementById('installDate')
+    .addEventListener('change', calculateDeduction);
+
+document.getElementById('compareDate')
+    .addEventListener('change', calculateDeduction);
+
+document.getElementById('searchInput').addEventListener('input', function () {
+    const searchText = this.value.toLowerCase().trim();
+    const select = document.getElementById('objectSelect');
+    const options = select.options;
+
+    for (let i = 0; i < options.length; i++) {
+        const option = options[i];
+        const matches = option.text.toLowerCase().includes(searchText);
+
+        option.style.display = matches ? '' : 'none';
+    }
+});
+document.querySelectorAll('input[name="ageMode"]').forEach(radio => {
+    radio.addEventListener('change', function () {
+
+        const manualBox = document.getElementById('manualAgeBox');
+        const dateBox = document.getElementById('dateAgeBox');
+
+        if (this.value === 'manual') {
+            manualBox.style.display = 'block';
+            dateBox.style.display = 'none';
+        } else {
+            manualBox.style.display = 'none';
+            dateBox.style.display = 'block';
+        }
+
+        calculateDeduction();
+    });
+});
+
+document.getElementById('installDate')
+    .addEventListener('change', calculateDeduction);
+
+
+        /* Sidan och aa-data.js laddas upp var för sig — fångar upp att de
+           hamnat i otakt, i stället för att sluta räkna i tysthet. */
+        function aaBeroendenSaknas(){
+            if (typeof AA_ITEMS === 'undefined') return 'aa-data.js har inte laddats alls';
+            if (typeof AA_VERSION === 'undefined' || AA_VERSION < 2) return 'aa-data.js är en äldre version än sidan';
+            if (typeof aaAndel !== 'function' || typeof aaAlderFranDatum !== 'function') return 'aa-data.js saknar beräkningsfunktionerna';
+            return null;
+        }
+
+        function calculateDeduction() {
+            const brist = aaBeroendenSaknas();
+            if (brist) {
+                document.getElementById('result').innerHTML =
+                    '<b>Filerna i otakt: ' + brist + '.</b><br>Ladda upp aa-data.js på nytt.';
+                return;
+            }
+    const selectedIndex = document.getElementById('objectSelect').value;
+let age;
+
+const mode = document.querySelector(
+    'input[name="ageMode"]:checked'
+).value;
+
+if (mode === 'manual') {
+
+    age = parseInt(
+        document.getElementById('ageInput').value
+    );
+
+} else {
+
+    const installDate =
+        document.getElementById('installDate').value;
+
+    /* Beräkningen bor i aa-data.js — delad med villkorssidan. */
+    age = aaAlderFranDatum(
+        installDate,
+        document.getElementById('compareDate').value
+    );
+}    const resultDiv = document.getElementById('result');
+
+    if (isNaN(age) || selectedIndex === "") {
+        resultDiv.textContent = "Resultat: ";
+
+        const calcResult = document.getElementById('calculatorResult');
+        if (calcResult) {
+            calcResult.innerHTML = "Ange belopp för att se åldersavdrag.";
+        }
+
+        return;
+    }
+
+    const item = items[selectedIndex];
+    const deduction = aaAndel(item, age);   /* aa-data.js */
+
+    resultDiv.innerHTML = `
+        Resultat: ${(deduction * 100).toFixed(2)}% åldersavdrag<br>
+        Fria år: ${item.no_deduction_years} år<br>
+        Avdrag per år: ${(item.deduction_rate * 100).toFixed(1)}%<br>
+        Max livslängd: ${item.max_years} år
+    `;
+
+    const cost = parseFloat(
+        document.getElementById('costInput')?.value
+    );
+
+    const calcResult =
+        document.getElementById('calculatorResult');
+
+    if (calcResult) {
+        if (!isNaN(cost) && cost > 0) {
+            const deductionAmount = cost * deduction;
+            const remainingValue = cost - deductionAmount;
+
+            calcResult.innerHTML = `
+                Ursprungligt belopp:
+                ${cost.toLocaleString('sv-SE')} kr<br>
+
+                Åldersavdrag:
+                ${deductionAmount.toLocaleString('sv-SE', {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 2
+                })} kr<br>
+
+                Kvar efter avdrag:
+                <b>${remainingValue.toLocaleString('sv-SE', {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 2
+                })} kr</b>
+            `;
+        } else {
+            calcResult.innerHTML =
+                "Ange belopp för att se åldersavdrag.";
+        }
+    }
+}
+``
+
+// Telefonlista
+
+let selectedPhoneNumber = "";
+
+document.getElementById("phoneSelect").addEventListener("change", function () {
+
+    selectedPhoneNumber = this.value;
+
+    const resultDiv = document.getElementById("phoneResult");
+
+    if (selectedPhoneNumber === "") {
+        resultDiv.innerHTML = "Telefonnummer:";
+        return;
+    }
+
+    resultDiv.innerHTML =
+        "Telefonnummer: " + selectedPhoneNumber;
+});
+
+document.getElementById("copyPhoneBtn").addEventListener("click", function () {
+
+    if (!selectedPhoneNumber) {
+        alert("Välj först ett telefonnummer.");
+        return;
+    }
+
+    navigator.clipboard.writeText(selectedPhoneNumber);
+
+    this.innerText = "Kopierat!";
+
+    setTimeout(() => {
+        this.innerText = "Kopiera telefonnummer";
+    }, 1500);
+});
+
+// ===============================
+// SJÄLVRISKGUIDE
+// ===============================
+
+const insuranceData = {
+
+FVB: `
+<b>Folksam Villa Bas</b><br><br>
+
+Ordinarie självrisk: 1 800 kr<br>
+Läckage: 4 000 kr<br>
+Läckage orsakad av frysning: 10% (4 000 - 10 000 kr)<br>
+Frysskada maskin: 10% (2 000 - 10 000 kr)<br>
+Översvämning: 10% (minst 10 000 kr)<br>
+Baktryck: 5 000 kr med backventil annars 10 000 kr<br>
+Ej branschregler vid vattenskada: 10% (minst 10 000 kr)<br>
+Max åldersavdrag: 105 000 kr
+`,
+
+FVS: `
+<b>Folksam Villa Stor</b><br><br>
+
+Ordinarie självrisk: 1 800 kr<br>
+Läckage: 4 000 kr<br>
+Läckage orsakad av frysning: 10% (4 000 - 10 000 kr)<br>
+Frysskada maskin: 10% (2 000 - 10 000 kr)<br>
+Översvämning: 1 800 kr<br>
+Baktryck: 0 kr med backventil annars 1 800 kr<br>
+Ej branschregler vid vattenskada: 10% (minst 10 000 kr)<br>
+Max åldersavdrag: 15 000 kr <br>
+Husextra MAX: 150 000 kr<br>
+Branschanpassningar: 10 000 kr
+
+`,
+
+FFB: `
+<b>Folksam Fritidshus Bas</b><br><br>
+
+Ordinarie självrisk: 1 800 kr<br>
+Läckage: 4 000 kr<br>
+Läckage orsakad av frysning: 10% (4 000 - 10 000 kr)<br>
+Frysskada maskin: 10% (2 000 - 10 000 kr)<br>
+Översvämning: 10% (minst 10 000 kr)<br>
+Baktryck: 5 000 kr med backventil annars 10 000 kr<br>
+Ej branschregler vid vattenskada: 10% (minst 10 000 kr)<br>
+Max åldersavdrag: 105 000 kr
+
+`,
+
+FFS: `
+<b>Folksam Fritidshus Stor</b><br><br>
+
+Ordinarie självrisk: 1 800 kr<br>
+Läckage: 4 000 kr<br>
+Läckage orsakad av frysning: 10% (4 000 - 10 000 kr)<br>
+Frysskada maskin: 10% (2 000 - 10 000 kr)<br>
+Översvämning: 1 800 kr<br>
+Baktryck: 0 kr med backventil annars 1 800 kr<br>
+Ej branschregler vid vattenskada: 10% (minst 10 000 kr)<br>
+Max åldersavdrag: 15 000 kr <br>
+Husextra MAX: 150 000 kr<br>
+Branschanpassningar: 10 000 kr
+
+
+`,
+
+FBS: `
+<b>Folksam Borätt Stor</b><br><br>
+
+Ordinarie självrisk: 1 800 kr<br>
+Läckage: 1 800 kr<br>
+Läckage orsakad av frysning: 1 800 kr<br>
+Frysskada maskin: 1 800 kr<br>
+Baktryck: 0 kr med backventil annars 1 800 kr<br>
+Borätt Extra MAX: 200 000 kr<br>
+Branschanpassningar: 10 000 kr
+`,
+
+"3VB": `
+<b>3Kronor Villa Bas</b><br><br>
+
+Ordinarie självrisk: 1 500 kr<br>
+Läckage: 4 000 kr<br>
+Läckage orsakad av frysning: 10 000 kr<br>
+Frysskada maskin: 10 000 kr<br>
+Översvämning: 10 000 kr<br>
+Baktryck: 5 000 kr med backventil annars 10 000 kr<br>
+Ej branschregler vid vattenskada: 10% (minst 10 000 kr)<br>
+Max åldersavdrag: 75 000 kr
+`,
+
+"3VP": `
+<b>3Kronor Villa Plus</b><br><br>
+
+Ordinarie självrisk: 1 500 kr<br>
+Läckage: 4 000 kr<br>
+Läckage orsakad av frysning: 4 000 kr<br>
+Frysskada maskin: 4 000 kr<br>
+Översvämning: 1 500 kr<br>
+Baktryck: 0 kr med backventil annars 1 500 kr<br>
+Ej branschregler vid vattenskada: 10% (minst 10 000 kr)<br>
+Max åldersavdrag: 15 000 kr <br>
+Husextra MAX: 200 000 kr<br>
+Branschanpassningar: 10 000 kr
+`,
+
+"3FB": `
+<b>3Kronor Fritidshus Bas</b><br><br>
+
+Ordinarie självrisk: 1 500 kr<br>
+Läckage: 4 000 kr<br>
+Läckage orsakad av frysning: 10 000 kr<br>
+Frysskada maskin: 10 000 kr<br>
+Översvämning: 10 000 kr<br>
+Baktryck: 5 000 kr med backventil annars 10 000 kr<br>
+Ej branschregler vid vattenskada: 10% (minst 10 000 kr)<br>
+Max åldersavdrag: 75 000 kr
+`,
+
+"3FP": `
+<b>3Kronor Fritidshus Plus</b><br><br>
+
+Ordinarie självrisk: 1 500 kr<br>
+Läckage: 4 000 kr<br>
+Läckage orsakad av frysning: 4 000 kr<br>
+Frysskada maskin: 4 000 kr<br>
+Översvämning: 1 500 kr<br>
+Baktryck: 0 kr med backventil annars 1 500 kr<br>
+Ej branschregler vid vattenskada: 10% (minst 10 000 kr)<br>
+Max åldersavdrag: 15 000 kr <br>
+Husextra MAX: 200 000 kr<br>
+Branschanpassningar: 10 000 kr
+`,
+
+"3BP": `
+<b>3Kronor Borätt Plus</b><br><br>
+
+Ordinarie självrisk: 1 500 kr<br>
+Läckage: 1 500 kr<br>
+Läckage orsakad av frysning: 1 500 kr<br>
+Frysskada maskin: 1 500 kr<br>
+Baktryck: 0 kr med backventil annars 1 500 kr<br>
+Borätt Extra MAX: 200 000 kr<br>
+Branschanpassningar: 10 000 kr
+`
+};
+
+document.getElementById("insuranceSelect").addEventListener("change", function(){
+
+    document.getElementById("insuranceResult").innerHTML =
+        insuranceData[this.value] ||
+        "Välj försäkring för att visa självrisker.";
+
+});
+
+    </script>
+
+<button id="themeToggle" type="button" aria-pressed="false">🌙 Mörkt</button>
+<script>
+/* Mörkt läge — valet sparas och gäller även villkorssidan. */
+(function(){
+  var root=document.documentElement, btn=document.getElementById('themeToggle');
+  function sync(){
+    var dark=root.getAttribute('data-theme')==='dark';
+    btn.textContent = dark ? '☀️ Ljust' : '🌙 Mörkt';
+    btn.setAttribute('aria-pressed', dark ? 'true' : 'false');
+    btn.setAttribute('aria-label', dark ? 'Byt till ljust läge' : 'Byt till mörkt läge');
+  }
+  btn.addEventListener('click',function(){
+    var dark=root.getAttribute('data-theme')==='dark';
+    if(dark) root.removeAttribute('data-theme'); else root.setAttribute('data-theme','dark');
+    try{ localStorage.setItem('theme', dark ? 'light' : 'dark'); }catch(e){}
+    sync();
+  });
+  /* Följ systemets läge så länge inget eget val gjorts. */
+  try{
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(e){
+      if(localStorage.getItem('theme')) return;
+      if(e.matches) root.setAttribute('data-theme','dark'); else root.removeAttribute('data-theme');
+      sync();
+    });
+  }catch(e){}
+  sync();
+})();
+</script>
+
+</body></html>
