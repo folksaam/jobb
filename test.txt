@@ -3,4 +3,5 @@ Testfil
 
 Skapad av Claude för att verifiera att skapa/ändra/committa/pusha fungerar.
 
-Rad 1: skapad
+Rad 1: skapad och sedan redigerad
+Rad 2: ändrad 2026-08-23 16:55 UTC
