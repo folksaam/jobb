@@ -134,6 +134,7 @@
       <div class="seg" id="nLage">
         <button type="button" data-v="ny" class="on">Nya skador</button>
         <button type="button" data-v="pag">Pågående skador</button>
+        <button type="button" data-v="webb">Webb skador</button>
       </div>
       <div class="sizebtns" id="nHojd">
         <span class="sizelbl">Höjd</span>
@@ -921,9 +922,22 @@ const MALL_NY =
 const MALL_PAG =
 'Kund ringer in om - \n';
 
-const MALLAR={ny:MALL_NY, pag:MALL_PAG};
+const MALL_WEBB =
+'Webb:\n' +
+'\n' +
+'Skadeorsak:\n' +
+'Skadeomfattning:\n' +
+'\n' +
+'Ytskikt:\n' +
+'Ålder:\n' +
+'Åldersavdrag:\n' +
+'Avtal/Självrisk:\n' +
+'\n' +
+'Nästa steg:\n';
+
+const MALLAR={ny:MALL_NY, pag:MALL_PAG, webb:MALL_WEBB};
 /* Varje läge behåller sin egen text när man växlar fram och tillbaka. */
-const utkast={ny:MALL_NY, pag:MALL_PAG};
+const utkast={ny:MALL_NY, pag:MALL_PAG, webb:MALL_WEBB};
 let lage='ny';
 
 const ORSAKER = [
@@ -1184,7 +1198,7 @@ document.getElementById('nInsertSr').onclick=()=>{
   const o=cur();
   const avtalNamn = avtal==='stor' ? 'Villa Stor' : 'Villa Bas';
   const ref = srRef ? ' ('+srRef+')' : '';
-  setRow('Avtal/Självrisk:', srText+ref+' — '+avtalNamn);
+  setRow('Avtal/Självrisk:', avtalNamn+' — '+srText+ref);
   if(o.v!=='okand') setRow('Skadeorsak:', o.t);
   nNote.focus();
 };
@@ -1192,7 +1206,7 @@ document.querySelectorAll('.srq').forEach(b=>{
   b.onclick=()=>{
     const v=Number(b.dataset.v);
     const avtalNamn = avtal==='stor' ? 'Villa Stor' : 'Villa Bas';
-    setRow('Avtal/Självrisk:', (v===0?'Ingen självrisk':fmt(v)+' kr')+' — '+avtalNamn);
+    setRow('Avtal/Självrisk:', avtalNamn+' — '+(v===0?'Ingen självrisk':fmt(v)+' kr'));
     nNote.focus();
   };
 });
@@ -1235,7 +1249,7 @@ document.getElementById('nClear').onclick=()=>{
 
 nUndo.onclick=()=>{
   if(!backup) return;
-  if(backup.utkast){ utkast.ny=backup.utkast.ny; utkast.pag=backup.utkast.pag; }
+  if(backup.utkast){ utkast.ny=backup.utkast.ny; utkast.pag=backup.utkast.pag; utkast.webb=backup.utkast.webb; }
   if(backup.lage){
     lage=backup.lage;
     [...nLage.children].forEach(x=>x.classList.toggle('on',x.dataset.v===lage));
@@ -1354,10 +1368,11 @@ function restoreNote(){
   if(!d){ nSave.textContent='Autospar aktivt'; return; }
 
   if(d.utkast && typeof d.utkast==='object'){
-    if(typeof d.utkast.ny==='string')  utkast.ny=migreraEtiketter(d.utkast.ny);
-    if(typeof d.utkast.pag==='string') utkast.pag=migreraEtiketter(d.utkast.pag);
+    if(typeof d.utkast.ny==='string')   utkast.ny=migreraEtiketter(d.utkast.ny);
+    if(typeof d.utkast.pag==='string')  utkast.pag=migreraEtiketter(d.utkast.pag);
+    if(typeof d.utkast.webb==='string') utkast.webb=migreraEtiketter(d.utkast.webb);
   }
-  if(d.lage==='ny' || d.lage==='pag'){
+  if(MALLAR[d.lage]){
     lage=d.lage;
     [...nLage.children].forEach(x=>x.classList.toggle('on',x.dataset.v===lage));
   }
