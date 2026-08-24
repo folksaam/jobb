@@ -914,7 +914,7 @@ const MALL_NY =
 'Ytskikt:\n' +
 'Ålder:\n' +
 'Åldersavdrag:\n' +
-'Självrisk/avtal:\n' +
+'Avtal/Självrisk:\n' +
 '\n' +
 'Nästa steg:\n';
 
@@ -1184,7 +1184,7 @@ document.getElementById('nInsertSr').onclick=()=>{
   const o=cur();
   const avtalNamn = avtal==='stor' ? 'Villa Stor' : 'Villa Bas';
   const ref = srRef ? ' ('+srRef+')' : '';
-  setRow('Självrisk/avtal:', srText+ref+' — '+avtalNamn);
+  setRow('Avtal/Självrisk:', srText+ref+' — '+avtalNamn);
   if(o.v!=='okand') setRow('Skadeorsak:', o.t);
   nNote.focus();
 };
@@ -1192,7 +1192,7 @@ document.querySelectorAll('.srq').forEach(b=>{
   b.onclick=()=>{
     const v=Number(b.dataset.v);
     const avtalNamn = avtal==='stor' ? 'Villa Stor' : 'Villa Bas';
-    setRow('Självrisk/avtal:', (v===0?'Ingen självrisk':fmt(v)+' kr')+' — '+avtalNamn);
+    setRow('Avtal/Självrisk:', (v===0?'Ingen självrisk':fmt(v)+' kr')+' — '+avtalNamn);
     nNote.focus();
   };
 });
@@ -1337,6 +1337,12 @@ function saveNote(){
   }
 }
 
+/* Äldre sparade utkast har den gamla etiketten — döp om så att
+   "Sätt in självrisk" hittar raden i stället för att lägga till en dubblett. */
+function migreraEtiketter(txt){
+  return typeof txt==='string' ? txt.replace(/^Självrisk\/avtal:/gm,'Avtal/Självrisk:') : txt;
+}
+
 function restoreNote(){
   if(!store){
     nSave.className='off';
@@ -1348,14 +1354,14 @@ function restoreNote(){
   if(!d){ nSave.textContent='Autospar aktivt'; return; }
 
   if(d.utkast && typeof d.utkast==='object'){
-    if(typeof d.utkast.ny==='string')  utkast.ny=d.utkast.ny;
-    if(typeof d.utkast.pag==='string') utkast.pag=d.utkast.pag;
+    if(typeof d.utkast.ny==='string')  utkast.ny=migreraEtiketter(d.utkast.ny);
+    if(typeof d.utkast.pag==='string') utkast.pag=migreraEtiketter(d.utkast.pag);
   }
   if(d.lage==='ny' || d.lage==='pag'){
     lage=d.lage;
     [...nLage.children].forEach(x=>x.classList.toggle('on',x.dataset.v===lage));
   }
-  if(typeof d.note==='string' && d.note.trim()) nNote.value=d.note;
+  if(typeof d.note==='string' && d.note.trim()) nNote.value=migreraEtiketter(d.note);
   if(d.h){
     nNote.style.height=d.h;
     const px=parseInt(d.h,10);
