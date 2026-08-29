@@ -194,7 +194,7 @@ input[type="date"]::-webkit-calendar-picker-indicator{
 }
     
 
-#backToVillkor{
+#backToVillkor,#backToBrf{
     position:fixed;
     left:20px;
     bottom:20px;
@@ -213,13 +213,17 @@ input[type="date"]::-webkit-calendar-picker-indicator{
     box-shadow:0 6px 20px var(--shadow);
     transition:0.2s;
 }
-#backToVillkor:hover{
+#backToVillkor:hover,#backToBrf:hover{
     background:var(--accent-hover);
     transform:translateY(-2px);
     box-shadow:0 8px 24px var(--shadow);
 }
+/* Två pillerlänkar i samma hörn — bostadsrätt ligger ovanpå. */
+#backToBrf{bottom:76px}
 @media (max-width:700px){
-    #backToVillkor{left:12px;bottom:12px;padding:10px 14px;font-size:13px}
+    #backToVillkor,#backToBrf{left:12px;padding:10px 14px;font-size:13px}
+    #backToVillkor{bottom:12px}
+    #backToBrf{bottom:62px}
 }
 
 /* ---------- mörkt läge ---------- */
@@ -260,6 +264,7 @@ input[type="date"]::-webkit-calendar-picker-indicator{
 <body>
 
 <a id="backToVillkor" href="./villaforsakring.html">&#8592; Villkor &amp; tr&#228;ning</a>
+<a id="backToBrf" href="./bostadsratt.html">Bostadsr&#228;tt &#8594;</a>
 
 
 

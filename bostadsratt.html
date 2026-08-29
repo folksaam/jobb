@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bostadsrättsförsäkring — punkt 1–22</title>
+<script>
+/* Sätts före rendering så sidan inte blinkar vitt i mörkt läge. */
+(function(){
+  try{
+    var saved = localStorage.getItem('theme');
+    var dark = saved ? saved === 'dark'
+                     : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if(dark) document.documentElement.setAttribute('data-theme','dark');
+  }catch(e){}
+})();
+</script>
+<script src="aa-data.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="stil.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap navrow">
+    <a href="#oversikt">Översikt</a>
+    <a href="#sjalvrisk">Självrisk</a>
+    <a href="#skador">Skadehändelser</a>
+    <a href="#extra">Borätt Extra</a>
+    <a href="#vardering">Värdering</a>
+    <a href="./villaforsakring.html">Villa →</a>
+    <a href="./trana.html">Träna →</a>
+    <a href="./aa-kalkylator.html">Åldersavdrag →</a>
+  </div>
+</nav>
+
+<header class="wrap">
+  <div class="eyebrow">Folksam · Försäkringsvillkor 1 januari 2026 · S2940 26-01</div>
+  <h1>Bostadsrätts&shy;försäkring<em>Punkt 1–22</em></h1>
+  <p class="lede">Bostadsrättsavsnittet i villkoret — lägenheten och det du själv svarar för. Uppslagsverk för dig som reglerar bostadsrättsskador.</p>
+</header>
+
+<main>
+
+<!-- ÖVERSIKT -->
+<section id="oversikt" class="wrap">
+  <div class="sectag">01 — Punkt 1–2</div>
+  <h2 class="sec">Vad försäkringen omfattar</h2>
+  <p class="intro">Bostadsrättsförsäkringen täcker det som bostadsrättshavaren själv svarar för — inte det föreningen svarar för. Två frågor avgör nästan varje ärende: vem har underhållsansvaret, och täcker fastighetens försäkring skadan?</p>
+
+  <div class="note warn"><strong>Den avgörande spärren:</strong> Villkoret avslutar egendomsuppräkningen med orden <em>”Allt under förutsättning att skadan inte ersätts genom fastighetens försäkring.”</em> Kontrollera alltid föreningens försäkring först — bostadsrättsförsäkringen går in där den inte räcker.</div>
+
+  <h3>Var försäkringen gäller</h3>
+  <p>I bostadsrättslägenheten, på den adress som anges i försäkringsbeskedet. <span class="sr" style="display:inline-block;margin-top:0">Punkt 1</span></p>
+
+  <h3>Vilken egendom som är försäkrad</h3>
+  <div class="lbl yes">Försäkringen gäller för</div>
+  <ul class="pts yes">
+    <li>Själva lägenheten med tillhörande utrymmen och egendom i lägenheten — <strong>dock endast för skada som du svarar för på grund av din underhållsskyldighet</strong> enligt bostadsrättslagen och föreningens stadgar</li>
+    <li>Fast inredning som du själv bekostat i lägenheten, eller i utrymmen som tillhör lägenheten och som du har ensam tillgång till</li>
+    <li>Inglasad balkong eller altan</li>
+    <li>Markis eller tak över uteplats</li>
+    <li>Tomtmark som tillhör föreningen och som du enligt stadgarna är skyldig att underhålla</li>
+    <li>Simbassäng, pool eller staket som du äger på mark som tillhör bostadsrätten — som simbassäng räknas även spabad utomhus anbringat för stadigvarande bruk</li>
+    <li>Egendom avsedd som fast inredning men ännu inte monterad, om den är under transport till bostadsrätten eller förvaras i den eller i dess förrådsutrymmen</li>
+    <li>Staket och egenbekostat uthus, garage eller carport <strong>högst 30 m²</strong> som du äger på mark som tillhör bostadsrätten</li>
+    <li>Solcellsanläggning som du äger på ditt bostadsrättsradhus eller på mark som tillhör bostadsrätten</li>
+  </ul>
+  <div class="sr"><b>Punkt 2.</b> Underhållsskyldigheten enligt bostadsrättslagen och stadgarna sätter gränsen — inte var i lägenheten skadan sitter.</div>
+
+  <h3>Så skiljer den sig från villaförsäkringen</h3>
+  <div class="tblwrap">
+  <table>
+    <tr><th>Fråga</th><th>Bostadsrätt</th><th>Villa Bas</th></tr>
+    <tr><td>Självrisk vid läckage</td><td class="num">1 800 kr</td><td class="num">4 000 kr–10 % utan tak (B7)</td></tr>
+    <tr><td>Självrisk vid översvämning</td><td class="num">1 800 kr</td><td class="num">10 %, lägst 10 000 kr (B8)</td></tr>
+    <tr><td>Självrisk vid frysning</td><td class="num">1 800 kr</td><td class="num">10 %, lägst 2 000–4 000 kr</td></tr>
+    <tr><td>Tak för åldersavdrag</td><td class="num">15 000 kr</td><td class="num">105 000 kr</td></tr>
+    <tr><td>Allrisk för bostaden</td><td class="num">Borätt Extra 200 000 kr</td><td class="num">Husextra 150 000 kr (endast Stor)</td></tr>
+    <tr><td>Nya normer i våtutrymme</td><td class="num">10 000 kr</td><td class="num">10 000 kr (endast Stor)</td></tr>
+    <tr><td>Nyvärdesskydd hushållsmaskin</td><td class="num">Ingår, under 4 år</td><td class="num">Endast Stor</td></tr>
+    <tr><td>Skadedjur och hussvamp</td><td class="num">Ingår inte</td><td class="num">B25 via Anticimex</td></tr>
+  </table>
+  </div>
+  <div class="note"><strong>Kom ihåg:</strong> Bostadsrättsförsäkringen har inga särskilda självrisker alls. Flera av de moment som kräver Villa Stor — nya normer, nyvärdesskydd, allrisk — ingår här direkt.</div>
+</section>
+
+<!-- SJÄLVRISK -->
+<section id="sjalvrisk" class="wrap">
+  <div class="sectag">02 — Punkt 21</div>
+  <h2 class="sec">Självrisk</h2>
+  <p class="intro">Här finns bara en nivå. Hela systemet med förhöjda självrisker vid läckage, översvämning och frysning saknas i bostadsrättsavsnittet.</p>
+
+  <div class="tblwrap">
+  <table>
+    <tr><th>Skadetyp</th><th>Självrisk</th><th>Punkt</th></tr>
+    <tr><td>Samtliga skadehändelser i punkt 3–14</td><td class="num">1 800 kr</td><td class="num">21</td></tr>
+    <tr><td>Borätt Extra</td><td class="num">1 800 kr</td><td class="num">18 / 21</td></tr>
+    <tr><td>Inbrott i hemmabostaden med aktiverat larm</td><td class="num">Ingen självrisk</td><td class="num">21</td></tr>
+  </table>
+  </div>
+
+  <h3>Ingen självrisk</h3>
+  <p>Kunden betalar ingen självrisk vid <strong>inbrott i hemmabostaden</strong> om det finns ett aktiverat inbrottslarm som är kopplat till godkänd larmcentral när ingen är hemma och ser till bostaden.</p>
+  <div class="note warn"><strong>Fyra krav, inte tre:</strong> larmet ska vara aktiverat, kopplat till godkänd larmcentral, ingen hemma som ser till bostaden — <em>och</em> skadehändelsen ska vara ett inbrott i hemmabostaden. Skadegörelse utifrån eller stöld av fast monterad egendom utanpå byggnaden ger inte nollsjälvrisk.</div>
+
+  <div class="note"><strong>Rättsskydd och ansvar:</strong> Bostadsrättsavsnittet innehåller inga egna moment för ansvar, rättsskydd eller överfall. Villkorstexten hänvisar genomgående till hemförsäkringens A-punkter, och punkt 22 slår fast att avsnitt C Allmänna bestämmelser gäller i tillämpliga delar. För rättsskydd gäller därför självrisken i C22: 20 % av kostnaderna, lägst 1 800 kr.</div>
+</section>
+
+<!-- SKADEHÄNDELSER -->
+<section id="skador" class="wrap">
+  <div class="sectag">03 — Punkt 3 till 14</div>
+  <h2 class="sec">Skadehändelser</h2>
+  <p class="intro">Samma logik som i villaförsäkringen: skadehändelsen måste vara ersättningsbar <em>och</em> egendomen måste omfattas av just den händelsen. Momenten motsvarar B4–B19 i villaavsnittet, men numreringen är egen.</p>
+
+  <details class="card" id="p3">
+    <summary><span class="chip">3</span><span class="title">Brand, blixt, explosion med mera</span><span class="caret">›</span></summary>
+    <div class="body">
+      <div class="lbl yes">Vi ersätter</div>
+      <ul class="pts yes">
+        <li>Skada genom brand</li>
+        <li>Skada genom blixt</li>
+        <li>Skada på hushållsmaskin och annan elektrisk maskin, apparat eller ledning genom kortslutning, överslag eller överspänning</li>
+        <li>Skada genom explosion</li>
+        <li>Skada som plötsligt orsakas av sot från öppen låga</li>
+        <li>Skada av frätande gas som bildats vid oavsiktlig upphettning av plast</li>
+      </ul>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada genom sprängningsarbete</li>
+        <li>Sot från levande ljus</li>
+      </ul>
+      <div class="lbl care">Aktsamhetskrav</div>
+      <ul class="pts care">
+        <li>Sota enligt kommunens regler och följa eldningsinstruktionerna för eldstaden</li>
+        <li>Tömma aska och sotrester i metallkärl med tättslutande lock på icke brännbart underlag</li>
+        <li>Följa MSB:s vägledning om laddinfrastruktur vid laddning av elbil och mindre elfordon</li>
+        <li>Inte lämna levande ljus eller andra ljuskällor med öppen låga utan tillsyn</li>
+        <li>Inte lämna kokkärl utan tillsyn på spisen</li>
+        <li>Inte röka i sängen</li>
+      </ul>
+      <div class="note"><strong>Vid brott:</strong> Ersättningen sätts ned eller uteblir efter vad som är skäligt — med hänsyn till sambandet mellan åsidosättandet och skadan, uppsåtet eller vårdslösheten, samt omständigheterna i övrigt. Ingen fast procentsats.</div>
+      <div class="sr"><b>Självrisk:</b> 1 800 kr. <b>Åldersavdrag:</b> vid kortslutning, överslag eller överspänning kan avdraget uppgå till 100 % och 15 000-taket gäller inte för helt avskrivna byggnadsdelar.</div>
+    </div>
+  </details>
+
+  <details class="card" id="p4">
+    <summary><span class="chip">4</span><span class="title">Läckage</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter skada av vatten, olja, annan vätska eller ånga som <strong>oberäknat strömmar ut</strong> från:</p>
+      <div class="lbl yes">Källor som omfattas</div>
+      <ul class="pts yes">
+        <li>Ledningssystem för vatten, värme eller avlopp</li>
+        <li>Anordning ansluten till dessa system — tvättställ, diskmaskin, tvättmaskin, värmepanna, oljetank</li>
+        <li>Invändigt stuprör som uppfyller kraven på avloppsledning för spillvatten</li>
+        <li>Badrum, duschrum eller tvättstuga som har golvavlopp</li>
+        <li>Kyl eller frys vid strömavbrott eller fel på anläggningen</li>
+        <li>Akvarium eller vattensäng</li>
+      </ul>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada på <strong>den anordning som läckt</strong> — rörledningar med mera kan dock ersättas enligt punkt 11</li>
+        <li>I våtutrymme: skada på ytskikt inklusive tätskikt genom vilket läckaget uppstått. <strong>Hela våtutrymmet — väggar och golv — ses som en enhet</strong></li>
+        <li>Den vätska som runnit ut</li>
+        <li>Skada på bostad genom röta, svamp, rost, frätning eller annan långtidspåverkan, om det inte framgår att skadan uppkommit genom utströmning under försäkringstiden</li>
+        <li>Utströmning från rökkanal, ventilationskanal, dräneringssystem, dagvattensystem, annat stuprör, tak eller takränna</li>
+        <li>Vatten som vid regn, snösmältning eller högvatten kommer ut ur avloppsbrunn eller avloppsledning — kan i vissa fall ersättas enligt punkt 5</li>
+      </ul>
+      <div class="note"><strong>Ingår också:</strong> Kostnaden för att lokalisera och frilägga läckagestället för att möjliggöra reparation — och kostnaden för att återställa det frilagda läckagestället.</div>
+      <div class="sr"><b>Självrisk:</b> 1 800 kr — ingen förhöjd självrisk vid frysning eller byggnormsbrist, till skillnad från villaförsäkringens B7.</div>
+    </div>
+  </details>
+
+  <details class="card" id="p5">
+    <summary><span class="chip">5</span><span class="title">Översvämning</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter skada orsakad av att vatten strömmar direkt in i byggnaden från markytan genom ventil, fönster eller dörröppning, eller inomhus tränger upp ur avloppsledning.</p>
+      <div class="lbl yes">Orsaken måste vara</div>
+      <ul class="pts yes">
+        <li>Skyfall — <strong>minst 1 mm/minut eller 50 mm/dygn</strong></li>
+        <li>Snösmältning</li>
+        <li>Stigande sjö eller vattendrag</li>
+      </ul>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada på båthus, sjöbod, badhytt, tält eller inglasad byggnad, t.ex. växthus</li>
+        <li>Skada på tomtmark</li>
+      </ul>
+      <div class="sr"><b>Självrisk:</b> 1 800 kr. Villaförsäkringens tioprocentiga självrisk med golv på 10 000 kr — och den särskilda baktrycksnivån — finns inte här.</div>
+    </div>
+  </details>
+
+  <details class="card" id="p6">
+    <summary><span class="chip">6</span><span class="title">Storm</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter skada på bostad som blåser sönder vid storm, <strong>minst 21 m/sekund</strong>. Även vid lägre vindstyrka lämnas ersättning om byggnaden skadas av träd eller flaggstång som blåser omkull.</p>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Revetering, puts eller skorstensbeklädnad som skadas på annat sätt än genom att träd eller annat föremål blåst omkull eller brutits loss</li>
+        <li>Skada på tält eller inglasad byggnad, t.ex. växthus</li>
+        <li>Skada på båthus, sjöbod eller badhytt</li>
+        <li>Skada på tomtmark, till exempel flaggstång eller träd</li>
+        <li>Skada på fristående carport</li>
+      </ul>
+      <div class="sr"><b>Självrisk:</b> 1 800 kr.</div>
+    </div>
+  </details>
+
+  <details class="card" id="p7">
+    <summary><span class="chip">7</span><span class="title">Hagel</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter skada på bostad som slås sönder av hagel.</p>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada på tält eller inglasad byggnad, t.ex. växthus</li>
+      </ul>
+      <div class="sr"><b>Självrisk:</b> 1 800 kr.</div>
+    </div>
+  </details>
+
+  <details class="card" id="p8">
+    <summary><span class="chip">8</span><span class="title">Snötryck</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter skada som består i eller orsakats av att <strong>yttertakets bärande konstruktion</strong> skadats på grund av snötryck.</p>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada om taket inte utförts enligt gällande byggnorm eller branschregler vid tidpunkten för uppförandet eller reparationen</li>
+        <li>Skada som beror på ingrepp i den bärande stommen eller angrepp av röta eller skadeinsekter</li>
+        <li>Skada på altantak, balkongtak, verandatak eller liknande tak</li>
+      </ul>
+      <div class="note"><strong>Notera:</strong> Bostadsrättsavsnittet ställer inget uttryckligt aktsamhetskrav på snöskottning — det gör villaförsäkringens B11.</div>
+      <div class="sr"><b>Självrisk:</b> 1 800 kr.</div>
+    </div>
+  </details>
+
+  <details class="card" id="p9">
+    <summary><span class="chip">9</span><span class="title">Andra naturskador</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter skada orsakad av jordskalv med en styrka på <strong>minst 4 enligt Richterskalan</strong>, jordskred, jordras, bergras, lavin eller vulkanutbrott. Sprickor i byggnad ersätts endast om de är så allvarliga att funktionsdugligheten avsevärt minskat — ytliga sprickbildningar ersätts alltså inte.</p>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada på tomtmark eller bostad orsakad av sättning i mark eller grund</li>
+        <li>Skada orsakad av sprängnings-, schaktnings-, pålnings- eller spontningsarbete</li>
+        <li>Skador orsakade av gruvdrift eller uppläggning av jord- och stenmassor</li>
+        <li>Skada på tomtmark eller byggnad orsakad av vatten- eller vågerosion</li>
+      </ul>
+      <div class="sr"><b>Självrisk:</b> 1 800 kr.</div>
+    </div>
+  </details>
+
+  <details class="card" id="p10">
+    <summary><span class="chip">10</span><span class="title">Skada orsakad av vilda djur</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter skada genom vilda djur eller fåglar som tagit sig in i bostaden.</p>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada orsakad av insekter, råttor, möss eller andra smågnagare</li>
+      </ul>
+      <div class="note warn"><strong>Ingen skadedjursförsäkring:</strong> Bostadsrättsavsnittet har ingen motsvarighet till villaförsäkringens B25 hos Anticimex. Sanering, träskadeinsekter och hussvamp ingår inte — hänvisa till föreningens försäkring.</div>
+      <div class="sr"><b>Självrisk:</b> 1 800 kr.</div>
+    </div>
+  </details>
+
+  <details class="card" id="p11">
+    <summary><span class="chip">11</span><span class="title">Hushållsmaskin- och installationsskador</span><span class="caret">›</span></summary>
+    <div class="body">
+      <div class="lbl yes">Vi ersätter skada på</div>
+      <ul class="pts yes">
+        <li>Installationer för vatten, värme, avlopp, ventilation, gas, el, fiberoptik eller bredband avsedda för den försäkrade bostaden, som går sönder</li>
+        <li>Duschkabin, duschvägg eller duschdörr, som går sönder</li>
+        <li>Hushållsmaskin som är byggnadstillbehör, som går sönder</li>
+        <li>Den maskinella utrustningen till brunn, simbassäng eller poolduk, som går sönder</li>
+      </ul>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada på ytskikt inklusive tätskikt</li>
+        <li>Skada på elslingor i våtrumsgolv</li>
+        <li>Rost eller frätning på egendom utanför eller utanpå byggnad</li>
+        <li>Rost eller frätning på installation inom byggnad om installationen är <strong>äldre än 15 år</strong></li>
+        <li>Skada genom sprängningsarbete</li>
+        <li>Skada genom översvämning eller vatten som tränger in i byggnad — se dock punkt 5</li>
+        <li>Kostnad för rensning eller upptining av ledning</li>
+        <li>Skada på belysningsarmatur, dränerings- och dagvattensystem, skorsten eller rökgång, murverk, ventilationshuv, brunn, simbassäng eller poolduk</li>
+        <li>Skada som enbart består i skönhetsfel och inte inverkar på funktionen</li>
+        <li>Skada som leverantör eller annan ansvarar för enligt konsumentköp- eller konsumenttjänstlagen — <strong>vi ersätter dock om den försäkrade visar att den ansvarige inte avhjälper eller betalar</strong></li>
+      </ul>
+      <div class="sr"><b>Självrisk:</b> 1 800 kr — ingen förhöjd frysningssjälvrisk som i villaförsäkringens B15. <b>Åldersavdrag:</b> kan uppgå till 100 % och 15 000-taket gäller inte för helt avskrivna byggnadsdelar.</div>
+    </div>
+  </details>
+
+  <details class="card" id="p12">
+    <summary><span class="chip">12</span><span class="title">Glasruteskador</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter skada på glasrutor som går sönder i bostadens fönster eller dörrar samt inglasad balkong och altan.</p>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada på isolerglas som endast består i att konstruktionen blivit otät</li>
+        <li>Skada på glas i drivbänkar och inglasad byggnad, t.ex. växthus</li>
+        <li>Skada genom byggnads- och sprängningsarbete</li>
+      </ul>
+      <div class="sr"><b>Självrisk:</b> 1 800 kr.</div>
+    </div>
+  </details>
+
+  <details class="card" id="p13">
+    <summary><span class="chip">13</span><span class="title">Stöld och skadegörelse</span><span class="caret">›</span></summary>
+    <div class="body">
+      <div class="lbl yes">Vi ersätter</div>
+      <ul class="pts yes">
+        <li>Stöld av fast monterad egendom utanför eller utanpå byggnaden</li>
+        <li>Skadegörelse på bostad utifrån</li>
+        <li>Skadegörelse på bostad inifrån samt stöld av fast monterad egendom inomhus — gäller även ännu inte installerad egendom</li>
+        <li>Skadegörelse på och stöld av sådant som i punkt 2 betecknas som tomtmark</li>
+        <li>Skadegörelse på simbassäng</li>
+      </ul>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada på drivbänkar och inglasad byggnad, t.ex. växthus</li>
+      </ul>
+      <div class="note"><strong>Aktsamhetskrav:</strong> Samma förutsättningar och aktsamhetskrav som i hemförsäkringen gäller — punkterna A11 och A13–A17.</div>
+      <div class="sr"><b>Självrisk:</b> 1 800 kr, eller ingen självrisk vid inbrott i hemmabostaden med aktiverat larm till godkänd larmcentral när ingen är hemma.</div>
+    </div>
+  </details>
+
+  <details class="card" id="p14">
+    <summary><span class="chip">14</span><span class="title">Nöd</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter nödskador — skador som uppstår genom nödvändiga räddningsåtgärder för att undanröja fara för en persons liv eller hälsa.</p>
+      <div class="sr"><b>Självrisk:</b> 1 800 kr.</div>
+    </div>
+  </details>
+</section>
+
+<!-- MERUTGIFTER, LÅSBYTE, BORÄTT EXTRA -->
+<section id="extra" class="wrap">
+  <div class="sectag">04 — Punkt 15 till 19</div>
+  <h2 class="sec">Merutgifter, låsbyte och Borätt Extra</h2>
+  <p class="intro">Momenten som ligger utanför själva skadehändelserna. Borätt Extra är bostadsrättens allriskskydd — det ingår, till skillnad från villaförsäkringens Husextra som kräver Stor.</p>
+
+  <details class="card" id="p15">
+    <summary><span class="chip">15</span><span class="title">Merutgifter och hyresbortfall</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Blir bostadsrätten helt eller delvis obrukbar efter en skadehändelse som egendomsskyddet i punkt A11–A36 omfattar, ersätter vi nödvändiga och skäliga merutgifter för till exempel kost och logi. Vi betalar också kostnad för magasinering av möbler om det behövs.</p>
+      <div class="lbl yes">Ersätts</div>
+      <ul class="pts yes">
+        <li>Merutgifter för kost och logi — <strong>under högst två år</strong></li>
+        <li>Magasinering av möbler — <strong>under högst två år</strong></li>
+        <li>Hyresbortfall vid uthyrning: det belopp du enligt lag är skyldig att sätta ned hyran med — <strong>under högst två år</strong></li>
+      </ul>
+      <div class="lbl no">Dras av</div>
+      <ul class="pts no">
+        <li>Kostnad för värme och andra driftskostnader som du sparar under tiden</li>
+      </ul>
+    </div>
+  </details>
+
+  <details class="card" id="p16">
+    <summary><span class="chip">16</span><span class="title">Låsbyte</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter kostnad för byte eller omkodning av <strong>eget bekostat lås</strong> till den försäkrade bostadsrätten om nyckeln förlorats vid en skadehändelse som är ersättningsbar ur egendomsskyddet i punkt A9–A36, och det är sannolikt att gärningspersonen kan spåra vart nyckeln går.</p>
+      <div class="note warn"><strong>Särregel för bostadsrätt:</strong> I bostadsrätt ses <em>endast lås utöver standard</em> som eget bekostat.</div>
+      <div class="lbl yes">Med Hemförsäkring Stor dessutom</div>
+      <ul class="pts yes">
+        <li>Din del av kostnaden för uppdyrkning av låset om nyckeln förlorats genom en plötslig och oförutsedd händelse</li>
+        <li>Din del av kostnaden för byte av låset vid sådan nyckelförlust, om det är sannolikt att det går att spåra vart nyckeln går</li>
+      </ul>
+      <div class="lbl no">Ersätts inte</div>
+      <ul class="pts no">
+        <li>Byte av lås till andra utrymmen, till exempel gemensam tvättstuga</li>
+      </ul>
+      <div class="sr"><b>Högsta ersättning:</b> 3 000 kr. Ersättning lämnas bara om hemförsäkringen eller annan försäkring inte till någon del kan ersätta kostnaden.</div>
+    </div>
+  </details>
+
+  <details class="card" id="p17">
+    <summary><span class="chip">17</span><span class="title">Ersättning på grund av nya normer och branschregler</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>I skadat våtutrymme ersätter vi den extra kostnad som kan uppkomma vid återställande eller reparation efter skada, på grund av att nya normer och branschregler gäller vid skadetillfället.</p>
+      <div class="lbl yes">Villkor för ersättning</div>
+      <ul class="pts yes">
+        <li>Kostnaden ersätts <strong>utan åldersavdrag</strong></li>
+        <li>Våtutrymme = badrum, duschrum, tvättstuga, WC samt rum för varmvattenberedare eller värmepump</li>
+        <li>Förutsättning: utrymmena är beklädda med vattentäta skikt</li>
+      </ul>
+      <div class="sr"><b>Högsta ersättning:</b> 10 000 kr vid varje skadetillfälle. I villaförsäkringen kräver samma moment Villa Stor.</div>
+    </div>
+  </details>
+
+  <details class="card" id="p18">
+    <summary><span class="chip">18</span><span class="title">Borätt Extra — allrisk för bostadsrätten</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter skada på eller förlust av försäkrad egendom genom <strong>plötslig och oförutsedd händelse</strong> — dock inte i den mån ersättning kan betalas ur hemförsäkringen.</p>
+      <div class="note"><strong>Plötslig</strong> betyder att händelsen haft ett förhållandevis snabbt förlopp — slitage och förbrukning faller utanför. <strong>Oförutsedd</strong> betyder att den inträffat oväntat och normalt inte gått att förutse och därigenom förhindra.</div>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada genom självsprickor, vittring eller åldersförändring — vare sig den visar sig successivt eller plötsligt</li>
+        <li>Skada orsakad av husdjur, insekter, råttor, möss eller andra smågnagare. Med husdjur menas djur som inte är vilda</li>
+        <li>Skada orsakad av felaktig konstruktion, felaktigt utförande eller materialfel</li>
+        <li>Frostskador på växtlighet i trädgård</li>
+        <li>Skada på hushållsmaskin som enbart består i skönhetsfel</li>
+        <li>Skada som leverantör eller annan ansvarar för enligt begränsningarna i punkt 11</li>
+        <li>Aktsamhetsnedsättning som gjorts i andra delar av försäkringen</li>
+      </ul>
+      <div class="sr"><b>Högsta ersättning:</b> 200 000 kr vid varje skadetillfälle · <b>Självrisk:</b> 1 800 kr enligt punkt 21.</div>
+    </div>
+  </details>
+
+  <details class="card" id="p19">
+    <summary><span class="chip">19</span><span class="title">Nyvärdesskydd hushållsmaskiner</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Hushållsmaskiner som omfattas av punkt 2 och som <strong>inte uppnått fyra års ålder</strong> betraktas som helt nya vid tillämpningen av värderingsregeln C42 — alltså inget åldersavdrag.</p>
+      <div class="lbl yes">Förutsättningar</div>
+      <ul class="pts yes">
+        <li>Kunden återanskaffar likvärdig egendom eller reparerar föremålet <strong>inom sex månader</strong> från skadetillfället</li>
+        <li>Kan föremålet repareras ersätts högst reparationskostnaden</li>
+        <li>Sker ingen återanskaffning eller reparation lämnas ersättning med värdet enligt C42 — alltså med åldersavdrag</li>
+      </ul>
+      <div class="note"><strong>Hushållsmaskin</strong> = maskin för klädvård, disk, städning, förvaring eller tillagning av mat och dryck, luftrening eller avfuktning.</div>
+    </div>
+  </details>
+</section>
+
+<!-- VÄRDERING -->
+<section id="vardering" class="wrap">
+  <div class="sectag">05 — Punkt 20 · C42</div>
+  <h2 class="sec">Värdering och åldersavdrag</h2>
+  <p class="intro">Skada på försäkrad egendom värderas och ersätts enligt reglerna för byggnad i punkt C37, C39, C42, C46 och C48. Åldersavdragstabellen är alltså densamma som för villa — men taket är ett helt annat.</p>
+
+  <div class="note warn"><strong>Taket:</strong> Åldersavdraget på skadade byggnadsdelar begränsas till sammanlagt <strong>högst 15 000 kr</strong> per skadetillfälle — samma nivå som Villaförsäkring Stor, inte de 105 000 kr som gäller i Villa Bas.</div>
+
+  <h3>Undantag från 15 000-taket</h3>
+  <div class="lbl no">Begränsningen gäller inte för</div>
+  <ul class="pts no">
+    <li>Skada på byggnadsdelar som ersätts enligt <strong>punkt 3</strong> (kortslutning, överslag eller överspänning) och som är helt avskrivna enligt ersättningstabell C42</li>
+    <li>Skada på byggnadsdelar som ersätts enligt <strong>punkt 11</strong> (hushållsmaskin- och installationsskador) och som är helt avskrivna enligt C42</li>
+    <li>Ytskikt och tätskikt äldre än 30 år i våtutrymme vid skador som ersätts enligt <strong>punkt 4</strong> (läckage)</li>
+    <li>Skada på byggnadsdelar som inte var funktionsdugliga före skadan</li>
+    <li>Åldersavdrag som kan ersättas från annan försäkring</li>
+  </ul>
+
+  <div class="calc">
+    <h2>Åldersavdrag</h2>
+    <p class="sub">Samma tabell som villaförsäkringen — C42 gäller båda. Sök fram byggnadsdelen och ange ålder.</p>
+
+    <label for="bSok">Byggnadsdel</label>
+    <input id="bSok" type="text" autocomplete="off" placeholder="Sök, t.ex. tvättmaskin eller kakel">
+    <select id="bObjekt" size="6"></select>
+
+    <label for="bAlder">Ålder i år</label>
+    <input id="bAlder" type="number" inputmode="numeric" min="0" max="200" placeholder="T.ex. 8">
+
+    <label for="bBelopp">Kostnad före avdrag (kr, valfritt)</label>
+    <input id="bBelopp" type="number" inputmode="numeric" min="0" step="1000" placeholder="T.ex. 40000">
+
+    <div class="result">
+      <div class="amount" id="bOut">Välj byggnadsdel</div>
+      <div class="formula" id="bForm">Sök fram byggnadsdelen och ange ålder.</div>
+      <span class="ref">C42 · punkt 20</span>
+    </div>
+  </div>
+
+  <div class="note"><strong>Tänk på:</strong> Avdraget är begränsat till 80 % för byggnadsdel som före skadan var funktionsduglig. Vid skada enligt punkt 3, punkt 11 samt ytskikt och tätskikt äldre än 30 år vid läckage enligt punkt 4 kan avdraget uppgå till 100 %. Räknaren utgår från tabellvärdet per objekt och kan inte skilja på skadetyp — bedöm sista biten själv.</div>
+
+  <p style="margin-top:22px"><a class="extlink" href="./villaforsakring.html#vardering">Hela C42-tabellen på villasidan →</a></p>
+</section>
+
+</main>
+
+<footer class="wrap">
+  <p>Byggt utifrån <code>Folksam Försäkringsvillkor Hem och villa, 1 januari 2026 (S2940 26-01)</code>, avsnittet Bostadsrättsförsäkring punkt 1–22 och tillhörande delar av avsnitt C.</p>
+  <p style="margin-top:10px">Studiematerial — kontrollera alltid mot gällande villkor och interna riktlinjer innan beslut i ett ärende.</p>
+  <p class="copyright">&copy; <span class="cpYear">2026</span> Nicolas Da Silva Kuehn</p>
+</footer>
+
+<button id="themeToggle" type="button" aria-pressed="false">🌙 Mörkt</button>
+<script src="tema.js"></script>
+<script>
+/* ---------------- ÅLDERSAVDRAG ----------------
+   Tabellen och beräkningen bor i aa-data.js, delad med villasidan och
+   kalkylatorn — sidan får aldrig räkna på egen hand. */
+(function(){
+  var sok=document.getElementById('bSok'),
+      sel=document.getElementById('bObjekt'),
+      alderIn=document.getElementById('bAlder'),
+      beloppIn=document.getElementById('bBelopp'),
+      out=document.getElementById('bOut'),
+      form=document.getElementById('bForm');
+
+  if(typeof AA_ITEMS==='undefined' || typeof aaAndel!=='function'){
+    out.textContent='Tabellen saknas';
+    form.textContent='aa-data.js har inte laddats — ladda upp filen på nytt.';
+    return;
+  }
+
+  var valt=-1;
+
+  function fmt(n){ return Math.round(n).toLocaleString('sv-SE').replace(/,/g,' '); }
+
+  function bygg(filter){
+    var f=(filter||'').toLowerCase().trim();
+    sel.innerHTML='';
+    AA_ITEMS.forEach(function(it,i){
+      if(f && it.name.toLowerCase().indexOf(f)<0) return;
+      var op=document.createElement('option');
+      op.value=i; op.textContent=it.name;
+      if(i===valt) op.selected=true;
+      sel.appendChild(op);
+    });
+  }
+
+  function rakna(){
+    var it=AA_ITEMS[valt];
+    if(!it){
+      out.textContent='Välj byggnadsdel';
+      form.textContent='Sök fram byggnadsdelen och ange ålder.';
+      return;
+    }
+    var alder=Number(alderIn.value);
+    if(alderIn.value===''||!isFinite(alder)||alder<0){
+      out.textContent=it.name;
+      form.innerHTML='Fria år '+it.no_deduction_years+' · '+
+        (it.deduction_rate*100).toFixed(1).replace('.0','')+' %/påbörjat år<br>Ange ålder för att räkna.';
+      return;
+    }
+    var andel=aaAndel(it,alder);
+    var belopp=Number(beloppIn.value);
+    var harBelopp=beloppIn.value!==''&&isFinite(belopp)&&belopp>0;
+
+    out.textContent = harBelopp ? fmt(belopp*andel)+' kr' : aaProcent(andel);
+
+    var rader=it.name+'<br>Fria år '+it.no_deduction_years+' · '+
+      (it.deduction_rate*100).toFixed(1).replace('.0','')+' %/påbörjat år<br>'+
+      'Ålder '+alder+' år → åldersavdrag '+aaProcent(andel);
+    if(harBelopp){
+      rader+='<br>'+fmt(belopp)+' kr − '+aaProcent(andel)+' = <b>'+fmt(belopp*andel)+
+             ' kr</b> i avdrag<br>Kvar att ersätta: '+fmt(belopp-belopp*andel)+' kr';
+      if(belopp*andel>15000){
+        rader+='<br>Över 15 000-taket i punkt 20 — kontrollera om något undantag gäller.';
+      }
+    }
+    form.innerHTML=rader;
+  }
+
+  sok.addEventListener('input',function(){ bygg(sok.value); });
+  sel.addEventListener('change',function(){ valt=Number(sel.value); rakna(); });
+  alderIn.addEventListener('input',rakna);
+  beloppIn.addEventListener('input',rakna);
+
+  bygg('');
+  rakna();
+})();
+</script>
+</body>
+</html>
