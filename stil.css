@@ -378,6 +378,14 @@ tbody tr:hover{background:var(--soft)}
 .seg button:hover{border-color:var(--accent);color:var(--accent)}
 .seg button.on{background:var(--btn-bg);border-color:var(--btn-bg);color:var(--btn-fg)}
 .seg button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* Segmentknappar inuti den mörka räknarrutan — tokens för ljust läge
+   syns inte mot den bakgrunden, så färgerna sätts om här. */
+.calc .seg{margin-bottom:16px}
+.calc .seg button{
+  background:#1B2C39;border-color:#2E4353;color:#93A6B3;
+}
+.calc .seg button:hover{border-color:#5D9DC7;color:#9FC8E0}
+.calc .seg button.on{background:#2E4353;border-color:#5D9DC7;color:#fff}
 #nSkadeorsak,#nBelopp{
   width:100%;font-family:'Source Serif 4',serif;font-size:15px;
   background:var(--soft);border:1.5px solid var(--line-soft);color:var(--ink);

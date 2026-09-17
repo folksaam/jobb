@@ -442,14 +442,29 @@
 
   <div class="calc">
     <h2>Åldersavdrag</h2>
-    <p class="sub">Samma tabell som villaförsäkringen — C42 gäller båda. Sök fram byggnadsdelen och ange ålder.</p>
+    <p class="sub">Samma tabell som villaförsäkringen — C42 gäller båda. Sök fram byggnadsdelen och ange antingen ålder eller installationsdatum och skadedatum.</p>
 
     <label for="bSok">Byggnadsdel</label>
     <input id="bSok" type="text" autocomplete="off" placeholder="Sök, t.ex. tvättmaskin eller kakel">
     <select id="bObjekt" size="6"></select>
 
-    <label for="bAlder">Ålder i år</label>
-    <input id="bAlder" type="number" inputmode="numeric" min="0" max="200" placeholder="T.ex. 8">
+    <label for="bLage">Hur anges åldern?</label>
+    <div class="seg" id="bLage">
+      <button type="button" data-v="alder" class="on">Ange ålder</button>
+      <button type="button" data-v="datum">Installationsdatum</button>
+    </div>
+
+    <div id="bAlderBox">
+      <label for="bAlder">Ålder i år</label>
+      <input id="bAlder" type="number" inputmode="numeric" min="0" max="200" placeholder="T.ex. 8">
+    </div>
+
+    <div id="bDatumBox" hidden>
+      <label for="bInstall">Installationsdatum</label>
+      <input id="bInstall" type="date">
+      <label for="bSkada">Skadedatum</label>
+      <input id="bSkada" type="date">
+    </div>
 
     <label for="bBelopp">Kostnad före avdrag (kr, valfritt)</label>
     <input id="bBelopp" type="number" inputmode="numeric" min="0" step="1000" placeholder="T.ex. 40000">
@@ -485,14 +500,22 @@
       sel=document.getElementById('bObjekt'),
       alderIn=document.getElementById('bAlder'),
       beloppIn=document.getElementById('bBelopp'),
+      lageSeg=document.getElementById('bLage'),
+      alderBox=document.getElementById('bAlderBox'),
+      datumBox=document.getElementById('bDatumBox'),
+      installIn=document.getElementById('bInstall'),
+      skadaIn=document.getElementById('bSkada'),
       out=document.getElementById('bOut'),
       form=document.getElementById('bForm');
 
-  if(typeof AA_ITEMS==='undefined' || typeof aaAndel!=='function'){
+  if(typeof AA_ITEMS==='undefined' || typeof aaAndel!=='function'
+     || typeof aaAlderFranDatum!=='function' || typeof aaIdagLokalt!=='function'){
     out.textContent='Tabellen saknas';
-    form.textContent='aa-data.js har inte laddats — ladda upp filen på nytt.';
+    form.textContent='aa-data.js har inte laddats eller är en äldre version — ladda upp filen på nytt.';
     return;
   }
+
+  var lage='alder';
 
   var valt=-1;
 
@@ -517,11 +540,23 @@
       form.textContent='Sök fram byggnadsdelen och ange ålder.';
       return;
     }
-    var alder=Number(alderIn.value);
-    if(alderIn.value===''||!isFinite(alder)||alder<0){
+    var alder, saknas=null, varning='';
+    if(lage==='datum'){
+      if(!installIn.value)                   saknas='Ange installationsdatum.';
+      else if(!skadaIn.value)                saknas='Ange skadedatum — åldern räknas fram till skadedagen.';
+      else if(installIn.value>skadaIn.value) saknas='Installationsdatumet ligger efter skadedatumet.';
+      /* Framtida skadedatum räknas ändå, men flaggas — oftast en felskrivning. */
+      else if(skadaIn.value>aaIdagLokalt())  varning='Obs: skadedatumet ligger i framtiden.';
+      alder=aaAlderFranDatum(installIn.value, skadaIn.value);   /* aa-data.js */
+    } else {
+      alder=Number(alderIn.value);
+      if(alderIn.value===''||!isFinite(alder)||alder<0) saknas='Ange ålder för att räkna.';
+    }
+    if(saknas || !isFinite(alder) || alder<0){
       out.textContent=it.name;
       form.innerHTML='Fria år '+it.no_deduction_years+' · '+
-        (it.deduction_rate*100).toFixed(1).replace('.0','')+' %/påbörjat år<br>Ange ålder för att räkna.';
+        (it.deduction_rate*100).toFixed(1).replace('.0','')+' %/påbörjat år<br>'+
+        (saknas||'Ange ålder för att räkna.');
       return;
     }
     var andel=aaAndel(it,alder);
@@ -532,7 +567,8 @@
 
     var rader=it.name+'<br>Fria år '+it.no_deduction_years+' · '+
       (it.deduction_rate*100).toFixed(1).replace('.0','')+' %/påbörjat år<br>'+
-      'Ålder '+alder+' år → åldersavdrag '+aaProcent(andel);
+      'Ålder '+alder+' påbörjade år'+(lage==='datum'?' vid skadedatumet':'')+
+      ' → åldersavdrag '+aaProcent(andel);
     if(harBelopp){
       rader+='<br>'+fmt(belopp)+' kr − '+aaProcent(andel)+' = <b>'+fmt(belopp*andel)+
              ' kr</b> i avdrag<br>Kvar att ersätta: '+fmt(belopp-belopp*andel)+' kr';
@@ -540,8 +576,21 @@
         rader+='<br>Över 15 000-taket i punkt 20 — kontrollera om något undantag gäller.';
       }
     }
+    if(varning) rader+='<br>'+varning;
     form.innerHTML=rader;
   }
+
+  lageSeg.querySelectorAll('button').forEach(function(b){
+    b.addEventListener('click',function(){
+      lage = b.dataset.v==='datum' ? 'datum' : 'alder';
+      [].forEach.call(lageSeg.children,function(x){ x.classList.toggle('on', x===b); });
+      alderBox.hidden = lage!=='alder';
+      datumBox.hidden = lage!=='datum';
+      rakna();
+    });
+  });
+  installIn.addEventListener('change',rakna);
+  skadaIn.addEventListener('change',rakna);
 
   sok.addEventListener('input',function(){ bygg(sok.value); });
   sel.addEventListener('change',function(){ valt=Number(sel.value); rakna(); });

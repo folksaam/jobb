@@ -115,8 +115,9 @@
       <div id="aaDatumBox" style="display:none">
         <span class="nlabel">Installationsdatum</span>
         <input id="aaInstall" type="date">
-        <span class="nlabel">Jämför mot datum</span>
+        <span class="nlabel">Skadedatum</span>
         <input id="aaJamfor" type="date">
+        <p class="nhint">Åldern räknas fram till skadedagen, inte till idag.</p>
       </div>
 
       <div class="nsr">
@@ -1340,6 +1341,9 @@ function saveNote(){
       larm:nLarm.checked,
       aaObjekt:aaValt,
       aaAlder:aaAlderIn.value,
+      aaLage:aaLageV,
+      aaInstall:aaInstall.value,
+      aaSkada:aaJamfor.value,
       bredd:breddV,
       h:nNote.style.height||'',
       ts:Date.now()
@@ -1392,6 +1396,9 @@ function restoreNote(){
     aaBygg(aaSok.value);
   }
   if(d.aaAlder) aaAlderIn.value=d.aaAlder;
+  if(d.aaInstall) aaInstall.value=d.aaInstall;
+  if(d.aaSkada)   aaJamfor.value=d.aaSkada;
+  if(d.aaLage)    aaSattLage(d.aaLage);
   if(d.bredd) sattBredd(d.bredd);
   if(d.avtal==='stor'){
     avtal='stor';
@@ -1558,9 +1565,10 @@ let aaLageV='alder';
    men slutar räkna. Hellre ett tydligt fel än en siffra man inte kan lita på. */
 function aaBeroendenSaknas(){
   if(typeof AA_ITEMS==='undefined') return 'aa-data.js har inte laddats alls';
-  if(typeof AA_VERSION==='undefined' || AA_VERSION<2) return 'aa-data.js är en äldre version än sidan';
+  if(typeof AA_VERSION==='undefined' || AA_VERSION<3) return 'aa-data.js är en äldre version än sidan';
   if(typeof aaAndel!=='function' || typeof aaProcent!=='function'
-     || typeof aaAlderFranDatum!=='function') return 'aa-data.js saknar beräkningsfunktionerna';
+     || typeof aaAlderFranDatum!=='function'
+     || typeof aaIdagLokalt!=='function') return 'aa-data.js saknar beräkningsfunktionerna';
   return null;
 }
 
@@ -1589,6 +1597,23 @@ function aaAlderNu(){
   return aaAlderFranDatum(aaInstall.value, aaJamfor.value);   /* aa-data.js */
 }
 
+/* Rimlighetskontroll på datumen. Utan den ger en felskriven årtal tyst
+   0 % eller ett orimligt avdrag, utan att något syns i panelen. */
+function aaDatumProblem(){
+  if(aaLageV!=='datum') return null;
+  /* blockera: åldern går inte att räkna fram alls.
+     Utan blockera: räkna ändå, men visa varningen — det kan vara rätt datum. */
+  if(!aaInstall.value)
+    return {kort:'Ange installationsdatum', text:'Ange när byggnadsdelen först togs i bruk.', blockera:true};
+  if(!aaJamfor.value)
+    return {kort:'Ange skadedatum', text:'Åldern räknas fram till skadedagen, inte till idag.', blockera:true};
+  if(aaInstall.value > aaJamfor.value)
+    return {kort:'Kontrollera datum', text:'Installationsdatumet ligger efter skadedatumet.', blockera:true};
+  if(aaJamfor.value > aaIdagLokalt())
+    return {text:'Obs: skadedatumet ligger i framtiden.'};
+  return null;
+}
+
 function aaUppdatera(){
   const brist=aaBeroendenSaknas();
   if(brist){
@@ -1605,6 +1630,12 @@ function aaUppdatera(){
     aaCalcEl.textContent='Sök fram objektet och ange ålder.';
     return;
   }
+  const datumfel=aaDatumProblem();
+  if(datumfel && datumfel.blockera){
+    aaAmt.textContent=datumfel.kort;
+    aaCalcEl.innerHTML=item.name+'<br>'+datumfel.text;
+    return;
+  }
   if(!isFinite(alder) || alder<0){
     aaAmt.textContent='Ange ålder';
     aaCalcEl.innerHTML=item.name+'<br>Fria år '+item.no_deduction_years
@@ -1615,7 +1646,8 @@ function aaUppdatera(){
   const andel=aaAndel(item,alder);            /* aa-data.js */
   aaAmt.textContent=aaProcent(andel);
 
-  let rader=item.name+', '+alder+' år<br>'
+  let rader=item.name+', '+alder+' påbörjade år'
+    +(aaLageV==='datum' ? ' vid skadedatumet' : '')+'<br>'
     +'Fria år '+item.no_deduction_years+' · '
     +(item.deduction_rate*100).toFixed(1).replace('.0','')+' %/år · max '+item.max_years+' år';
 
@@ -1624,6 +1656,7 @@ function aaUppdatera(){
     const avdrag=Math.round(belopp*andel);
     rader+='<br>'+fmt(belopp)+' kr − '+fmt(avdrag)+' kr = <b>'+fmt(belopp-avdrag)+' kr</b> kvar';
   }
+  if(datumfel) rader+='<br>'+datumfel.text;
   aaCalcEl.innerHTML=rader;
 }
 
@@ -1635,18 +1668,24 @@ aaObjekt.addEventListener('change',()=>{
 });
 aaSok.addEventListener('input',()=>aaBygg(aaSok.value));
 aaAlderIn.addEventListener('input',()=>{ aaUppdatera(); if(typeof saveNote==='function') saveNote(); });
-aaInstall.addEventListener('change',aaUppdatera);
-aaJamfor.addEventListener('change',aaUppdatera);
+[aaInstall,aaJamfor].forEach(el=>{
+  el.addEventListener('change',()=>{ aaUppdatera(); if(typeof saveNote==='function') saveNote(); });
+});
 /* Skadebeloppet delas med självriskpanelen. */
 nBel.addEventListener('input',aaUppdatera);
 
+function aaSattLage(v){
+  aaLageV = v==='datum' ? 'datum' : 'alder';
+  [...aaLage.children].forEach(x=>x.classList.toggle('on',x.dataset.v===aaLageV));
+  aaAlderBox.style.display = aaLageV==='alder' ? '' : 'none';
+  aaDatumBox.style.display = aaLageV==='datum' ? '' : 'none';
+}
+
 aaLage.querySelectorAll('button').forEach(b=>{
   b.onclick=()=>{
-    aaLageV=b.dataset.v;
-    [...aaLage.children].forEach(x=>x.classList.toggle('on',x===b));
-    aaAlderBox.style.display = aaLageV==='alder' ? '' : 'none';
-    aaDatumBox.style.display = aaLageV==='datum' ? '' : 'none';
+    aaSattLage(b.dataset.v);
     aaUppdatera();
+    if(typeof saveNote==='function') saveNote();
   };
 });
 
@@ -1667,7 +1706,7 @@ document.getElementById('aaInsert').onclick=()=>{
 };
 
 aaBygg('');
-aaJamfor.value=new Date().toISOString().split('T')[0];
+/* Skadedatum förifylls inte — det ska anges aktivt, se aaAlderFranDatum. */
 
 /* Startsekvens — måste ligga sist, efter att alla paneler deklarerats. */
 restoreNote();

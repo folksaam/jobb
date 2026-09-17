@@ -194,6 +194,14 @@ input[type="date"]::-webkit-calendar-picker-indicator{
 }
     
 
+.datumhint{
+    font-size:12.5px;
+    line-height:1.5;
+    color:var(--field-ink);
+    opacity:.75;
+    margin:-4px 0 12px;
+}
+
 #backToVillkor,#backToBrf{
     position:fixed;
     left:20px;
@@ -331,8 +339,9 @@ input[type="date"]::-webkit-calendar-picker-indicator{
     <label for="installDate">Installationsdatum:</label>
     <input type="date" id="installDate">
 
-    <label for="compareDate">Jämför mot datum:</label>
+    <label for="compareDate">Skadedatum:</label>
     <input type="date" id="compareDate">
+    <div class="datumhint">Åldern räknas fram till skadedagen, inte till idag.</div>
 </div>
     <div id="result">Resultat: </div>
 
@@ -472,11 +481,8 @@ input[type="date"]::-webkit-calendar-picker-indicator{
 
     <script src="aa-data.js"></script>
     <script>
-window.addEventListener('load', () => {
-    document.getElementById('compareDate').value =
-        new Date().toISOString().split('T')[0];
-});
-``
+/* Skadedatum förifylls inte — åldern ska räknas fram till skadedagen,
+   och det datumet måste anges aktivt. Se aaAlderFranDatum i aa-data.js. */
 
         const items = AA_ITEMS;   /* tabellen bor i aa-data.js */
 
@@ -528,8 +534,9 @@ document.getElementById('installDate')
            hamnat i otakt, i stället för att sluta räkna i tysthet. */
         function aaBeroendenSaknas(){
             if (typeof AA_ITEMS === 'undefined') return 'aa-data.js har inte laddats alls';
-            if (typeof AA_VERSION === 'undefined' || AA_VERSION < 2) return 'aa-data.js är en äldre version än sidan';
-            if (typeof aaAndel !== 'function' || typeof aaAlderFranDatum !== 'function') return 'aa-data.js saknar beräkningsfunktionerna';
+            if (typeof AA_VERSION === 'undefined' || AA_VERSION < 3) return 'aa-data.js är en äldre version än sidan';
+            if (typeof aaAndel !== 'function' || typeof aaAlderFranDatum !== 'function'
+                || typeof aaIdagLokalt !== 'function') return 'aa-data.js saknar beräkningsfunktionerna';
             return null;
         }
 
@@ -565,6 +572,24 @@ if (mode === 'manual') {
     );
 }    const resultDiv = document.getElementById('result');
 
+    /* Rimlighetskontroll på datumen — en felskriven siffra ger annars tyst
+       0 % eller ett orimligt avdrag, utan att något syns i rutan. */
+    let datumVarning = '';
+    if (mode !== 'manual') {
+        const i = document.getElementById('installDate').value;
+        const sk = document.getElementById('compareDate').value;
+        let stopp = null;
+        if (!i)          stopp = 'Ange installationsdatum.';
+        else if (!sk)    stopp = 'Ange skadedatum — åldern räknas fram till skadedagen.';
+        else if (i > sk) stopp = 'Installationsdatumet ligger efter skadedatumet — kontrollera uppgifterna.';
+        if (stopp) {
+            resultDiv.innerHTML = 'Resultat: ' + stopp;
+            return;
+        }
+        /* Räknas ändå — men flaggas, eftersom det oftast är en felskrivning. */
+        if (sk > aaIdagLokalt()) datumVarning = '<br>Obs: skadedatumet ligger i framtiden.';
+    }
+
     if (isNaN(age) || selectedIndex === "") {
         resultDiv.textContent = "Resultat: ";
 
@@ -581,9 +606,10 @@ if (mode === 'manual') {
 
     resultDiv.innerHTML = `
         Resultat: ${(deduction * 100).toFixed(2)}% åldersavdrag<br>
+        Ålder: ${age} påbörjade år${mode === 'manual' ? '' : ' vid skadedatumet'}<br>
         Fria år: ${item.no_deduction_years} år<br>
         Avdrag per år: ${(item.deduction_rate * 100).toFixed(1)}%<br>
-        Max livslängd: ${item.max_years} år
+        Max livslängd: ${item.max_years} år${datumVarning}
     `;
 
     const cost = parseFloat(

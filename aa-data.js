@@ -4,7 +4,7 @@
 /* Höjs när sidorna börjar kräva något nytt härifrån. Sidorna kontrollerar
    den, så att en gammal kvarglömd kopia upptäcks direkt i stället för att
    få en panel att sluta räkna i tysthet. */
-const AA_VERSION = 2;
+const AA_VERSION = 3;
 
 const AA_ITEMS = [
   {"name":"Ackumulatortank","no_deduction_years":5,"deduction_rate":0.08,"max_years":18},
@@ -162,16 +162,30 @@ function aaProcent(andel){
   return (p % 1 ? p.toFixed(1) : p.toFixed(0)) + ' %';
 }
 
-/* Ålder i år från installationsdatum till jämförelsedatum.
+/* Dagens datum som YYYY-MM-DD i lokal tid.
+   new Date().toISOString() räknar om till UTC och ger gårdagens datum
+   fram till klockan 01 eller 02 svensk tid — därav de lokala getters:arna. */
+function aaIdagLokalt(){
+  var d = new Date();
+  return d.getFullYear() + '-' +
+         String(d.getMonth() + 1).padStart(2, '0') + '-' +
+         String(d.getDate()).padStart(2, '0');
+}
+
+/* Ålder i påbörjade år från installationsdatum till skadedatum.
+   Åldersavdraget hör till värderingen av skadan, och den görs vid
+   skadetillfället (C27, C39) — inte den dag ärendet handläggs. Därför
+   krävs ett skadedatum; utan det räknar vi inte, i stället för att tyst
+   falla tillbaka på dagens datum.
    Påbörjat år räknas som helt — därav det avslutande ++. */
-function aaAlderFranDatum(installDatum, jamforDatum){
-  if(!installDatum) return NaN;
-  var idag = jamforDatum ? new Date(jamforDatum) : new Date();
+function aaAlderFranDatum(installDatum, skadeDatum){
+  if(!installDatum || !skadeDatum) return NaN;
+  var skada = new Date(skadeDatum);
   var satt = new Date(installDatum);
-  if(isNaN(idag) || isNaN(satt)) return NaN;
-  var alder = idag.getFullYear() - satt.getFullYear();
-  if(idag.getMonth() < satt.getMonth() ||
-     (idag.getMonth() === satt.getMonth() && idag.getDate() < satt.getDate())){
+  if(isNaN(skada) || isNaN(satt)) return NaN;
+  var alder = skada.getFullYear() - satt.getFullYear();
+  if(skada.getMonth() < satt.getMonth() ||
+     (skada.getMonth() === satt.getMonth() && skada.getDate() < satt.getDate())){
     alder--;
   }
   return alder + 1;
