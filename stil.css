@@ -829,6 +829,11 @@ footer code{font-family:'JetBrains Mono',monospace;font-size:calc(12.5px * var(-
 #uLayoutKnapp.pa{background:var(--accent);border-color:var(--accent);color:var(--btn-fg)}
 #uLayoutKnapp:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
+/* Radmodellen byggs av layout.js. Kolumnbredderna sätts per rad därifrån,
+   eftersom antalet paneler på en rad ändras av användaren. */
+.ngrid.egenlayout{display:flex;flex-direction:column;gap:16px}
+.ngrid.egenlayout > .rad{display:grid;gap:16px;align-items:stretch}
+
 .ngrid.redigera .npanel{outline:2px dashed var(--accent);outline-offset:2px;position:relative}
 /* Innehållet dämpas och blir oklickbart, så man inte råkar fylla i
    något medan man flyttar paneler. */
@@ -844,9 +849,11 @@ footer code{font-family:'JetBrains Mono',monospace;font-size:calc(12.5px * var(-
 .ngrid.redigera .pVerktyg{display:flex}
 .pVerktyg button{
   background:none;border:none;color:var(--accent);cursor:pointer;
-  font-size:calc(13px * var(--skala));line-height:1;padding:4px 6px;
+  font-size:calc(12px * var(--skala));line-height:1;padding:4px 5px;
   border-radius:100px;font-family:var(--rubrik);font-weight:700;
 }
+/* Radknapparna skiljs från sidledsknapparna med en tunn linje. */
+.pVerktyg button[data-rad="-1"]{border-left:1px solid var(--line-soft);margin-left:3px;padding-left:7px}
 .pVerktyg button:hover{background:var(--accent-soft)}
 .pVerktyg button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 .pVerktyg .pNamn{
