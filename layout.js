@@ -13,25 +13,25 @@
   if(!grid) return;
 
   var NYCKEL = 'layout';
-  var NAMN = {nAvtalPanel:'Avtal', nAaPanel:'Åldersavdrag',
-              nMallPanel:'Mall',  nPhonePanel:'Telefonlista'};
-  var ALLA = ['nAvtalPanel','nAaPanel','nMallPanel','nPhonePanel'];
+  var NAMN = {nAvtalPanel:'Avtal', nAaPanel:'Åldersavdrag', nMallPanel:'Mall',
+              nPhonePanel:'Telefonlista', nEkPanel:'Egenkontroll'};
+  var ALLA = ['nAvtalPanel','nAaPanel','nMallPanel','nPhonePanel','nEkPanel'];
 
   /* Samma fördelning som .ngrid hade i stil.css, så standardläget ser
      likadant ut som innan filen fanns. */
   var STANDARD = {
     rader: [ALLA.slice()],
-    bredd: {nAvtalPanel:0.95, nAaPanel:0.85, nMallPanel:1.2, nPhonePanel:0.9}
+    bredd: {nAvtalPanel:0.95, nAaPanel:0.85, nMallPanel:1.2, nPhonePanel:0.9, nEkPanel:0.9}
   };
 
   /* Breddknapparna i mallpanelen blir startlägen för radmodellen. */
   var FORVAL = {
     normal: {rader:[ALLA.slice()],
-             bredd:{nAvtalPanel:0.95, nAaPanel:0.85, nMallPanel:1.2,  nPhonePanel:0.9}},
+             bredd:{nAvtalPanel:0.95, nAaPanel:0.85, nMallPanel:1.2, nPhonePanel:0.9, nEkPanel:0.9}},
     bred:   {rader:[ALLA.slice()],
-             bredd:{nAvtalPanel:0.8,  nAaPanel:0.7,  nMallPanel:2.3,  nPhonePanel:0.85}},
-    full:   {rader:[['nAvtalPanel','nAaPanel','nPhonePanel'],['nMallPanel']],
-             bredd:{nAvtalPanel:1, nAaPanel:1, nMallPanel:1, nPhonePanel:1}}
+             bredd:{nAvtalPanel:0.8,  nAaPanel:0.7,  nMallPanel:2.3, nPhonePanel:0.85, nEkPanel:0.85}},
+    full:   {rader:[['nAvtalPanel','nAaPanel','nPhonePanel','nEkPanel'],['nMallPanel']],
+             bredd:{nAvtalPanel:1, nAaPanel:1, nMallPanel:1, nPhonePanel:1, nEkPanel:1}}
   };
 
   var lay = kopia(STANDARD);

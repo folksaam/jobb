@@ -41,11 +41,11 @@
   }catch(e){}
 })();
 </script>
-<script src="aa-data.js?v=20261023"></script>
+<script src="aa-data.js?v=20261024"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="stil.css?v=20261023">
+<link rel="stylesheet" href="stil.css?v=20261024">
 </head>
 <body>
 
@@ -200,6 +200,19 @@
       <button type="button" id="pCopy">Kopiera nummer</button>
       <button type="button" id="pInsert">Lägg in i mallen</button>
       <p class="nhint" id="pNote"></p>
+    </div>
+
+    <div class="npanel" id="nEkPanel">
+      <span class="nlabel">Egenkontroll</span>
+      <div class="ekTopp">
+        <span class="ekRubrik" id="ekRubrik">Skadeanmälan och kundmötet</span>
+        <span class="ekRakna" id="ekRakna">0 / 0</span>
+      </div>
+      <div id="ekLista"></div>
+      <div class="nbtns">
+        <button type="button" id="ekNollstall">Börja om</button>
+      </div>
+      <p class="nhint">Listan följer slingan du valt i mallen. Bockarna sparas med anteckningen och nollställs när du rensar.</p>
     </div>
 
   </div>
@@ -1101,6 +1114,7 @@ nLage.querySelectorAll('button').forEach(b=>{
     nNote.focus();
     placeraMarkor();
     if(typeof checkOklar==='function') checkOklar();
+    if(typeof ekRita==='function') ekRita();
     if(typeof saveNote==='function') saveNote();
   };
 });
@@ -1264,7 +1278,8 @@ document.getElementById('nClear').onclick=()=>{
   backup={
     note:nNote.value, avtal:avtal, orsak:nSel.value, belopp:nBel.value,
     bv:nBv.checked, larm:nLarm.checked, h:nNote.style.height||'',
-    lage:lage, utkast:Object.assign({},utkast)
+    lage:lage, utkast:Object.assign({},utkast),
+    ek:JSON.parse(JSON.stringify(ekBockar))
   };
   nNote.value=MALLAR[lage];
   utkast[lage]=MALLAR[lage];
@@ -1274,12 +1289,14 @@ document.getElementById('nClear').onclick=()=>{
   nBv.checked=false; nLarm.checked=false;
   nUndo.classList.add('show');
   updateSr();
+  if(typeof ekBockar!=='undefined'){ ekBockar[ekNyckel()]={}; ekRita(); }
   nNote.focus();
 };
 
 nUndo.onclick=()=>{
   if(!backup) return;
   if(backup.utkast){ utkast.ny=backup.utkast.ny; utkast.pag=backup.utkast.pag; utkast.webb=backup.utkast.webb; }
+  if(backup.ek){ ekBockar=JSON.parse(JSON.stringify(backup.ek)); ekRita(); }
   if(backup.lage){
     lage=backup.lage;
     [...nLage.children].forEach(x=>x.classList.toggle('on',x.dataset.v===lage));
@@ -1340,6 +1357,120 @@ function checkOklar(){
 nNote.addEventListener('input',checkOklar);
 checkOklar();
 
+/* ---------------- EGENKONTROLL ----------------
+   Två checklistor, ordagrant från de tryckta korten. Den rosa hör till
+   skadeanmälan och kundmötet, den blå till löpande handläggning.
+   Vilken som visas följer slingan som valts i mallpanelen. */
+const EK = {
+  ny: {titel:'Skadeanmälan och kundmötet', farg:'rosa', grupper:[
+    ['Kundbilden',[
+      'Säkerställ vem du pratar med och om det finns försäkring för aktuell byggnad?',
+      'Kontrollerat om det finns tidigare försäkringsfall eller kundmötesnoteringar av relevans?']],
+    ['Skadan',[
+      'Vad är skadeorsaken/händelsen?',
+      'Hur har det gått till?',
+      'Hur ser skadans omfattning ut?',
+      'Vad är det för typ av ytskikt och ålder?',
+      'Har några åtgärder vidtagits?',
+      'Finns skador på lösöre/merkostnader (säkerställ kontakt med sakskador vid behov)']],
+    ['Noteringar',[
+      'Alla aktiviteter ska noteras i Y75/H84, noteringarna ska vara tydliga och begripliga för en kollega.',
+      'Vilken villkorspunkt som reglerar skadan.',
+      'Inhämtade uppgifter från kundmötet och information om skadan.',
+      'Beslut om hur försäkringen gäller samt vad som är nästa steg.']],
+    ['I systemet',[
+      'Är skadan reservsatt, registrerad på rätt försäkring och moment?',
+      'Har vi rätt kontaktuppgifter till kunden?',
+      'Skriftlig information till kund (bekräftelse, förmedlarbrev, kontaktuppgifter till HL etc)']],
+    ['Sammanfattning',[
+      'Vad blev bestämt och vem gör vad?',
+      'Hur gäller försäkringen?',
+      'Vad är nästa steg i skaderegleringen?',
+      'Finns det ytterligare frågor? Har kunden koll på läget?']]
+  ]},
+  pag: {titel:'Löpande handläggning och pågående ärenden', farg:'bla', grupper:[
+    ['Ny information',[
+      'Vad har inkommit?',
+      'Vad är status?',
+      'Är skadans omfattning förändrad?',
+      'Kan jag ta skadan vidare/ta beslut?']],
+    ['I systemet',[
+      'Märkt upp dokument?',
+      'Uppdatera reservsättningen?',
+      'Behöver utbetalningsrätten uppdateras?',
+      'Är förmedlarbrev skickat + finns i Meps?',
+      'Finns beslut i Meps noterat i Y75/H84?']],
+    ['Noteringar',[
+      'Alla aktiviteter ska alltid noteras i Y75/H84',
+      'Ny information och status?',
+      'Notera och motivera beslutet',
+      'Är nästa steg noterat?']],
+    ['Sammanfattning',[
+      'Har vi meddelat kund status/beslut?',
+      'Vilka är kundens preliminära kostnader?',
+      'Vad blev bestämt och vem gör vad?',
+      'Vad är nästa steg i skaderegleringen?',
+      'Har kunden koll på läget?']]
+  ]}
+};
+/* Webbskador är också en nyanmälan, så de får den rosa listan. */
+const EK_LISTA = {ny:'ny', webb:'ny', pag:'pag'};
+
+const ekPanel   = document.getElementById('nEkPanel');
+const ekListaEl = document.getElementById('ekLista');
+const ekRubrik  = document.getElementById('ekRubrik');
+const ekRakna   = document.getElementById('ekRakna');
+
+/* Bockarna hålls per lista, så man inte tappar dem när man växlar slinga. */
+let ekBockar = {ny:{}, pag:{}};
+
+function ekNyckel(){ return EK_LISTA[lage] || 'ny'; }
+
+function ekRita(){
+  const n = ekNyckel();
+  const d = EK[n];
+  ekPanel.classList.toggle('ek-rosa', d.farg === 'rosa');
+  ekPanel.classList.toggle('ek-bla',  d.farg === 'bla');
+  ekRubrik.textContent = d.titel;
+
+  let h = '';
+  d.grupper.forEach((g, gi) => {
+    h += '<div class="ekGrupp"><div class="ekGnamn">' + g[0] + '</div>';
+    g[1].forEach((text, ri) => {
+      const id = 'ek-' + n + '-' + gi + '-' + ri;
+      const i = ekBockar[n][id] ? ' checked' : '';
+      h += '<label class="ekRad"><input type="checkbox" id="' + id + '"' + i + '>' +
+           '<span>' + text + '</span></label>';
+    });
+    h += '</div>';
+  });
+  ekListaEl.innerHTML = h;
+
+  ekListaEl.querySelectorAll('input[type="checkbox"]').forEach(b => {
+    b.addEventListener('change', () => {
+      ekBockar[n][b.id] = b.checked;
+      ekSumma();
+      if(typeof saveNote === 'function') saveNote();
+    });
+  });
+  ekSumma();
+}
+
+function ekSumma(){
+  const rutor = ekListaEl.querySelectorAll('input[type="checkbox"]');
+  const klara = ekListaEl.querySelectorAll('input[type="checkbox"]:checked').length;
+  ekRakna.textContent = klara + ' / ' + rutor.length;
+  ekPanel.classList.toggle('ek-klar', rutor.length > 0 && klara === rutor.length);
+}
+
+document.getElementById('ekNollstall').onclick = () => {
+  ekBockar[ekNyckel()] = {};
+  ekRita();
+  if(typeof saveNote === 'function') saveNote();
+};
+
+ekRita();
+
 /* ---------------- AUTOSPAR ---------------- */
 const NKEY='folksam_villa_anteckning';
 const nSave=document.getElementById('nSave');
@@ -1370,6 +1501,7 @@ function saveNote(){
       aaObjekt:aaValt,
       aaAlder:aaAlderIn.value,
       aaLage:aaLageV,
+      ek:ekBockar,
       aaInstall:aaInstall.value,
       aaSkada:aaJamfor.value,
       bredd:breddV,
@@ -1427,6 +1559,9 @@ function restoreNote(){
   if(d.aaInstall) aaInstall.value=d.aaInstall;
   if(d.aaSkada)   aaJamfor.value=d.aaSkada;
   if(d.aaLage)    aaSattLage(d.aaLage);
+  if(d.ek && typeof d.ek === 'object'){
+    ekBockar = {ny:d.ek.ny || {}, pag:d.ek.pag || {}};
+  }
   if(d.bredd) sattBredd(d.bredd);
   if(d.avtal==='stor'){
     avtal='stor';
@@ -1742,6 +1877,7 @@ restoreNote();
 updateSr();
 checkOklar();
 aaUppdatera();
+ekRita();
 
 /* ---------------- VILLKORSASSISTENT ---------------- */
 /* Slår upp i sidans egna villkorskort och räknar med samma motorer som
@@ -2104,7 +2240,7 @@ document.addEventListener('DOMContentLoaded',function(){
 </div>
 
 <button id="themeToggle" type="button" aria-pressed="false">🌙 Mörkt</button>
-<script src="tema.js?v=20261023"></script>
-<script src="layout.js?v=20261023"></script>
+<script src="tema.js?v=20261024"></script>
+<script src="layout.js?v=20261024"></script>
 </body>
 </html>
