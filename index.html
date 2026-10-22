@@ -11,11 +11,37 @@ body{background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMac
 </style>
 <script>
 (function(){
+  /* Läser in utseendevalen innan sidan ritas upp, annars hinner den
+     blinka i fel läge, bredd och storlek. Håll i synk med tema.js. */
   try{
-    var saved = localStorage.getItem('theme');
-    var dark = saved ? saved === 'dark'
-                     : window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if(dark) document.documentElement.setAttribute('data-theme','dark');
+    var d = document.documentElement, s = d.style;
+    var r = JSON.parse(localStorage.getItem('utseende') || 'null') || {};
+    var tema = r.tema;
+    if(!tema){
+      var g = localStorage.getItem('theme');
+      tema = g === 'dark' ? 'mork' : g === 'light' ? 'ljus' : 'system';
+    }
+    if(tema === 'mork')      d.setAttribute('data-theme','dark');
+    else if(tema === 'ljus') d.setAttribute('data-theme','light');
+    else if(window.matchMedia('(prefers-color-scheme: dark)').matches)
+                             d.setAttribute('data-theme','dark');
+
+    if(r.wrap){
+      s.setProperty('--wrap', r.wrap);
+      s.setProperty('--wrap-brett',
+        {'720px':'1200px','860px':'1600px','1040px':'1900px','100%':'100%'}[r.wrap] || '1600px');
+    }
+    if(r.skala)  s.setProperty('--skala', r.skala);
+    if(r.luft)   s.setProperty('--luft',  r.luft);
+    if(r.radie)  s.setProperty('--radie', r.radie);
+    if(r.accent) s.setProperty('--accent', r.accent);
+    if(r.typsnitt && r.typsnitt !== 'serif'){
+      var t = r.typsnitt === 'sans'
+        ? "'Archivo',system-ui,sans-serif"
+        : "system-ui,-apple-system,'Segoe UI',Roboto,sans-serif";
+      s.setProperty('--brodtext', t);
+      s.setProperty('--rubrik', t);
+    }
   }catch(e){}
 })();
 </script>
