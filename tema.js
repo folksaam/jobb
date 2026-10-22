@@ -6,7 +6,12 @@
 
    OBS: snutten som läser in valen INNAN sidan ritas upp ligger kvar
    inline i <head> på varje sida. Den måste köras direkt, annars hinner
-   sidan blinka i fel bredd, storlek och färg. */
+   sidan blinka i fel bredd, storlek och färg.
+
+   OBS 2: stil.css, tema.js, layout.js och aa-data.js laddas med ?v=DATUM
+   i sidornas taggar. Höj det numret när du laddat upp en ändrad fil —
+   annars serverar webbläsaren den gamla versionen ur cachen, och en ny
+   fil kan se ut att fungera medan en ändrad inte gör det. */
 
 (function(){
   var root = document.documentElement;
