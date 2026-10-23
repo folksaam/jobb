@@ -892,7 +892,7 @@ footer code{font-family:'JetBrains Mono',monospace;font-size:calc(12.5px * var(-
   border-left:3px solid var(--ek);padding-left:10px;margin-bottom:14px;
 }
 .ekRubrik{
-  font-family:var(--rubrik);font-weight:700;font-size:calc(14px * var(--skala));
+  font-family:var(--rubrik);font-weight:700;font-size:calc(14px * var(--skala) * var(--ek-skala));
   line-height:1.3;color:var(--ek);
 }
 .ekRakna{
@@ -904,20 +904,53 @@ footer code{font-family:'JetBrains Mono',monospace;font-size:calc(12.5px * var(-
 
 .ekGrupp{margin-bottom:15px}
 .ekGnamn{
-  font-family:var(--rubrik);font-size:calc(10.5px * var(--skala));font-weight:700;
+  font-family:var(--rubrik);font-size:calc(10.5px * var(--skala) * var(--ek-skala));font-weight:700;
   letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;
 }
+/* --ek-skala sätts av storleksknapparna i panelen och gäller bara
+   checklistan, så man kan få större text där utan att röra resten. */
+#nEkPanel{--ek-skala:1}
 .ekRad{
-  display:flex;align-items:flex-start;gap:9px;cursor:pointer;
-  font-size:calc(13.5px * var(--skala));line-height:1.45;
-  padding:5px 7px;margin-left:-7px;border-radius:calc(6px * var(--radie));
+  display:flex;align-items:flex-start;gap:10px;cursor:pointer;
+  font-size:calc(13.5px * var(--skala) * var(--ek-skala));line-height:1.45;
+  padding:6px 8px;margin-left:-8px;border-radius:100px 12px 12px 100px;
   transition:background .12s;
 }
 .ekRad:hover{background:var(--ek-mjuk)}
+
+/* Rutan ritas som ett eget element. Den riktiga kryssrutan ligger kvar
+   osynlig men fokuserbar, så tangentbord och skärmläsare fungerar. */
 .ekRad input{
-  margin-top:2px;flex-shrink:0;width:15px;height:15px;
-  accent-color:var(--ek);cursor:pointer;
+  position:absolute;opacity:0;width:0;height:0;margin:0;pointer-events:none;
 }
-.ekRad input:focus-visible{outline:2px solid var(--ek);outline-offset:2px}
+.ekBock{
+  position:relative;flex-shrink:0;
+  width:calc(19px * var(--skala) * var(--ek-skala));
+  height:calc(19px * var(--skala) * var(--ek-skala));
+  margin-top:calc(1px * var(--ek-skala));
+  border:2px solid var(--line);border-radius:50%;
+  background:var(--surface);
+  transition:background .15s,border-color .15s,transform .12s;
+}
+.ekRad:hover .ekBock{border-color:var(--ek)}
+.ekRad input:checked ~ .ekBock{
+  background:var(--ek);border-color:var(--ek);
+}
+/* Bocken ritas som två kanter på en vriden ruta — skalar skarpt. */
+.ekBock::after{
+  content:'';position:absolute;left:50%;top:47%;
+  width:calc(5px * var(--skala) * var(--ek-skala));
+  height:calc(9px * var(--skala) * var(--ek-skala));
+  border:solid #fff;border-width:0 2px 2px 0;
+  transform:translate(-50%,-55%) rotate(45deg) scale(.4);
+  opacity:0;transition:opacity .13s,transform .13s;
+}
+.ekRad input:checked ~ .ekBock::after{opacity:1;transform:translate(-50%,-55%) rotate(45deg) scale(1)}
+.ekRad input:focus-visible ~ .ekBock{outline:2px solid var(--ek);outline-offset:3px}
+.ekRad:active .ekBock{transform:scale(.92)}
+@media (prefers-reduced-motion:reduce){
+  .ekBock,.ekBock::after,.ekRad{transition:none}
+}
+
 /* Avbockat tonas ner, så det som återstår syns tydligt. */
-.ekRad input:checked + span{color:var(--muted);text-decoration:line-through;text-decoration-thickness:1px}
+.ekRad input:checked ~ .ekText{color:var(--muted);text-decoration:line-through;text-decoration-thickness:1px}

@@ -41,11 +41,11 @@
   }catch(e){}
 })();
 </script>
-<script src="aa-data.js?v=20261024"></script>
+<script src="aa-data.js?v=20261025"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="stil.css?v=20261024">
+<link rel="stylesheet" href="stil.css?v=20261025">
 </head>
 <body>
 
@@ -207,6 +207,13 @@
       <div class="ekTopp">
         <span class="ekRubrik" id="ekRubrik">Skadeanmälan och kundmötet</span>
         <span class="ekRakna" id="ekRakna">0 / 0</span>
+      </div>
+      <div class="sizebtns" id="ekStorlek">
+        <span class="sizelbl">Text</span>
+        <button type="button" data-v="0.88">Liten</button>
+        <button type="button" data-v="1" class="on">Normal</button>
+        <button type="button" data-v="1.15">Stor</button>
+        <button type="button" data-v="1.32">Störst</button>
       </div>
       <div id="ekLista"></div>
       <div class="nbtns">
@@ -1440,7 +1447,8 @@ function ekRita(){
       const id = 'ek-' + n + '-' + gi + '-' + ri;
       const i = ekBockar[n][id] ? ' checked' : '';
       h += '<label class="ekRad"><input type="checkbox" id="' + id + '"' + i + '>' +
-           '<span>' + text + '</span></label>';
+           '<span class="ekBock" aria-hidden="true"></span>' +
+           '<span class="ekText">' + text + '</span></label>';
     });
     h += '</div>';
   });
@@ -1462,6 +1470,26 @@ function ekSumma(){
   ekRakna.textContent = klara + ' / ' + rutor.length;
   ekPanel.classList.toggle('ek-klar', rutor.length > 0 && klara === rutor.length);
 }
+
+/* Textstorleken i listan är ett vyval, som höjden på mallrutan, och
+   sparas därför tillsammans med den i autosparet. */
+let ekStorlekV = '1';
+const ekStorlekEl = document.getElementById('ekStorlek');
+
+function ekSattStorlek(v){
+  ekStorlekV = v || '1';
+  ekPanel.style.setProperty('--ek-skala', ekStorlekV);
+  ekStorlekEl.querySelectorAll('button').forEach(b => {
+    b.classList.toggle('on', b.dataset.v === ekStorlekV);
+  });
+}
+ekStorlekEl.querySelectorAll('button').forEach(b => {
+  b.addEventListener('click', () => {
+    ekSattStorlek(b.dataset.v);
+    if(typeof saveNote === 'function') saveNote();
+  });
+});
+ekSattStorlek('1');
 
 document.getElementById('ekNollstall').onclick = () => {
   ekBockar[ekNyckel()] = {};
@@ -1502,6 +1530,7 @@ function saveNote(){
       aaAlder:aaAlderIn.value,
       aaLage:aaLageV,
       ek:ekBockar,
+      ekStorlek:ekStorlekV,
       aaInstall:aaInstall.value,
       aaSkada:aaJamfor.value,
       bredd:breddV,
@@ -1562,6 +1591,7 @@ function restoreNote(){
   if(d.ek && typeof d.ek === 'object'){
     ekBockar = {ny:d.ek.ny || {}, pag:d.ek.pag || {}};
   }
+  if(d.ekStorlek) ekSattStorlek(d.ekStorlek);
   if(d.bredd) sattBredd(d.bredd);
   if(d.avtal==='stor'){
     avtal='stor';
@@ -2240,7 +2270,7 @@ document.addEventListener('DOMContentLoaded',function(){
 </div>
 
 <button id="themeToggle" type="button" aria-pressed="false">🌙 Mörkt</button>
-<script src="tema.js?v=20261024"></script>
-<script src="layout.js?v=20261024"></script>
+<script src="tema.js?v=20261025"></script>
+<script src="layout.js?v=20261025"></script>
 </body>
 </html>
