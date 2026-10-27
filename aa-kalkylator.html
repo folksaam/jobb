@@ -228,7 +228,7 @@ input[type="date"]::-webkit-calendar-picker-indicator{
     margin:-4px 0 12px;
 }
 
-#backToVillkor,#backToBrf{
+#backToVillkor,#backToFritid{
     position:fixed;
     left:20px;
     bottom:20px;
@@ -247,17 +247,17 @@ input[type="date"]::-webkit-calendar-picker-indicator{
     box-shadow:0 6px 20px var(--shadow);
     transition:0.2s;
 }
-#backToVillkor:hover,#backToBrf:hover{
+#backToVillkor:hover,#backToFritid:hover{
     background:var(--accent-hover);
     transform:translateY(-2px);
     box-shadow:0 8px 24px var(--shadow);
 }
-/* Två pillerlänkar i samma hörn — bostadsrätt ligger ovanpå. */
-#backToBrf{bottom:76px}
+/* Två pillerlänkar i samma hörn — fritidshus ligger ovanpå. */
+#backToFritid{bottom:76px}
 @media (max-width:700px){
-    #backToVillkor,#backToBrf{left:12px;padding:10px 14px;font-size:13px}
+    #backToVillkor,#backToFritid{left:12px;padding:10px 14px;font-size:13px}
     #backToVillkor{bottom:12px}
-    #backToBrf{bottom:62px}
+    #backToFritid{bottom:62px}
 }
 
 /* ---------- mörkt läge ---------- */
@@ -298,7 +298,7 @@ input[type="date"]::-webkit-calendar-picker-indicator{
 <body>
 
 <a id="backToVillkor" href="./villaforsakring.html">&#8592; Villkor &amp; tr&#228;ning</a>
-<a id="backToBrf" href="./bostadsratt.html">Bostadsr&#228;tt &#8594;</a>
+<a id="backToFritid" href="./fritidshus.html">Fritidshus &#8594;</a>
 
 
 
@@ -505,7 +505,7 @@ input[type="date"]::-webkit-calendar-picker-indicator{
 
 
 
-    <script src="aa-data.js?v=20261025"></script>
+    <script src="aa-data.js?v=20261027"></script>
     <script>
 /* Skadedatum förifylls inte — åldern ska räknas fram till skadedagen,
    och det datumet måste anges aktivt. Se aaAlderFranDatum i aa-data.js. */

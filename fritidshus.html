@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fritidshusförsäkring — Bas &amp; Stor</title>
+<script>
+/* Sätts före rendering så sidan inte blinkar vitt i mörkt läge. */
+(function(){
+  /* Läser in utseendevalen innan sidan ritas upp, annars hinner den
+     blinka i fel läge, bredd och storlek. Håll i synk med tema.js. */
+  try{
+    var d = document.documentElement, s = d.style;
+    var r = JSON.parse(localStorage.getItem('utseende') || 'null') || {};
+    var tema = r.tema;
+    if(!tema){
+      var g = localStorage.getItem('theme');
+      tema = g === 'dark' ? 'mork' : g === 'light' ? 'ljus' : 'system';
+    }
+    if(tema === 'mork')      d.setAttribute('data-theme','dark');
+    else if(tema === 'ljus') d.setAttribute('data-theme','light');
+    else if(window.matchMedia('(prefers-color-scheme: dark)').matches)
+                             d.setAttribute('data-theme','dark');
+
+    if(r.wrap){
+      s.setProperty('--wrap', r.wrap);
+      s.setProperty('--wrap-brett',
+        {'720px':'1200px','860px':'1600px','1040px':'1900px','100%':'100%'}[r.wrap] || '1600px');
+    }
+    if(r.skala)  s.setProperty('--skala', r.skala);
+    if(r.luft)   s.setProperty('--luft',  r.luft);
+    if(r.radie)  s.setProperty('--radie', r.radie);
+    if(r.accent) s.setProperty('--accent', r.accent);
+    if(r.typsnitt && r.typsnitt !== 'serif'){
+      var t = r.typsnitt === 'sans'
+        ? "'Archivo',system-ui,sans-serif"
+        : "system-ui,-apple-system,'Segoe UI',Roboto,sans-serif";
+      s.setProperty('--brodtext', t);
+      s.setProperty('--rubrik', t);
+    }
+  }catch(e){}
+})();
+</script>
+<script src="aa-data.js?v=20261027"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="stil.css?v=20261027">
+</head>
+<body>
+
+<nav>
+  <div class="wrap navrow">
+    <a href="#oversikt">Översikt</a>
+    <a href="#sjalvrisk">Självrisker</a>
+    <a href="#skador">Skadehändelser</a>
+    <a href="#stor">Stor</a>
+    <a href="#vardering">Värdering</a>
+    <a href="./villaforsakring.html">Villa →</a>
+    <a href="./trana.html">Träna →</a>
+    <a href="./aa-kalkylator.html">Åldersavdrag →</a>
+  </div>
+</nav>
+
+<header class="wrap">
+  <div class="eyebrow">Folksam · Försäkringsvillkor 1 januari 2026 · S2941 26-01</div>
+  <h1>Fritidshus&shy;försäkring<em>Bas &amp; Stor</em></h1>
+  <p class="lede">Eget villkor, egen numrering — fritidshus regleras mot A-punkterna i S2941, inte mot villans B-avsnitt. Uppslagsverk för dig som reglerar fritidshusskador.</p>
+</header>
+
+<main>
+
+<!-- ÖVERSIKT -->
+<section id="oversikt" class="wrap">
+  <div class="sectag">01 — A1 till A7</div>
+  <h2 class="sec">Vad försäkringen omfattar</h2>
+  <p class="intro">Fritidshus är en byggnadsförsäkring precis som villa, men med ett eget villkor och egen numrering. Det mesta känns igen — men undantagen skiljer sig på flera punkter som kostar kunden pengar.</p>
+
+  <div class="note warn"><strong>Fel villkor är det vanligaste misstaget.</strong> Fritidshus regleras mot <strong>S2941</strong> och dess A-punkter. Villans B-punkter gäller inte här, även om texterna ofta är nästan likalydande. Självriskerna är desamma, men stöldmomentet, låsbytet och merutgifterna är det inte.</p>
+
+  <h3>Det här ingår i Bas</h3>
+  <div class="lbl yes">Egendomsskydd för byggnader och tomt</div>
+  <ul class="pts yes">
+    <li>Stöld och skadegörelse</li>
+    <li>Brand, blixt med mera</li>
+    <li>Läckage, översvämning</li>
+    <li>Storm, hagel, snötryck</li>
+    <li>Andra naturskador (lavin med mera)</li>
+    <li>Skador orsakade av vilda djur</li>
+    <li>Hushållsmaskiner, installationer, glasrutor</li>
+    <li>Merutgifter och hyresbortfall</li>
+    <li>Vissa trafikskador</li>
+  </ul>
+  <p>Plus <strong>ansvarsförsäkring</strong>, <strong>rättsskyddsförsäkring</strong>, <strong>skadedjursförsäkring</strong> och <strong>kristerapi</strong>.</p>
+  <div class="sr"><b>Personligt lösöre</b> ingår bara om det står i försäkringsbeskedet (A5). Det skiljer fritidshus från villa, där lösöret ligger i hemförsäkringen.</div>
+
+  <h3>Enklare fritidshus</h3>
+  <div class="note"><strong>Saknar huset vatten, avlopp och maskinell utrustning</strong> kan försäkringen tecknas utan det skyddet. Då gäller den inte för läckageskador enligt A12, maskin- och installationsskador enligt A21, eller skador på tvätt och livsmedel enligt A22. Kontrollera försäkringsbeskedet innan du reglerar en läckageskada.</div>
+
+  <h3>Vilken egendom som är försäkrad</h3>
+  <div class="lbl yes">Försäkringen gäller för</div>
+  <ul class="pts yes">
+    <li>Byggnad som är angiven i försäkringsbeskedet</li>
+    <li>Tillbehör till byggnaden enligt jordabalken — fast inredning, ledningar, värmepanna, spis, badkar, kylskåp, tvättmaskin</li>
+    <li>Ledningar avsedda för försäkrad byggnad, även sträckning utanför byggnaden fram till kommunal eller samägd anläggning</li>
+    <li>Tomtmark: mark, växtlighet, staket, terrassmur, trädgårdstrappa, plattgång, konstverk på fundament, flaggstång, fristående carport upp till 50 m², pergola, brygga och laddstolpe</li>
+    <li>Installation som servar försäkrad byggnad — vid samägd installation gäller försäkringen för din del</li>
+    <li>Fast monterad radio- och tv-antenn, även parabol</li>
+    <li>Simbassäng inom tomten, även spabad anbringat för stadigvarande bruk</li>
+    <li>Bränsle på tomten avsett för byggnadens uppvärmning</li>
+    <li>Solceller som du hyr eller leasar som servar försäkrad byggnad</li>
+    <li>Byggnadstillbehör som ännu inte installerats — värderas enligt C27</li>
+  </ul>
+  <div class="lbl no">Ingår inte</div>
+  <ul class="pts no">
+    <li>Brunn, inklusive brunnsvatten. Undantaget avser dock inte ledningar och maskinell utrustning</li>
+  </ul>
+  <div class="sr"><b>A4.</b> Samma uppräkning som villans B2, med ett undantag: fritidshus saknar villans skrivning om byggnad under uppförande i samma punkt — den ligger i stället i A26–A27.</div>
+
+  <h3>Så skiljer den sig från villaförsäkringen</h3>
+  <div class="tblwrap">
+  <table>
+    <tr><th>Fråga</th><th>Fritidshus</th><th>Villa</th></tr>
+    <tr><td>Villkor</td><td class="num">S2941, punkt A</td><td class="num">S2940, punkt B</td></tr>
+    <tr><td>Stöld och skadegörelse</td><td class="num">Kräver att någon olovligen tagit sig in</td><td class="num">B17, vidare omfattning</td></tr>
+    <tr><td>Låsbyte</td><td class="num">Ersätts inte</td><td class="num">Högst 3 000 kr</td></tr>
+    <tr><td>Merutgifter</td><td class="num">Högst ett år</td><td class="num">Hyresbortfall två år</td></tr>
+    <tr><td>Hyresbortfall</td><td class="num">Två år, högst 25 000 kr</td><td class="num">Två år, utan takbelopp</td></tr>
+    <tr><td>Personligt lösöre</td><td class="num">Kan ingå enligt A5</td><td class="num">Ligger i hemförsäkringen</td></tr>
+    <tr><td>Utökat läckageskydd i Stor</td><td class="num">Finns inte</td><td class="num">20 000 kr</td></tr>
+    <tr><td>Skadedjur, självrisk</td><td class="num">Ingen alls</td><td class="num">Hussvamp 10 000 kr i Bas</td></tr>
+    <tr><td>Nyteckningsregel skadedjur</td><td class="num">9 månader</td><td class="num">6 månader</td></tr>
+    <tr><td>Kristerapi</td><td class="num">Ingår</td><td class="num">Ingår inte i B</td></tr>
+    <tr><td>Åldersavdragstabell</td><td class="num">C35 — identisk</td><td class="num">C42</td></tr>
+  </table>
+  </div>
+  <div class="note"><strong>Kom ihåg:</strong> Självrisknivåerna är identiska mellan villkoren. Det som skiljer är omfattningen — framför allt stöld, låsbyte och merutgifter.</div>
+</section>
+
+<!-- SJÄLVRISKER -->
+<section id="sjalvrisk" class="wrap">
+  <div class="sectag">02 — A3, A14, A15, A21</div>
+  <h2 class="sec">Självrisker</h2>
+  <p class="intro">Grundsjälvrisken är 1 800 kr, men vid vattenskador gäller den nästan aldrig. Nivåerna är desamma som i villaförsäkringen — bara punktnumren skiljer.</p>
+
+  <div class="tblwrap">
+  <table>
+    <tr><th>Skadetyp</th><th>Självrisk</th><th>Punkt</th></tr>
+    <tr><td>Grundsjälvrisk (övrigt)</td><td class="num">1 800 kr</td><td class="num">A3</td></tr>
+    <tr><td>Läckage: frysning</td><td class="num">10 %, lägst 4 000, högst 10 000</td><td class="num">A14</td></tr>
+    <tr><td>Läckage: byggnorm ej följd</td><td class="num">10 %, lägst 10 000, inget tak</td><td class="num">A14</td></tr>
+    <tr><td>Läckage genom vattentätt skikt</td><td class="num">4 000 kr</td><td class="num">A14</td></tr>
+    <tr><td>Annan läckageskada på byggnad</td><td class="num">4 000 kr</td><td class="num">A14</td></tr>
+    <tr><td>Översvämning</td><td class="num">10 %, lägst 10 000</td><td class="num">A15</td></tr>
+    <tr><td>Ren baktrycksskada</td><td class="num">10 000 kr</td><td class="num">A15</td></tr>
+    <tr><td>Ren baktrycksskada med backventil</td><td class="num">5 000 kr</td><td class="num">A15</td></tr>
+    <tr><td>Hushållsmaskin/installation: frysning</td><td class="num">10 %, lägst 2 000, högst 10 000</td><td class="num">A21</td></tr>
+    <tr><td>Rättsskydd</td><td class="num">20 % av kostnaden, lägst 1 800</td><td class="num">C15</td></tr>
+  </table>
+  </div>
+
+  <h3>Ingen självrisk alls</h3>
+  <ul class="pts yes">
+    <li>Inbrott i fritidshuset när det finns ett aktiverat inbrottslarm kopplat till godkänd larmcentral och ingen är hemma och ser till bostaden</li>
+    <li>Skadedjursförsäkringen — hela momentet, till skillnad från villa</li>
+  </ul>
+
+  <div class="note warn"><strong>Fyra krav, inte tre.</strong> Larmet ska vara aktiverat, kopplat till godkänd larmcentral, ingen hemma som ser till bostaden — <em>och</em> skadehändelsen ska vara ett inbrott. Skadegörelse utifrån eller stöld av byggnadstillbehör utanpå huset ger inte nollsjälvrisk.</div>
+
+  <h3>Förhöjd självrisk</h3>
+  <p>Har ni avtalat om högre självrisk än grundsjälvrisken framgår det av försäkringsbeskedet. Den gäller för egendom försäkrad enligt A4 och är alltid den lägsta kunden får stå för.</p>
+</section>
+
+<!-- SKADEHÄNDELSER -->
+<section id="skador" class="wrap">
+  <div class="sectag">03 — A8 till A25</div>
+  <h2 class="sec">Skadehändelser</h2>
+  <p class="intro">För att ersättning ska lämnas krävs två saker: att skadehändelsen är ersättningsbar <em>och</em> att den försäkrade egendomen omfattas av just den händelsen.</p>
+
+  <details class="card" id="a8">
+    <summary><span class="chip">A8</span><span class="title">Stöld och skadegörelse</span><span class="caret">›</span></summary>
+    <div class="body">
+      <div class="lbl yes">Vi ersätter</div>
+      <ul class="pts yes">
+        <li>Stöld och skadegörelse om gärningspersonen <strong>olovligen tagit sig in</strong> i bostadshus eller uthus</li>
+        <li>Stöld av fast monterat byggnadstillbehör utanför eller utanpå byggnaden</li>
+        <li>Skadegörelse på byggnad utifrån och inifrån, samt stöld av fast monterat byggnadstillbehör inomhus — gäller även ännu inte installerat tillbehör</li>
+        <li>Skadegörelse på och stöld av sådant som i A4 betecknas som tomtmark</li>
+        <li>Skadegörelse på simbassäng</li>
+      </ul>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada som en försäkrad tillfogar någon annan som försäkringen gäller för enligt A2</li>
+        <li>Skada på drivbänkar och inglasad byggnad, t.ex. växthus</li>
+      </ul>
+      <div class="note warn"><strong>Två skärpningar mot villa.</strong> Har gärningspersonen tagit sig in med nyckel gäller försäkringen bara om denne <em>obehörigen</em> innehade nyckeln. Har gärningspersonen blivit insläppt gäller den bara om tvång eller hot använts. Balkong och altan räknas inte som bostad eller inomhus.</div>
+      <div class="note warn"><strong>Låsbyte ersätts inte.</strong> Varken byte eller omläggning. Villaförsäkringen ersätter upp till 3 000 kr — den regeln finns inte här.</div>
+      <div class="lbl care">Aktsamhetskrav (A9)</div>
+      <ul class="pts care">
+        <li>Ytterdörrar ska vara låsta; altan-, terrass- och balkongdörrar kan i stället vara stängda och reglade</li>
+        <li>Alla fönster stängda och reglade när ingen är hemma. Vid bortovaro under 24 timmar får fönster stå på glänt om det är säkrat med ordentlig fönsterspärr — plastspärr duger inte</li>
+        <li>Nyckel får inte lämnas kvar eller gömmas i närheten av husen, och inte märkas så att obehörig kan avgöra vart den går</li>
+        <li>Misstänker du att obehörig har nyckel måste du omedelbart byta lås</li>
+        <li>Vapen ska förvaras inlåst i godkänt vapenskåp, nyckeln inte i närheten av skåpet</li>
+      </ul>
+      <div class="sr"><b>Vid brott (A10):</b> Har kunden varit hemma med rimlig tillsyn görs normalt inget avdrag, och detsamma gäller bortovaro under 30 minuter. I övriga fall normalt 25 %. Vid upprepad försummelse eller längre tid med olåst dörr kan avdraget bli större, till och med helt utebliven ersättning.</div>
+    </div>
+  </details>
+
+  <details class="card" id="a11">
+    <summary><span class="chip">A11</span><span class="title">Brand, blixt, explosion med mera</span><span class="caret">›</span></summary>
+    <div class="body">
+      <div class="lbl yes">Vi ersätter</div>
+      <ul class="pts yes">
+        <li>Skada genom brand</li>
+        <li>Skada genom blixt</li>
+        <li>Skada på hushållsmaskin och annan elektrisk maskin, apparat eller ledning genom kortslutning, överslag eller överspänning</li>
+        <li>Skada genom explosion</li>
+        <li>Skada som plötsligt orsakas av sot från öppen låga</li>
+        <li>Skada av frätande gas som bildats vid oavsiktlig upphettning av plast</li>
+      </ul>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada genom sprängningsarbete</li>
+        <li>Sot från levande ljus</li>
+      </ul>
+      <div class="lbl care">Aktsamhetskrav</div>
+      <ul class="pts care">
+        <li>Sota enligt kommunens regler och följa eldningsinstruktionerna för eldstaden</li>
+        <li>Tömma aska och sotrester i metallkärl med tättslutande lock på icke brännbart underlag</li>
+        <li>Följa MSB:s vägledning om laddinfrastruktur vid laddning av elbil och mindre elfordon</li>
+        <li>Inte lämna levande ljus eller andra ljuskällor med öppen låga utan tillsyn</li>
+        <li>Inte lämna kokkärl utan tillsyn på spisen</li>
+        <li>Inte röka i sängen</li>
+      </ul>
+      <div class="note"><strong>Vid brott:</strong> Ersättningen sätts ned eller uteblir efter vad som är skäligt — med hänsyn till sambandet mellan åsidosättandet och skadan, uppsåtet eller vårdslösheten, samt omständigheterna i övrigt. Ingen fast procentsats.</div>
+      <div class="sr"><b>Självrisk:</b> 1 800 kr. <b>Åldersavdrag:</b> vid kortslutning, överslag eller överspänning kan avdraget uppgå till 100 %, och takbeloppet gäller inte för helt avskrivna byggnadsdelar.</div>
+    </div>
+  </details>
+
+  <details class="card" id="a12">
+    <summary><span class="chip">A12</span><span class="title">Läckage</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter om egendomen skadas av vatten, olja, annan vätska eller ånga som <strong>oberäknat strömmar ut</strong> från:</p>
+      <div class="lbl yes">Källor som omfattas</div>
+      <ul class="pts yes">
+        <li>Ledningssystem för vatten, värme eller avlopp</li>
+        <li>Anordning ansluten till dessa system — tvättställ, diskmaskin, tvättmaskin, värmepanna, oljetank</li>
+        <li>Invändigt stuprör som uppfyller kraven på avloppsledning för spillvatten</li>
+        <li>Badrum, duschrum eller tvättstuga som har golvavlopp</li>
+        <li>Kyl eller frys vid strömavbrott eller fel på anläggningen</li>
+        <li>Akvarium eller vattensäng</li>
+      </ul>
+      <div class="note"><strong>Ingår också:</strong> Kostnaden för att lokalisera och frilägga läckagestället inom byggnaden för att möjliggöra reparation — och kostnaden för att återställa det frilagda läckagestället.</div>
+      <div class="note warn"><strong>Kontrollera först:</strong> Är det ett enklare fritidshus utan vatten, avlopp och maskinell utrustning gäller A12 inte alls.</div>
+      <div class="sr"><b>Självrisk:</b> Se A14 — fyra olika nivåer beroende på orsak.</div>
+    </div>
+  </details>
+
+  <details class="card" id="a13">
+    <summary><span class="chip">A13</span><span class="title">Begränsningar till läckage</span><span class="caret">›</span></summary>
+    <div class="body">
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada på <strong>den anordning som läckt</strong> — rörledningar med mera kan dock ersättas enligt A21</li>
+        <li>I våtutrymme: skada på ytskikt inklusive tätskikt genom vilket läckaget uppstått. <strong>Hela våtutrymmet — väggar och golv — ses som en enhet</strong></li>
+        <li>Den vätska som runnit ut</li>
+        <li>Skada på byggnad genom röta, svamp, rost, frätning eller annan långtidspåverkan, om det inte framgår att skadan uppkommit genom utströmning under försäkringstiden</li>
+        <li>Utströmning från rökkanal, ventilationskanal, dräneringssystem, dagvattensystem, annat stuprör, tak eller takränna</li>
+        <li>Vatten som vid regn, snösmältning eller högvatten kommer ut ur avloppsbrunn eller avloppsledning — kan i vissa fall ersättas enligt A15</li>
+      </ul>
+      <div class="sr">Ytskiktet och tätskiktet omfattas med <b>Fritidshusförsäkring Stor</b>, om kvalitetsdokument från uppförandet kan uppvisas.</div>
+    </div>
+  </details>
+
+  <details class="card" id="a15">
+    <summary><span class="chip">A15</span><span class="title">Översvämning</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter skada på byggnad <strong>eller lös egendom i byggnaden</strong> orsakad av att vatten strömmar direkt in från markytan genom ventil, fönster eller dörröppning, eller inomhus tränger upp ur avloppsledning.</p>
+      <div class="lbl yes">Orsaken måste vara</div>
+      <ul class="pts yes">
+        <li>Skyfall — <strong>minst 1 mm/minut eller 50 mm/dygn</strong></li>
+        <li>Snösmältning</li>
+        <li>Stigande sjö eller vattendrag</li>
+      </ul>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada på båthus, sjöbod, badhytt, tält eller inglasad byggnad — eller egendom som förvaras i dessa</li>
+        <li>Skada på tomtmark</li>
+      </ul>
+      <div class="sr"><b>Självrisk:</b> 10 % av skadebeloppet, lägst 10 000 kr. Ren baktrycksskada 10 000 kr, med installerad backventil 5 000 kr. Med Stor betalar kunden 1 800 kr, och ingen självrisk alls vid ren baktrycksskada med backventil.</div>
+    </div>
+  </details>
+
+  <details class="card" id="a16">
+    <summary><span class="chip">A16</span><span class="title">Storm</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter skada på byggnad som blåser sönder vid storm, <strong>minst 21 m/sekund</strong>, och den skada som kan uppstå på lös egendom i huset. Även vid lägre vindstyrka lämnas ersättning om byggnaden skadas av träd eller flaggstång som blåser omkull.</p>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Revetering, puts eller skorstensbeklädnad som skadas på annat sätt än genom att träd eller annat föremål blåst omkull eller brutits loss</li>
+        <li>Skada på tält eller inglasad byggnad, t.ex. växthus</li>
+        <li>Skada på båthus, sjöbod eller badhytt</li>
+        <li>Skada på lös egendom i de nämnda byggnaderna eller utomhus</li>
+        <li>Skada på tomtmark, till exempel flaggstång eller träd</li>
+        <li>Skada på fristående carport</li>
+      </ul>
+      <div class="sr"><b>Självrisk:</b> 1 800 kr. Med Stor utökas skyddet till tomtmark, pool och byggnad enligt A4 — men inte brygga.</div>
+    </div>
+  </details>
+
+  <details class="card" id="a17">
+    <summary><span class="chip">A17</span><span class="title">Hagel</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter skada på byggnad som slås sönder av hagel, och den skada som kan uppstå på lös egendom däri.</p>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada på tält eller inglasad byggnad, t.ex. växthus, eller lös egendom i dessa</li>
+        <li>Skada på lös egendom utomhus</li>
+      </ul>
+      <div class="sr"><b>Självrisk:</b> 1 800 kr.</div>
+    </div>
+  </details>
+
+  <details class="card" id="a18">
+    <summary><span class="chip">A18</span><span class="title">Snötryck</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter skada på bostadsbyggnad och lös egendom i byggnaden, bestående i eller orsakad av att <strong>yttertakets bärande konstruktion</strong> skadats av snötryck.</p>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada om taket inte utförts enligt gällande byggnorm eller branschregler vid tidpunkten för uppförandet eller reparationen</li>
+        <li>Skada som beror på ingrepp i den bärande stommen eller angrepp av röta eller skadeinsekter</li>
+        <li>Skada på altantak, balkongtak, verandatak eller liknande tak</li>
+      </ul>
+      <div class="lbl care">Aktsamhetskrav</div>
+      <ul class="pts care">
+        <li>Förebygga och förhindra skada genom att se till att taket blir skottat om snömängden blir hotande stor</li>
+      </ul>
+      <div class="sr"><b>Vid brott:</b> normalt 25 % avdrag, större i allvarliga fall, inget i lindriga. <b>Självrisk:</b> 1 800 kr.</div>
+    </div>
+  </details>
+
+  <details class="card" id="a19">
+    <summary><span class="chip">A19</span><span class="title">Andra naturskador</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter skada orsakad av jordskalv med en styrka på <strong>minst 4 enligt Richterskalan</strong>, jordskred, jordras, bergras, lavin eller vulkanutbrott. Sprickor i byggnad ersätts endast om de är så allvarliga att funktionsdugligheten avsevärt minskat.</p>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada på tomtmark eller byggnad orsakad av sättning i mark eller grund</li>
+        <li>Skada orsakad av sprängnings-, schaktnings-, pålnings- eller spontningsarbete, gruvdrift eller uppläggning av jord- och stenmassor</li>
+        <li>Skada på tomtmark eller byggnad orsakad av vatten- eller vågerosion</li>
+      </ul>
+      <div class="sr"><b>Självrisk:</b> 1 800 kr.</div>
+    </div>
+  </details>
+
+  <details class="card" id="a20">
+    <summary><span class="chip">A20</span><span class="title">Skada orsakad av vilda djur</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter skada genom vilda djur eller fåglar som tagit sig in i bostadsbyggnaden.</p>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada orsakad av insekter, råttor, möss eller andra smågnagare</li>
+      </ul>
+      <div class="note"><strong>Hänvisa till Anticimex.</strong> Sanering av råttor och möss ingår i skadedjursförsäkringen utan självrisk. Till skillnad från villa Stor finns däremot inget moment för <em>byggnadsskada</em> orsakad av möss.</div>
+      <div class="sr"><b>Självrisk:</b> 1 800 kr.</div>
+    </div>
+  </details>
+
+  <details class="card" id="a21">
+    <summary><span class="chip">A21</span><span class="title">Hushållsmaskin- och installationsskador</span><span class="caret">›</span></summary>
+    <div class="body">
+      <div class="lbl yes">Vi ersätter skada på</div>
+      <ul class="pts yes">
+        <li>Installationer för vatten, värme, avlopp, ventilation, gas, el, fiberoptik eller bredband avsedda för den försäkrade byggnaden, som går sönder</li>
+        <li>Duschkabin, duschvägg eller duschdörr, som går sönder</li>
+        <li>Hushållsmaskin som går sönder</li>
+        <li>Den maskinella utrustningen till brunn, simbassäng eller poolduk, som går sönder</li>
+      </ul>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada på ytskikt inklusive tätskikt</li>
+        <li>Skada på elslingor i våtrumsgolv</li>
+        <li>Rost eller frätning på egendom utanför eller utanpå byggnad</li>
+        <li>Rost eller frätning på installation inom byggnad om installationen är <strong>äldre än 15 år</strong></li>
+        <li>Skada som enbart består i skönhetsfel</li>
+        <li>Skada genom sprängningsarbete</li>
+        <li>Skada genom översvämning eller vatten som tränger in i byggnad — se dock A15</li>
+        <li>Kostnad för rensning eller upptining av ledning</li>
+        <li>Skada på belysningsarmatur, dränerings- och dagvattensystem, skorsten eller rökgång, murverk, ventilationshuv, brunn, simbassäng eller poolduk</li>
+        <li>Skada som leverantör eller annan ansvarar för enligt konsumentköp- eller konsumenttjänstlagen — <strong>vi ersätter dock om den försäkrade visar att den ansvarige inte avhjälper eller betalar</strong></li>
+      </ul>
+      <div class="sr"><b>Självrisk vid frysning:</b> 10 % av skadebeloppet, lägst 2 000 kr, högst 10 000 kr. <b>Åldersavdrag:</b> kan uppgå till 100 % och takbeloppet gäller inte för helt avskrivna byggnadsdelar.</div>
+    </div>
+  </details>
+
+  <details class="card" id="a22">
+    <summary><span class="chip">A22</span><span class="title">Tvätt och livsmedel</span><span class="caret">›</span></summary>
+    <div class="body">
+      <div class="lbl yes">Vi ersätter</div>
+      <ul class="pts yes">
+        <li>Skada på tvätt i tvättmaskin eller torktumlare orsakad av fel på maskinen</li>
+        <li>Skada på livsmedel i frys och kyl till följd av temperaturstegring eller fel på frysen</li>
+      </ul>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada på livsmedel till följd av strömavbrott som ersätts av annan enligt ellagen — vi ersätter dock om den försäkrade visar att den ansvarige inte avhjälper eller betalar</li>
+      </ul>
+      <div class="note"><strong>Finns ingen motsvarighet i villaförsäkringen.</strong> Momentet gäller inte för enklare fritidshus utan maskinell utrustning.</div>
+    </div>
+  </details>
+
+  <details class="card" id="a23">
+    <summary><span class="chip">A23</span><span class="title">Glasruteskador</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter skada på glasrutor som går sönder i byggnadens fönster eller dörrar samt inglasad balkong och altan.</p>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada på isolerglas som endast består i att konstruktionen blivit otät</li>
+        <li>Skada på glas i drivbänkar och inglasad byggnad, t.ex. växthus</li>
+        <li>Skada genom byggnads- och sprängningsarbete</li>
+      </ul>
+      <div class="sr"><b>Självrisk:</b> 1 800 kr.</div>
+    </div>
+  </details>
+
+  <details class="card" id="a24">
+    <summary><span class="chip">A24</span><span class="title">Vissa trafikskador</span><span class="caret">›</span></summary>
+    <div class="body">
+      <div class="lbl yes">Vi ersätter</div>
+      <ul class="pts yes">
+        <li>Skada på byggnad vid trafikolycka med fordon som omfattas av trafikskadelagen — <strong>dock endast till den del skadan inte är ersättningsbar genom trafikförsäkringen</strong></li>
+        <li>Skada på försäkrad egendom genom att flygplan eller annat luftfartyg störtar, eller att delar faller ner</li>
+      </ul>
+      <div class="sr"><b>Självrisk:</b> 1 800 kr. Trafikförsäkringen går alltid först.</div>
+    </div>
+  </details>
+
+  <details class="card" id="a25">
+    <summary><span class="chip">A25</span><span class="title">Nöd</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter nödskador på byggnad — skador som uppstår genom nödvändiga räddningsåtgärder för att undanröja fara för en persons liv eller hälsa.</p>
+      <div class="sr"><b>Självrisk:</b> 1 800 kr.</div>
+    </div>
+  </details>
+</section>
+
+<!-- BYGGNATION, MERUTGIFTER, SKADEDJUR -->
+<section id="ovrigt" class="wrap">
+  <div class="sectag">04 — A26 till A31</div>
+  <h2 class="sec">Byggnation, merutgifter och skadedjur</h2>
+  <p class="intro">Momenten utanför själva skadehändelserna. Merutgifterna är kortare och mer begränsade än i villaförsäkringen — det är lätt att läsa fel här.</p>
+
+  <details class="card" id="a26">
+    <summary><span class="chip">A26</span><span class="title">Byggnad under uppförande, om- eller tillbyggnad</span><span class="caret">›</span></summary>
+    <div class="body">
+      <div class="lbl no">Begränsning under byggtiden</div>
+      <ul class="pts no">
+        <li>Skada genom läckage, eller skada på installationer för värme, vatten eller avlopp, ersätts inte om den inträffar innan rörsystemen provats och befunnits felfria</li>
+      </ul>
+      <div class="lbl no">A27 — arbetsbodar, verktyg och material</div>
+      <ul class="pts no">
+        <li>Stöld av verktyg och material ersätts endast vid inbrott i låst utrymme</li>
+        <li>Skadegörelse på arbetsbodar, verktyg och material ersätts inte</li>
+        <li>Stormskador på verktyg och material ersätts inte</li>
+      </ul>
+      <div class="sr">Ansvarsförsäkringen enligt C1–C4 gäller för kunden som byggherre och arbetsgivare åt den som hjälper till. Anlitas entreprenör betraktas kunden normalt inte som arbetsgivare åt denne eller dennes anställda.</div>
+    </div>
+  </details>
+
+  <details class="card" id="a28">
+    <summary><span class="chip">A28</span><span class="title">Merutgifter och hyresbortfall</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Blir bostadshuset helt eller delvis obrukbart efter en skada som egendomsskyddet i A8–A27 omfattar, ersätter vi nödvändiga och skäliga merutgifter om kunden för eget bruk måste hyra en annan liknande fritidsbostad för fritidsändamål.</p>
+      <div class="lbl yes">Ersätts</div>
+      <ul class="pts yes">
+        <li>Merutgifter för annan fritidsbostad — <strong>under högst ett år</strong></li>
+        <li>Magasinering av möbler om det behövs — <strong>under högst två år</strong></li>
+        <li>Hyresbortfall vid uthyrning (A29): det belopp kunden enligt lag är skyldig att sätta ned hyran med — <strong>under högst två år och högst 25 000 kr</strong></li>
+      </ul>
+      <div class="lbl no">Dras av eller ersätts inte</div>
+      <ul class="pts no">
+        <li>Kostnad för värme och andra driftkostnader som kunden sparar under tiden</li>
+        <li>Förmedlingskostnad om fritidshuset är uthyrt genom förmedling</li>
+      </ul>
+      <div class="note warn"><strong>Skiljer sig från villa.</strong> Merutgifterna löper högst ett år, inte två, och hyresbortfallet har ett takbelopp på 25 000 kr. Allt betalas dessutom längst tills fritidsbostaden är återställd.</div>
+    </div>
+  </details>
+
+  <details class="card" id="a31">
+    <summary><span class="chip">A31</span><span class="title">Skadedjursförsäkring — Anticimex</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Försäkringsgivare är <strong>Anticimex Försäkringar AB</strong>, org.nr 502000-8958 — inte Folksam. Försäkringen gäller under den tid fritidshusförsäkringen är i kraft.</p>
+      <div class="tblwrap">
+      <table>
+        <tr><th>Moment</th><th>Högsta ersättning</th><th>Gäller i</th></tr>
+        <tr><td>Sanering av skadedjur</td><td class="num">Ingen beloppsgräns</td><td class="num">Bas och Stor</td></tr>
+        <tr><td>Skada av träskadeinsekter</td><td class="num">4 mkr / skadetillfälle</td><td class="num">Bas och Stor</td></tr>
+        <tr><td>Sent upptäckt dödsfall</td><td class="num">4 mkr / skadetillfälle</td><td class="num">Bas och Stor</td></tr>
+        <tr><td>Äkta hussvamp</td><td class="num">Fullvärde</td><td class="num">Endast Stor</td></tr>
+      </table>
+      </div>
+      <div class="sr"><b>Självrisk:</b> ingen alls, på samtliga moment. Det skiljer sig från villaförsäkringen, där hussvamp har 10 000 kr i Bas.</div>
+      <div class="note"><strong>Nyteckningsregel:</strong> Momenten för träskadeinsekter och äkta hussvamp börjar gälla vid godkänd besiktning eller senast <strong>nio månader</strong> efter begynnelsedagen — mot sex månader i villaförsäkringen. När försäkringen börjar gälla inträder ansvaret från begynnelsedagen.</div>
+      <div class="lbl no">Undantag att känna till</div>
+      <ul class="pts no">
+        <li>Angrepp på rötskadat virke</li>
+        <li>Byggnad som är eller har varit ekonomibyggnad eller uthus vid lantgård</li>
+        <li>Hussvamp: angrepp av andra rötsvampar och mögelsvampar</li>
+        <li>Hussvamp: skador som kan härledas till vatten- eller fuktskador och som är ersättningsgilla enligt den sedvanliga försäkringen</li>
+      </ul>
+      <div class="sr">Merkostnader vid hussvamp ersätts med högst <b>1,5 prisbasbelopp</b> inom gällande högsta försäkringsbelopp.</div>
+    </div>
+  </details>
+</section>
+
+<!-- STOR -->
+<section id="stor" class="wrap">
+  <div class="sectag">05 — Fritidshusförsäkring Stor</div>
+  <h2 class="sec">Vad Stor lägger till</h2>
+  <p class="intro">Sex moment utöver Bas. Notera att villans <em>utökade läckageskydd</em> — vatten in genom yttertak eller fasad — inte finns i fritidshusvillkoret.</p>
+
+  <details class="card" id="stor1">
+    <summary><span class="chip">1</span><span class="title">Ersättning på grund av nya normer och branschregler</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>I skadat våtutrymme ersätter vi den extra kostnad som kan uppkomma vid återställande eller reparation på grund av att nya normer och branschregler gäller vid skadetillfället.</p>
+      <ul class="pts yes">
+        <li>Kostnaden ersätts <strong>utan åldersavdrag</strong></li>
+        <li>Våtutrymme = badrum, duschrum, tvättstuga, WC samt rum för varmvattenberedare eller värmepump</li>
+        <li>Förutsättning: utrymmena är beklädda med vattentäta skikt</li>
+      </ul>
+      <div class="sr"><b>Högsta ersättning:</b> 10 000 kr vid varje skadetillfälle.</div>
+    </div>
+  </details>
+
+  <details class="card" id="stor2">
+    <summary><span class="chip">2</span><span class="title">Ytskikt och tätskikt i våtutrymme</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Försäkringen gäller för det ytskikt och tätskikt som undantas i <strong>A13</strong>.</p>
+      <div class="lbl care">Förutsättning</div>
+      <ul class="pts care">
+        <li>Arbetet har utförts enligt gällande byggnormer och branschregler</li>
+        <li>Kvalitetsdokument eller annan motsvarande dokumentation från uppförandet kan uppvisas</li>
+      </ul>
+      <div class="sr">Utan dokumentation — ingen ersättning.</div>
+    </div>
+  </details>
+
+  <details class="card" id="stor3">
+    <summary><span class="chip">3</span><span class="title">Självriskersättning vid översvämning</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter den förhöjda självrisken vid översvämning enligt A15. Kunden betalar endast <strong>1 800 kr</strong>. Finns installerad backventil betalar kunden <strong>ingen självrisk alls</strong> vid ren baktrycksskada.</p>
+    </div>
+  </details>
+
+  <details class="card" id="stor4">
+    <summary><span class="chip">4</span><span class="title">Nyvärdesskydd hushållsmaskiner</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Hushållsmaskiner som omfattas av Bas och som <strong>inte uppnått fyra års ålder</strong> betraktas som helt nya vid tillämpningen av värderingsreglerna C28 och C35 — alltså inget åldersavdrag.</p>
+      <div class="lbl yes">Förutsättningar</div>
+      <ul class="pts yes">
+        <li>Kunden återanskaffar likvärdig egendom eller reparerar föremålet <strong>inom sex månader</strong> från skadetillfället</li>
+        <li>Kan föremålet repareras ersätts högst reparationskostnaden</li>
+        <li>Sker ingen återanskaffning eller reparation lämnas ersättning med värdet enligt C28 och C35 — alltså med åldersavdrag</li>
+      </ul>
+      <div class="note"><strong>Hushållsmaskin</strong> = maskin för klädvård, disk, städning, förvaring eller tillagning av mat och dryck, luftrening eller avfuktning.</div>
+    </div>
+  </details>
+
+  <details class="card" id="stor5">
+    <summary><span class="chip">5</span><span class="title">Utökat stormskydd</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Vi ersätter skada på <strong>tomtmark, pool och försäkrad byggnad enligt A4</strong> som blåser sönder vid storm (minst 21 m/sekund). Även vid lägre vindstyrka lämnas ersättning om byggnaden skadas av träd eller flaggstång som blåser omkull.</p>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada på brygga</li>
+      </ul>
+      <div class="sr">Här försvinner Bas-undantagen för tomtmark och fristående carport — men bryggan står kvar som undantag.</div>
+    </div>
+  </details>
+
+  <details class="card" id="stor6">
+    <summary><span class="chip">6</span><span class="title">Hussvampsförsäkring</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Med Stor gäller Skadedjurs- och hussvampsförsäkringen i sin fulla omfattning, inklusive skydd för skador orsakade av <strong>äkta hussvamp</strong>. Försäkringen gäller utan självrisk.</p>
+      <div class="sr">I Bas gäller samma avsnitt <b>utom</b> hussvampsmomentet.</div>
+    </div>
+  </details>
+
+  <details class="card" id="stor7">
+    <summary><span class="chip">7</span><span class="title">Husextra — allrisk för byggnaden</span><span class="caret">›</span></summary>
+    <div class="body">
+      <p>Gäller för försäkrad egendom enligt <strong>A4</strong>. Vi ersätter skada på eller förlust av försäkrad egendom genom <strong>plötslig och oförutsedd händelse</strong> — dock inte i den mån ersättning kan betalas ur fritidshusförsäkringen i övrigt.</p>
+      <div class="note"><strong>Plötslig</strong> betyder att händelsen haft ett förhållandevis snabbt förlopp — slitage och förbrukning faller utanför. <strong>Oförutsedd</strong> betyder att den inträffat oväntat och normalt inte gått att förutse och därigenom förhindra.</div>
+      <div class="lbl no">Vi ersätter inte</div>
+      <ul class="pts no">
+        <li>Skada genom förslitning, självsprickor, vittring eller åldersförändring — vare sig den visar sig successivt eller plötsligt</li>
+        <li>Sprickbildning på byggnad som är naturlig på grund av byggnadens utförande och konstruktion</li>
+        <li>Skada på byggnad genom fukt, röta, svamp, mögel, rost, frätning eller annan långtidspåverkan</li>
+        <li>Frostskador på växtlighet i trädgård</li>
+        <li>Skada orsakad av felaktig konstruktion, felaktigt utförande eller materialfel</li>
+        <li>Skada på tak och byggnaden i övrigt orsakad av läckage från tak</li>
+        <li>Låsbyte</li>
+        <li>Den förhöjda självrisken vid läckageskador enligt A14 och vid maskin- och installationsskador enligt A21</li>
+        <li>Skada orsakad av husdjur, insekter, råttor, möss eller andra smågnagare</li>
+        <li>Skada på hushållsmaskin som enbart består i skönhetsfel</li>
+        <li>Skada som leverantör eller annan ansvarar för enligt begränsningarna i A21</li>
+        <li>Aktsamhetsnedsättning som gjorts i andra delar av försäkringen</li>
+      </ul>
+      <div class="sr"><b>Högsta ersättning:</b> 150 000 kr vid varje skadetillfälle · <b>Självrisk:</b> 1 800 kr.</div>
+    </div>
+  </details>
+</section>
+
+<!-- VÄRDERING -->
+<section id="vardering" class="wrap">
+  <div class="sectag">06 — C30 till C35</div>
+  <h2 class="sec">Värdering och åldersavdrag</h2>
+  <p class="intro">Byggnadsskador värderas enligt C30–C35. Ersättningstabellen i C35 är <strong>identisk</strong> med C42 i Hem och villa — samma byggnadsdelar, samma friår, samma procentsatser. Samma räknare gäller alltså för båda.</p>
+
+  <div class="note warn"><strong>Taken:</strong> I <strong>Bas</strong> är de sammanlagda åldersavdragen högst <strong>105 000 kr</strong> per skadetillfälle. I <strong>Stor</strong> är gränsen <strong>15 000 kr</strong>.</div>
+
+  <h3>Undantag från taken</h3>
+  <div class="lbl no">105 000-taket i Bas gäller inte för</div>
+  <ul class="pts no">
+    <li>Skada på <strong>värmepumpsanläggning eller spabad</strong> som ersätts enligt A11 (kortslutning, överslag eller överspänning) och som är helt avskriven enligt C35</li>
+    <li>Skada på <strong>värmepumpsanläggning eller spabad</strong> som ersätts enligt A21 (hushållsmaskin- och installationsskador) och som är helt avskriven enligt C35</li>
+  </ul>
+  <div class="lbl no">15 000-taket i Stor gäller inte för</div>
+  <ul class="pts no">
+    <li>Byggnadsdelar som ersätts enligt A11 och är helt avskrivna enligt C35</li>
+    <li>Byggnadsdelar som ersätts enligt A21 och är helt avskrivna enligt C35</li>
+    <li>Ytskikt och tätskikt äldre än 30 år i våtutrymme vid skador som ersätts enligt A12 (läckage)</li>
+    <li>Byggnadsdelar som inte var funktionsdugliga före skadan</li>
+    <li>Åldersavdrag som kan ersättas från annan försäkring</li>
+  </ul>
+
+  <div class="calc">
+    <h2>Åldersavdrag</h2>
+    <p class="sub">Tabellen i C35 är identisk med villans C42 — samma räknare, samma siffror. Sök fram byggnadsdelen och ange antingen ålder eller installationsdatum och skadedatum.</p>
+
+    <label for="bSok">Byggnadsdel</label>
+    <input id="bSok" type="text" autocomplete="off" placeholder="Sök, t.ex. tvättmaskin eller kakel">
+    <select id="bObjekt" size="6"></select>
+
+    <label for="bLage">Hur anges åldern?</label>
+    <div class="seg" id="bLage">
+      <button type="button" data-v="alder" class="on">Ange ålder</button>
+      <button type="button" data-v="datum">Installationsdatum</button>
+    </div>
+
+    <div id="bAlderBox">
+      <label for="bAlder">Ålder i år</label>
+      <input id="bAlder" type="number" inputmode="numeric" min="0" max="200" placeholder="T.ex. 8">
+    </div>
+
+    <div id="bDatumBox" hidden>
+      <label for="bInstall">Installationsdatum</label>
+      <input id="bInstall" type="date">
+      <label for="bSkada">Skadedatum</label>
+      <input id="bSkada" type="date">
+    </div>
+
+    <label for="bBelopp">Kostnad före avdrag (kr, valfritt)</label>
+    <input id="bBelopp" type="number" inputmode="numeric" min="0" step="1000" placeholder="T.ex. 40000">
+
+    <div class="result">
+      <div class="amount" id="bOut">Välj byggnadsdel</div>
+      <div class="formula" id="bForm">Sök fram byggnadsdelen och ange ålder.</div>
+      <span class="ref">C35 · S2941</span>
+    </div>
+  </div>
+
+  <div class="note"><strong>Tänk på:</strong> Avdraget är begränsat till 80 % för byggnadsdel som före skadan var funktionsduglig. Vid skada enligt A11, A21 samt ytskikt och tätskikt äldre än 30 år vid läckage enligt A12 kan avdraget uppgå till 100 %. Räknaren utgår från tabellvärdet per objekt och kan inte skilja på skadetyp — bedöm sista biten själv.</div>
+
+  <p style="margin-top:22px"><a class="extlink" href="./villaforsakring.html#vardering">Hela tabellen på villasidan →</a></p>
+</section>
+
+</main>
+
+<footer class="wrap">
+  <p>Byggt utifrån <code>Folksam Försäkringsvillkor Fritidshus, 1 januari 2026 (S2941 26-01)</code>, avsnitt A Fritidshusförsäkring och tillhörande delar av avsnitt C.</p>
+  <p style="margin-top:10px">Studiematerial — kontrollera alltid mot gällande villkor och interna riktlinjer innan beslut i ett ärende.</p>
+  <p class="copyright">&copy; <span class="cpYear">2026</span> Nicolas Da Silva Kuehn</p>
+</footer>
+
+<button id="themeToggle" type="button" aria-pressed="false">🌙 Mörkt</button>
+<script src="tema.js?v=20261027"></script>
+<script>
+/* ---------------- ÅLDERSAVDRAG ----------------
+   Tabellen och beräkningen bor i aa-data.js, delad med villasidan och
+   kalkylatorn — sidan får aldrig räkna på egen hand. */
+(function(){
+  var sok=document.getElementById('bSok'),
+      sel=document.getElementById('bObjekt'),
+      alderIn=document.getElementById('bAlder'),
+      beloppIn=document.getElementById('bBelopp'),
+      lageSeg=document.getElementById('bLage'),
+      alderBox=document.getElementById('bAlderBox'),
+      datumBox=document.getElementById('bDatumBox'),
+      installIn=document.getElementById('bInstall'),
+      skadaIn=document.getElementById('bSkada'),
+      out=document.getElementById('bOut'),
+      form=document.getElementById('bForm');
+
+  if(typeof AA_ITEMS==='undefined' || typeof aaAndel!=='function'
+     || typeof aaAlderFranDatum!=='function' || typeof aaIdagLokalt!=='function'){
+    out.textContent='Tabellen saknas';
+    form.textContent='aa-data.js har inte laddats eller är en äldre version — ladda upp filen på nytt.';
+    return;
+  }
+
+  var lage='alder';
+
+  var valt=-1;
+
+  function fmt(n){ return Math.round(n).toLocaleString('sv-SE').replace(/,/g,' '); }
+
+  function bygg(filter){
+    var f=(filter||'').toLowerCase().trim();
+    sel.innerHTML='';
+    AA_ITEMS.forEach(function(it,i){
+      if(f && it.name.toLowerCase().indexOf(f)<0) return;
+      var op=document.createElement('option');
+      op.value=i; op.textContent=it.name;
+      if(i===valt) op.selected=true;
+      sel.appendChild(op);
+    });
+  }
+
+  function rakna(){
+    var it=AA_ITEMS[valt];
+    if(!it){
+      out.textContent='Välj byggnadsdel';
+      form.textContent='Sök fram byggnadsdelen och ange ålder.';
+      return;
+    }
+    var alder, saknas=null, varning='';
+    if(lage==='datum'){
+      if(!installIn.value)                   saknas='Ange installationsdatum.';
+      else if(!skadaIn.value)                saknas='Ange skadedatum — åldern räknas fram till skadedagen.';
+      else if(installIn.value>skadaIn.value) saknas='Installationsdatumet ligger efter skadedatumet.';
+      /* Framtida skadedatum räknas ändå, men flaggas — oftast en felskrivning. */
+      else if(skadaIn.value>aaIdagLokalt())  varning='Obs: skadedatumet ligger i framtiden.';
+      alder=aaAlderFranDatum(installIn.value, skadaIn.value);   /* aa-data.js */
+    } else {
+      alder=Number(alderIn.value);
+      if(alderIn.value===''||!isFinite(alder)||alder<0) saknas='Ange ålder för att räkna.';
+    }
+    if(saknas || !isFinite(alder) || alder<0){
+      out.textContent=it.name;
+      form.innerHTML='Fria år '+it.no_deduction_years+' · '+
+        (it.deduction_rate*100).toFixed(1).replace('.0','')+' %/påbörjat år<br>'+
+        (saknas||'Ange ålder för att räkna.');
+      return;
+    }
+    var andel=aaAndel(it,alder);
+    var belopp=Number(beloppIn.value);
+    var harBelopp=beloppIn.value!==''&&isFinite(belopp)&&belopp>0;
+
+    out.textContent = harBelopp ? fmt(belopp*andel)+' kr' : aaProcent(andel);
+
+    var rader=it.name+'<br>Fria år '+it.no_deduction_years+' · '+
+      (it.deduction_rate*100).toFixed(1).replace('.0','')+' %/påbörjat år<br>'+
+      'Ålder '+alder+' påbörjade år'+(lage==='datum'?' vid skadedatumet':'')+
+      ' → åldersavdrag '+aaProcent(andel);
+    if(harBelopp){
+      rader+='<br>'+fmt(belopp)+' kr − '+aaProcent(andel)+' = <b>'+fmt(belopp*andel)+
+             ' kr</b> i avdrag<br>Kvar att ersätta: '+fmt(belopp-belopp*andel)+' kr';
+      if(belopp*andel>15000){
+        rader+='<br>Över 15 000-taket i punkt 20 — kontrollera om något undantag gäller.';
+      }
+    }
+    if(varning) rader+='<br>'+varning;
+    form.innerHTML=rader;
+  }
+
+  lageSeg.querySelectorAll('button').forEach(function(b){
+    b.addEventListener('click',function(){
+      lage = b.dataset.v==='datum' ? 'datum' : 'alder';
+      [].forEach.call(lageSeg.children,function(x){ x.classList.toggle('on', x===b); });
+      alderBox.hidden = lage!=='alder';
+      datumBox.hidden = lage!=='datum';
+      rakna();
+    });
+  });
+  installIn.addEventListener('change',rakna);
+  skadaIn.addEventListener('change',rakna);
+
+  sok.addEventListener('input',function(){ bygg(sok.value); });
+  sel.addEventListener('change',function(){ valt=Number(sel.value); rakna(); });
+  alderIn.addEventListener('input',rakna);
+  beloppIn.addEventListener('input',rakna);
+
+  bygg('');
+  rakna();
+})();
+</script>
+</body>
+</html>
