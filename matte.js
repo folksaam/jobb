@@ -1,9 +1,9 @@
 /* Räknar ut uttryck som skrivs direkt i anteckningsmallen.
 
-   Raden som markören står på tolkas löpande. Står det ett giltigt
-   uttryck visas svaret under rutan, och skriver man ett likhetstecken
-   sist på raden skrivs svaret in. Allt som inte går att tolka ignoreras
-   tyst, så vanlig text aldrig stökas till.
+   Skriver man ett likhetstecken sist på en rad som innehåller ett
+   giltigt räkneuttryck byts raden ut mot uttrycket plus svaret. Inget
+   syns i gränssnittet i övrigt — går raden inte att tolka blir
+   likhetstecknet stående som vilket tecken som helst.
 
    Uttrycket tolkas av en egen parser i stället för eval, dels för att
    inget en kund dikterar ska kunna köras som kod, dels för att svenska
@@ -12,12 +12,7 @@
 
 (function(){
   var ruta = document.getElementById('nNote');
-  var strip = document.getElementById('nMatte');
-  if(!ruta || !strip) return;
-
-  var uttryckEl = document.getElementById('mUttryck');
-  var svarEl    = document.getElementById('mSvar');
-  var inKnapp   = document.getElementById('mIn');
+  if(!ruta) return;
 
   /* ---------- tal ---------- */
   /* "12 000,50" och "12000.50" ska båda bli 12000.5. Mellanslag räknas
@@ -40,8 +35,7 @@
       if(m){ t.push({typ:'tal', v:tolkaTal(m[0])}); i += m[0].length; continue; }
 
       /* "av" som i "20 % av 40 000" */
-      var ord = rest.match(/^av\b/i);
-      if(ord){ t.push({typ:'av'}); i += 2; continue; }
+      if(/^av\b/i.test(rest)){ t.push({typ:'av'}); i += 2; continue; }
 
       if('+-*/()%'.indexOf(c) >= 0){ t.push({typ:c}); i++; continue; }
       if(c === '×' || c === '·'){ t.push({typ:'*'}); i++; continue; }
@@ -127,10 +121,8 @@
     return isFinite(svar) ? svar : null;
   }
 
-  /* ---------- formatering ---------- */
   function formatera(n){
-    var avrundat = Math.round(n * 100) / 100;
-    return avrundat.toLocaleString('sv-SE', {maximumFractionDigits:2});
+    return (Math.round(n * 100) / 100).toLocaleString('sv-SE', {maximumFractionDigits:2});
   }
 
   /* ---------- raden markören står på ---------- */
@@ -144,90 +136,41 @@
   }
 
   /* Etiketten före kolon hör till mallen, inte till uträkningen. */
-  function uttryckDelen(rad){
-    var kolon = rad.lastIndexOf(':');
-    return kolon >= 0 ? rad.slice(kolon + 1) : rad;
-  }
-
   function tolka(rad){
-    var del = uttryckDelen(rad).replace(/\bkr\b/gi, '').trim();
+    var kolon = rad.lastIndexOf(':');
+    var del = (kolon >= 0 ? rad.slice(kolon + 1) : rad).replace(/\bkr\b/gi, '').trim();
     if(!del) return null;
+    /* Ett ensamt tal är inget att räkna ut. */
+    if(!/[+\-*/×·÷x%]/i.test(del)) return null;
+    if(!/\d/.test(del)) return null;
     /* Datum ser ut som räkning men är det inte. Dag/månad kräver rimliga
        tal, annars blockeras division som 15000/4. */
     if(/\b\d{4}-\d{1,2}-\d{1,2}\b/.test(del)) return null;
     var dm = del.match(/\b(\d{1,2})\/(\d{1,2})\b/);
     if(dm && +dm[1] >= 1 && +dm[1] <= 31 && +dm[2] >= 1 && +dm[2] <= 12) return null;
-    /* Ett ensamt tal är inget att räkna ut. */
-    if(!/[+\-*/×·÷x%]/i.test(del)) return null;
-    if(!/\d/.test(del)) return null;
+
     var t = dela(del);
     if(!t || !t.length) return null;
-    var svar = rakna(t);
-    return svar === null ? null : {text:del, svar:svar};
+    return rakna(t);
   }
 
-  var senaste = null;
-
-  function visa(){
+  /* Likhetstecken sist på raden betyder "räkna ut det här". */
+  ruta.addEventListener('input', function(){
     var rad = aktuellRad();
-    var r = tolka(rad.text);
-    senaste = r ? {rad:rad, r:r} : null;
-    if(!r){ strip.hidden = true; return; }
-    var enhet = /\bkr\b/i.test(rad.text) ? ' kr' : '';
-    uttryckEl.textContent = r.text.replace(/\s+/g,' ').trim() + '  =';
-    svarEl.textContent = formatera(r.svar) + enhet;
-    strip.hidden = false;
-  }
+    if(!/=\s*$/.test(rad.text) || ruta.selectionStart !== rad.slut) return;
 
-  /* Skriver in svaret sist på raden. */
-  function skrivIn(){
-    if(!senaste) return;
-    var rad = aktuellRad();
-    var r = tolka(rad.text);
-    if(!r) return;
+    var utan = rad.text.replace(/=\s*$/, '');
+    var svar = tolka(utan);
+    if(svar === null) return;
+
     var enhet = /\bkr\b/i.test(rad.text) ? ' kr' : '';
-    var ny = rad.text.replace(/[\s=]*$/, '') + ' = ' + formatera(r.svar) + enhet;
+    var ny = utan.replace(/\s*$/, '') + ' = ' + formatera(svar) + enhet;
     ruta.value = ruta.value.slice(0, rad.start) + ny + ruta.value.slice(rad.slut);
     var pos = rad.start + ny.length;
     ruta.setSelectionRange(pos, pos);
-    ruta.focus();
-    strip.hidden = true;
     if(typeof saveNote === 'function') saveNote();
-    if(typeof checkOklar === 'function') checkOklar();
-  }
-
-  ruta.addEventListener('input', function(){
-    /* Likhetstecken sist på raden betyder "räkna ut det här". */
-    var rad = aktuellRad();
-    if(/=\s*$/.test(rad.text) && ruta.selectionStart === rad.slut){
-      var utan = rad.text.replace(/=\s*$/, '');
-      if(tolka(utan)){
-        var r = tolka(utan);
-        var enhet = /\bkr\b/i.test(rad.text) ? ' kr' : '';
-        var ny = utan.replace(/\s*$/, '') + ' = ' + formatera(r.svar) + enhet;
-        ruta.value = ruta.value.slice(0, rad.start) + ny + ruta.value.slice(rad.slut);
-        var pos = rad.start + ny.length;
-        ruta.setSelectionRange(pos, pos);
-        strip.hidden = true;
-        if(typeof saveNote === 'function') saveNote();
-        return;
-      }
-    }
-    visa();
   });
 
-  ['click','keyup','focus'].forEach(function(h){
-    ruta.addEventListener(h, visa);
-  });
-  ruta.addEventListener('blur', function(){
-    /* Knappen ska hinna klickas innan remsan försvinner. */
-    setTimeout(function(){ if(document.activeElement !== inKnapp) strip.hidden = true; }, 150);
-  });
-  inKnapp.addEventListener('click', skrivIn);
-
-  /* Exponeras för testning och för panelen om den vill räkna själv. */
-  window.nMatteRakna = function(rad){
-    var r = tolka(rad);
-    return r ? r.svar : null;
-  };
+  /* Exponeras för testning. */
+  window.nMatteRakna = tolka;
 })();
