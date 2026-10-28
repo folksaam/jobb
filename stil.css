@@ -954,3 +954,27 @@ footer code{font-family:'JetBrains Mono',monospace;font-size:calc(12.5px * var(-
 
 /* Avbockat tonas ner, så det som återstår syns tydligt. */
 .ekRad input:checked ~ .ekText{color:var(--muted);text-decoration:line-through;text-decoration-thickness:1px}
+
+/* ---------- uträkning i mallen ---------- */
+#nMatte{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  margin-top:9px;padding:9px 12px;
+  background:var(--accent-soft);border:1px solid var(--accent);
+  border-radius:calc(8px * var(--radie));
+}
+#nMatte .mUttryck{
+  font-family:'JetBrains Mono',monospace;font-size:calc(12.5px * var(--skala));
+  color:var(--muted);
+}
+#nMatte .mSvar{
+  font-family:'JetBrains Mono',monospace;font-size:calc(15px * var(--skala));
+  font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums;
+  margin-right:auto;
+}
+#nMatte button{
+  font-family:var(--rubrik);font-size:calc(12px * var(--skala));font-weight:600;
+  background:var(--accent);border:none;color:var(--btn-fg);
+  padding:6px 13px;border-radius:100px;cursor:pointer;white-space:nowrap;
+}
+#nMatte button:hover{filter:brightness(1.1)}
+#nMatte button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
